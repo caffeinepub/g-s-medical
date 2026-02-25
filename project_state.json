@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 25,
+  "projectStateVersion": 37,
   "summary": "Online medical store project for G&S Medical. Includes a customer-facing website and mobile app, plus an admin dashboard. Admin can add/customize products visible on both website and app. Payment page integrated with UPI ID gauravsaswade03@pingpay. Store details: customer care +91 9270556455 and +91 9766343454, email gauravsaswade@gsgroupswebstore.in, address At-Bhaje, Post-Malavali, Tal-Maval, Dist-Pune, Near Malavali Railway Station, Maharashtra-410405. Owners: Gaurav Saswade (CEO & Director, contact: +91 9270556455) & Shushant Waghmare. Multi-vendor marketplace feature planned: third-party sellers can register, get DigiLocker document verification (Aadhaar, PAN, medical shop license), and sell medicines on the platform with their own seller dashboard.",
   "architectural_notes": [
     "Project has two separate codebases: website and mobile app — to be delivered as separate 7-zip archives",
@@ -10,7 +10,10 @@
     "Admin dashboard login password changed to: p1love2g (no leading dot)",
     "Email notifications for seller approval are unavailable on the current plan; in-dashboard notification system is used instead"
   ],
-  "known_issues": [],
+  "known_issues": [
+    "HomePage has duplicate G&S Medical name, customer care numbers, email, and address appearing more than once",
+    "ProductsPage and CartPage have duplicate customer care numbers, email address, and store address appearing more than once"
+  ],
   "isFixRequest": false,
   "existing_features": [
     {
@@ -380,6 +383,110 @@
         "REQ-54"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-audit-and-remove-all-duplicate-contact-information-within-the-same-page-or-section-across-the-entire-frontend-specifically-1-in-footer-tsx-ensure-each-phone-number-91-9270556455-91-9766343454-the-email-address-and-the-store-address-each-appear-exactly-once-2-in-contactpage-tsx-ensure-each-phone-number-the-email-and-the-address-each-appear-exactly-once-within-the-contact-info-cards-section-3-in-aboutpage-tsx-ensure-gaurav-saswade-s-phone-number-91-9270556455-appears-only-in-his-profile-bio-card-and-not-repeated-elsewhere-on-the-same-page-ensure-shushant-waghmare-s-phone-number-91-9156896495-appears-only-in-his-profile-bio-card-4-in-ordersuccesspage-tsx-ensure-91-9270556455-and-91-9766343454-each-appear-exactly-once-5-in-homepage-tsx-ensure-no-contact-detail-phone-number-or-address-is-repeated-within-any-single-section-review-all-other-pages-and-components-for-any-within-page-duplication-of-the-same-data-point-and-eliminate-it-so-each-piece-of-information-is-shown-exactly-once-per-page",
+      "title": "Audit and remove all duplicate contact information within the same page or section across the entire frontend. Specifically: (1) In Footer.tsx, ensure each phone number (+91 9270556455, +91 9766343454), the email address, and the store address each appear exactly once. (2) In ContactPage.tsx, ensure each phone number, the email, and the address each appear exactly once within the contact info cards section. (3) In AboutPage.tsx, ensure Gaurav Saswade's phone number (+91 9270556455) appears only in his profile/bio card and not repeated elsewhere on the same page; ensure Shushant Waghmare's phone number (+91 9156896495) appears only in his profile/bio card. (4) In OrderSuccessPage.tsx, ensure +91 9270556455 and +91 9766343454 each appear exactly once. (5) In HomePage.tsx, ensure no contact detail, phone number, or address is repeated within any single section. Review all other pages and components for any within-page duplication of the same data point and eliminate it so each piece of information is shown exactly once per page.",
+      "reqIds": [
+        "REQ-55"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-audit-the-header-frontend-src-components-header-tsx-desktop-navigation-and-ensure-each-navigation-link-home-products-about-us-contact-cart-login-seller-portal-appears-exactly-once-remove-any-duplicate-nav-items-or-buttons-that-appear-more-than-once-within-the-same-navigation-bar-or-menu-section",
+      "title": "Audit the Header (frontend/src/components/Header.tsx) desktop navigation and ensure each navigation link (Home, Products, About Us, Contact, Cart, Login, Seller Portal) appears exactly once. Remove any duplicate nav items or buttons that appear more than once within the same navigation bar or menu section.",
+      "reqIds": [
+        "REQ-56"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-pages-homepage-tsx-audit-every-section-of-the-page-and-ensure-the-store-name-g-s-medical-appears-only-once-in-the-hero-header-area-remove-all-additional-duplicate-occurrences-of-the-store-name-from-any-other-sections-such-as-the-featured-products-section-stats-section-or-any-other-repeated-block",
+      "title": "In frontend/src/pages/HomePage.tsx, audit every section of the page and ensure the store name 'G&S MEDICAL' appears only once (in the hero/header area). Remove all additional duplicate occurrences of the store name from any other sections such as the featured products section, stats section, or any other repeated block.",
+      "reqIds": [
+        "REQ-59"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-pages-homepage-tsx-audit-all-sections-and-ensure-each-customer-care-phone-number-91-9270556455-and-91-9766343454-appears-at-most-once-remove-any-duplicate-phone-number-entries-found-in-banners-footers-within-page-contact-sections-or-any-other-repeated-locations-on-the-same-page",
+      "title": "In frontend/src/pages/HomePage.tsx, audit all sections and ensure each customer care phone number (+91 9270556455 and +91 9766343454) appears at most once. Remove any duplicate phone number entries found in banners, footers-within-page, contact sections, or any other repeated locations on the same page.",
+      "reqIds": [
+        "REQ-60"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-pages-homepage-tsx-audit-all-sections-and-ensure-the-store-email-address-gauravsaswade-gsgroupswebstore-in-appears-at-most-once-remove-any-duplicate-email-entries-from-banners-contact-blocks-or-any-other-sections-that-repeat-the-same-email-on-the-same-page",
+      "title": "In frontend/src/pages/HomePage.tsx, audit all sections and ensure the store email address (gauravsaswade@gsgroupswebstore.in) appears at most once. Remove any duplicate email entries from banners, contact blocks, or any other sections that repeat the same email on the same page.",
+      "reqIds": [
+        "REQ-61"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-pages-homepage-tsx-audit-all-sections-and-ensure-the-store-address-at-bhaje-post-malavali-tal-maval-dist-pune-near-malavali-railway-station-malavali-maharashtra-410405-appears-at-most-once-remove-any-duplicate-address-entries-from-banners-info-cards-contact-blocks-or-any-other-repeated-areas-on-the-same-page",
+      "title": "In frontend/src/pages/HomePage.tsx, audit all sections and ensure the store address (At-Bhaje, Post-Malavali, Tal-Maval, Dist-Pune, Near Malavali Railway Station, Malavali, Maharashtra-410405) appears at most once. Remove any duplicate address entries from banners, info cards, contact blocks, or any other repeated areas on the same page.",
+      "reqIds": [
+        "REQ-62"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-pages-productspage-tsx-audit-all-sections-and-ensure-each-customer-care-phone-number-91-9270556455-and-91-9766343454-the-store-email-address-gauravsaswade-gsgroupswebstore-in-and-the-store-address-at-bhaje-post-malavali-tal-maval-dist-pune-near-malavali-railway-station-malavali-maharashtra-410405-each-appear-at-most-once-on-the-page-remove-all-duplicate-occurrences-so-each-piece-of-contact-information-is-shown-exactly-once",
+      "title": "In frontend/src/pages/ProductsPage.tsx, audit all sections and ensure each customer care phone number (+91 9270556455 and +91 9766343454), the store email address (gauravsaswade@gsgroupswebstore.in), and the store address (At-Bhaje, Post-Malavali, Tal-Maval, Dist-Pune, Near Malavali Railway Station, Malavali, Maharashtra-410405) each appear at most once on the page. Remove all duplicate occurrences so each piece of contact information is shown exactly once.",
+      "reqIds": [
+        "REQ-63"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-pages-cartpage-tsx-audit-all-sections-and-ensure-each-customer-care-phone-number-91-9270556455-and-91-9766343454-the-store-email-address-gauravsaswade-gsgroupswebstore-in-and-the-store-address-at-bhaje-post-malavali-tal-maval-dist-pune-near-malavali-railway-station-malavali-maharashtra-410405-each-appear-at-most-once-on-the-page-remove-all-duplicate-occurrences-so-each-piece-of-contact-information-is-shown-exactly-once",
+      "title": "In frontend/src/pages/CartPage.tsx, audit all sections and ensure each customer care phone number (+91 9270556455 and +91 9766343454), the store email address (gauravsaswade@gsgroupswebstore.in), and the store address (At-Bhaje, Post-Malavali, Tal-Maval, Dist-Pune, Near Malavali Railway Station, Malavali, Maharashtra-410405) each appear at most once on the page. Remove all duplicate occurrences so each piece of contact information is shown exactly once.",
+      "reqIds": [
+        "REQ-64"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-deeper-more-expressive-entrance-and-transition-animations-to-all-customer-facing-pages-homepage-productspage-cartpage-paymentpage-ordersuccesspage-aboutpage-contactpage-each-page-must-have-a-unique-animation-personality-homepage-uses-cascading-hero-reveals-with-morphing-gradient-orbs-productspage-uses-a-wave-stagger-grid-entrance-cartpage-uses-spring-physics-item-rows-paymentpage-uses-a-progressive-step-reveal-ordersuccesspage-uses-a-particle-burst-celebration-aboutpage-uses-alternating-slide-in-bio-cards-with-parallax-depth-contactpage-uses-a-ripple-entrance-for-info-cards-no-two-pages-should-share-the-same-animation-pattern-all-animations-must-respect-prefers-reduced-motion",
+      "title": "Apply deeper, more expressive entrance and transition animations to all customer-facing pages (HomePage, ProductsPage, CartPage, PaymentPage, OrderSuccessPage, AboutPage, ContactPage). Each page must have a unique animation personality: HomePage uses cascading hero reveals with morphing gradient orbs; ProductsPage uses a wave-stagger grid entrance; CartPage uses spring-physics item rows; PaymentPage uses a progressive step-reveal; OrderSuccessPage uses a particle-burst celebration; AboutPage uses alternating slide-in bio cards with parallax depth; ContactPage uses a ripple entrance for info cards. No two pages should share the same animation pattern. All animations must respect prefers-reduced-motion.",
+      "reqIds": [
+        "REQ-65"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-richer-more-unique-visual-design-language-to-each-authentication-page-customerloginpage-adminloginpage-sellerloginpage-sellerregisterpage-each-must-have-a-distinct-illustrated-or-decorative-background-panel-that-is-visually-different-from-the-others-customerloginpage-uses-floating-medicine-capsule-illustrations-on-a-soft-green-gradient-adminloginpage-uses-a-dark-deep-green-geometric-grid-pattern-with-a-subtle-glow-sellerloginpage-uses-a-storefront-shop-illustration-motif-sellerregisterpage-uses-a-document-verification-theme-with-step-progress-indicators-styled-as-a-visual-timeline-smooth-slide-in-transitions-between-form-steps-must-use-different-easing-curves-per-page-input-focus-states-must-animate-with-a-sweeping-green-underline-unique-per-page-type",
+      "title": "Apply a richer, more unique visual design language to each authentication page (CustomerLoginPage, AdminLoginPage, SellerLoginPage, SellerRegisterPage). Each must have a distinct illustrated or decorative background panel that is visually different from the others: CustomerLoginPage uses floating medicine capsule illustrations on a soft green gradient; AdminLoginPage uses a dark deep-green geometric grid pattern with a subtle glow; SellerLoginPage uses a storefront/shop illustration motif; SellerRegisterPage uses a document/verification theme with step-progress indicators styled as a visual timeline. Smooth slide-in transitions between form steps must use different easing curves per page. Input focus states must animate with a sweeping green underline unique per page type.",
+      "reqIds": [
+        "REQ-66"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-visually-distinct-and-richer-design-to-the-admin-dashboard-pages-admindashboardpage-adminproductspage-adminorderspage-adminrefundspage-adminsellerspage-each-page-must-have-a-unique-header-illustration-or-accent-graphic-dashboard-overview-gets-a-data-viz-inspired-top-banner-with-mini-sparkline-shapes-products-page-gets-a-medicine-grid-mosaic-accent-orders-page-gets-a-delivery-flow-timeline-graphic-refunds-page-gets-a-coin-wallet-accent-illustration-sellers-page-gets-a-verified-badge-shield-motif-stat-cards-must-use-glassmorphism-style-with-a-frosted-green-tint-animated-shimmer-on-load-and-a-bounce-pop-entrance-staggered-per-card-table-rows-must-highlight-with-a-smooth-green-tint-sweep-when-status-changes-the-adminlayout-sidebar-must-use-a-deep-gradient-dark-forest-green-to-emerald-with-active-link-showing-a-glowing-left-border-indicator-and-pending-item-badges-pulsing-with-a-ring-animation",
+      "title": "Apply a visually distinct and richer design to the Admin Dashboard pages (AdminDashboardPage, AdminProductsPage, AdminOrdersPage, AdminRefundsPage, AdminSellersPage). Each page must have a unique header illustration or accent graphic: Dashboard overview gets a data-viz inspired top banner with mini sparkline shapes; Products page gets a medicine-grid mosaic accent; Orders page gets a delivery-flow timeline graphic; Refunds page gets a coin/wallet accent illustration; Sellers page gets a verified-badge/shield motif. Stat cards must use glassmorphism-style with a frosted green tint, animated shimmer on load, and a bounce-pop entrance staggered per card. Table rows must highlight with a smooth green-tint sweep when status changes. The AdminLayout sidebar must use a deep gradient (dark forest green to emerald), with active link showing a glowing left-border indicator and pending-item badges pulsing with a ring animation.",
+      "reqIds": [
+        "REQ-67"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-visually-distinct-and-richer-animated-design-to-all-seller-dashboard-pages-sellerdashboardpage-sellerproductspage-sellerorderspage-sellerprofilepage-sellerdashboardpage-must-open-with-a-full-width-animated-welcome-banner-showing-the-seller-s-store-name-with-a-typewriter-reveal-and-a-small-animated-pharmacy-store-svg-icon-sellerproductspage-uses-a-card-mosaic-entrance-with-color-accent-top-borders-unique-to-medicine-categories-sellerorderspage-uses-a-timeline-style-list-view-for-orders-not-a-plain-table-with-animated-status-step-indicators-sellerprofilepage-shows-a-profile-card-with-an-animated-verification-status-badge-spinning-ring-while-pending-pop-in-checkmark-when-verified-the-sellerlayout-sidebar-must-mirror-the-admin-sidebar-s-gradient-styling-but-use-a-slightly-lighter-emerald-to-teal-tone-to-visually-distinguish-seller-from-admin-context",
+      "title": "Apply a visually distinct and richer animated design to all Seller Dashboard pages (SellerDashboardPage, SellerProductsPage, SellerOrdersPage, SellerProfilePage). SellerDashboardPage must open with a full-width animated welcome banner showing the seller's store name with a typewriter reveal and a small animated pharmacy-store SVG icon. SellerProductsPage uses a card-mosaic entrance with color-accent top borders unique to medicine categories. SellerOrdersPage uses a timeline-style list view for orders (not a plain table) with animated status step indicators. SellerProfilePage shows a profile card with an animated verification status badge (spinning ring while pending, pop-in checkmark when verified). The SellerLayout sidebar must mirror the Admin sidebar's gradient styling but use a slightly lighter emerald-to-teal tone to visually distinguish seller from admin context.",
+      "reqIds": [
+        "REQ-68"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-upgrade-the-header-and-footer-with-richer-more-distinctive-animated-design-the-header-must-display-a-multicolor-gradient-top-accent-bar-deep-green-emerald-teal-animating-slowly-on-scroll-a-frosted-glass-blur-effect-on-the-navbar-background-when-scrolled-and-a-morphing-logo-text-effect-on-hover-the-cart-badge-must-burst-animate-scale-pop-color-flash-when-an-item-is-added-all-desktop-nav-links-must-have-an-animated-underline-that-slides-in-from-the-left-on-hover-the-footer-must-feature-a-more-elaborate-svg-wave-top-edge-with-two-layered-wave-paths-at-different-opacities-a-starfield-or-subtle-dot-grid-background-texture-and-footer-navigation-links-with-a-fade-slide-up-hover-effect-no-design-element-in-the-header-or-footer-should-duplicate-any-animation-used-on-page-bodies",
+      "title": "Upgrade the Header and Footer with richer, more distinctive animated design. The Header must display a multicolor gradient top accent bar (deep green → emerald → teal, animating slowly) on scroll, a frosted-glass blur effect on the navbar background when scrolled, and a morphing logo text effect on hover. The cart badge must burst-animate (scale pop + color flash) when an item is added. All desktop nav links must have an animated underline that slides in from the left on hover. The Footer must feature a more elaborate SVG wave top edge with two layered wave paths at different opacities, a starfield or subtle dot-grid background texture, and footer navigation links with a fade-slide-up hover effect. No design element in the Header or Footer should duplicate any animation used on page bodies.",
+      "reqIds": [
+        "REQ-69"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -553,6 +660,132 @@
       "id": "AR-35",
       "summary": "Add +91 9156896495 as the co-founder (Shushant Waghmare) personal contact number on the About Us page",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-36",
+      "summary": "Ensure no information is repeated across the site — each piece of contact info, address, phone number, or other detail should appear only once in its appropriate location, no duplicates within the same section or page.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-37",
+      "summary": "Ensure menu/navigation buttons are not duplicated — each nav item should appear only once per navigation bar or menu section, with no repeated buttons across header, footer, or mobile nav.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-39",
+      "summary": "Audit the MobileBottomNav (frontend/src/components/MobileBottomNav.tsx) and ensure each navigation item (Home, Products, Cart, Account) appears exactly once. Remove any duplicate entries.",
+      "reqIds": [
+        "REQ-57"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-40",
+      "summary": "Audit the Footer (frontend/src/components/Footer.tsx) quick navigation links section and ensure each navigation link (Home, Products, About Us, Contact, etc.) appears exactly once within the footer nav. Remove any duplicate link entries.",
+      "reqIds": [
+        "REQ-58"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-41",
+      "summary": "On the HomePage, remove all duplicate instances of G&S Medical name, customer care numbers, email, and address — each piece of information should appear exactly once.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-42",
+      "summary": "In ProductsPage and CartPage, ensure customer care numbers, email address, and store address each appear exactly once — remove all duplicate instances.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-43",
+      "summary": "Make the entire application more animative and design-rich without repeating any design patterns already applied — every new animation or visual element must be unique and additive",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-44",
+      "summary": "Apply a new layer of unique, non-repeating micro-interaction animations to all customer-facing product cards (ProductCard.tsx) and the cart badge: add a magnetic hover tilt effect on product cards (subtle 3D perspective rotation following cursor), a liquid fill progress animation on the 'Add to Cart' button that sweeps green from left to right on click, and a numerical increment burst on the cart badge each time a new item is added. None of these animations must duplicate any existing hover, scale, or slide-up patterns already applied.",
+      "reqIds": [
+        "REQ-70"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-45",
+      "summary": "Introduce a page-transition overlay system: when navigating between any two pages, display a brief (200–300 ms) branded curtain wipe animation (a vertical green panel that sweeps in from the left edge and immediately sweeps out to the right) before the new page renders. This must be applied globally via the Layout component and must not conflict with or duplicate existing fade-in/slide-up entrance animations already on individual pages.",
+      "reqIds": [
+        "REQ-71"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-46",
+      "summary": "Add a dynamic scrolling progress indicator: a thin (3–4 px) emerald-to-teal gradient line at the very top of the viewport (above the Header accent bar) that fills from 0% to 100% width as the user scrolls down any page and resets on navigation. This is distinct from any existing top-border, accent bar, or underline animation already on the Header.",
+      "reqIds": [
+        "REQ-72"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-47",
+      "summary": "Enhance the AnnouncementTicker (AnnouncementTicker.tsx) with a visually richer design: replace the plain scrolling strip with a frosted-glass pill-shaped ticker that has a soft inner glow, individual announcement items separated by animated dot-pulse dividers, and a subtle shimmer sweep across the background every 4 seconds. This must not reuse any animation from the existing marquee scroll or any page-body entrance animation.",
+      "reqIds": [
+        "REQ-73"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-48",
+      "summary": "Add a floating ambient background layer to the HomePage hero section: render 6–8 large, very low-opacity (3–6%) morphing blob shapes in deep green and teal that slowly deform and drift using an SVG feTurbulence or CSS border-radius keyframe morph. These blobs must be layered behind all hero content and must be visually distinct from the existing floating pill/capsule SVG shapes already in the hero.",
+      "reqIds": [
+        "REQ-74"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-49",
+      "summary": "Implement an interactive cursor spotlight effect on the Admin Dashboard pages (AdminDashboardPage, AdminProductsPage, AdminOrdersPage, AdminRefundsPage, AdminSellersPage): a radial gradient glow that follows the mouse cursor across the page background, with a soft 200 px radius emerald glow. This must only activate on desktop (pointer: fine) and must be a new visual layer not shared with any existing glassmorphism, shimmer, or gradient animation already applied to admin pages.",
+      "reqIds": [
+        "REQ-75"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-50",
+      "summary": "Add a staggered text word-reveal animation to all major page headings (h1 and prominent section titles) across the Seller Dashboard pages (SellerDashboardPage, SellerProductsPage, SellerOrdersPage, SellerProfilePage): each word in the heading splits and reveals upward from a clip-path mask with a 60 ms stagger per word. This must use a clip-path reveal technique that is distinct from the existing typewriter character-by-character animation already used in the welcome banner.",
+      "reqIds": [
+        "REQ-76"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-51",
+      "summary": "Add a unique 'ink-drop' ripple animation to the StatusBadge component (StatusBadge.tsx): whenever a badge's status value changes (e.g., order status updated from pending to confirmed), the badge plays a concentric-ring ink-drop ripple expanding outward from its center before settling on the new color. This is distinct from the existing green-tint table row sweep and pulsing ring badge animations already applied.",
+      "reqIds": [
+        "REQ-77"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-52",
+      "summary": "Apply a unique visual treatment to the SkeletonProductCard component (SkeletonProductCard.tsx): replace the current shimmer with a scan-line animation — a single bright horizontal line that sweeps top-to-bottom repeatedly over a dark-tinted skeleton, giving a medical-scanner aesthetic. This scan-line must use a different keyframe from the existing shimmer/gradient sweep used on admin glassmorphism cards.",
+      "reqIds": [
+        "REQ-78"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-53",
+      "summary": "Add a floating action button (FAB) to the CartPage with a unique spring-bounce entrance animation: the FAB appears in the bottom-right corner only when the cart has items, reveals with a spring overshoot bounce (scale 0 → 1.2 → 1.0), and shows a quick-checkout icon. On click it scrolls to the checkout summary section. This FAB must be visually and animatively distinct from the existing ScrollToTopButton component.",
+      "reqIds": [
+        "REQ-79"
+      ],
       "status": "pending"
     }
   ],

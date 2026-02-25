@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight } from 'lucide-react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import { useCustomerAuth } from '../hooks/useCustomerAuth';
 import { useAnimatedCounter } from '../hooks/useAnimatedCounter';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { Product } from '../backend';
@@ -15,7 +12,6 @@ interface CartItem {
 
 export default function CartPage() {
   const navigate = useNavigate();
-  const { isCustomerAuthenticated, customer, logout } = useCustomerAuth();
   const prefersReducedMotion = useReducedMotion();
 
   const [cart, setCart] = useState<CartItem[]>(() => {
@@ -69,20 +65,8 @@ export default function CartPage() {
     }
   };
 
-  const cartItems = cart.map((item) => ({
-    id: Number(item.product.id),
-    quantity: item.quantity,
-  }));
-
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <Header
-        cartItems={cartItems}
-        isCustomerAuthenticated={isCustomerAuthenticated}
-        customerName={customer?.name}
-        onLogout={logout}
-      />
-
       <main className="flex-1 py-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1
@@ -206,8 +190,6 @@ export default function CartPage() {
           )}
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

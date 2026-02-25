@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, X, SlidersHorizontal } from 'lucide-react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import { Search, X } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import SkeletonProductCard from '../components/SkeletonProductCard';
 import ScrollToTopButton from '../components/ScrollToTopButton';
@@ -13,7 +11,6 @@ import { Product } from '../backend';
 export default function ProductsPage() {
   const { data: products = [], isLoading } = useGetProducts();
   const { data: categories = [] } = useGetCategories();
-  const { isCustomerAuthenticated, customer, logout } = useCustomerAuth();
   const prefersReducedMotion = useReducedMotion();
 
   const [search, setSearch] = useState('');
@@ -59,11 +56,6 @@ export default function ProductsPage() {
     });
   };
 
-  const cartItems = cart.map((item) => ({
-    id: Number(item.product.id),
-    quantity: item.quantity,
-  }));
-
   const clearFilters = () => {
     setSearch('');
     setSelectedCategory('');
@@ -74,13 +66,6 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <Header
-        cartItems={cartItems}
-        isCustomerAuthenticated={isCustomerAuthenticated}
-        customerName={customer?.name}
-        onLogout={logout}
-      />
-
       {/* Page Hero */}
       <section className="bg-gradient-to-br from-primary/10 to-accent/20 py-12 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -191,7 +176,6 @@ export default function ProductsPage() {
       </main>
 
       <ScrollToTopButton />
-      <Footer />
     </div>
   );
 }

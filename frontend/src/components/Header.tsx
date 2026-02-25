@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ShoppingCart, Menu, X, Phone, Store } from 'lucide-react';
+import { ShoppingCart, Menu, X, Store } from 'lucide-react';
 import { useNavigate } from '@tanstack/react-router';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 
@@ -55,6 +55,12 @@ export default function Header({
   const navLinks = [
     { label: 'Home', path: '/' },
     { label: 'Products', path: '/products' },
+    { label: 'About', path: '/about' },
+    { label: 'Contact', path: '/contact' },
+  ];
+
+  // Mobile menu only shows items not already in the bottom nav (Home, Products, Cart are there)
+  const mobileMenuLinks = [
     { label: 'About', path: '/about' },
     { label: 'Contact', path: '/contact' },
   ];
@@ -161,14 +167,14 @@ export default function Header({
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu — only shows links not already in the bottom nav */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ${
-          mobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          mobileMenuOpen ? 'max-h-72 opacity-100' : 'max-h-0 opacity-0'
         } bg-card border-t border-border`}
       >
         <div className="px-4 py-4 space-y-2">
-          {navLinks.map((link) => (
+          {mobileMenuLinks.map((link) => (
             <button
               key={link.path}
               onClick={() => {

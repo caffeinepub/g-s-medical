@@ -192,40 +192,14 @@ export default function AboutPage() {
       {/* Contact CTA */}
       <section className="py-16 bg-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-card rounded-3xl border border-border p-8 md:p-12">
-            <h2 className="font-heading text-3xl font-bold text-center mb-8">Get in Touch</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div className="flex flex-col items-center text-center p-4 rounded-2xl bg-secondary">
-                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-3">
-                  <Phone className="w-6 h-6 text-primary" />
-                </div>
-                <p className="font-semibold text-sm mb-1">Call Us</p>
-                <a href="tel:+919270556455" className="text-primary font-bold hover:underline block">+91 9270556455</a>
-                <a href="tel:+919766343454" className="text-primary font-bold hover:underline block">+91 9766343454</a>
-              </div>
-              <a
-                href="mailto:gauravsaswade@gsgroupswebstore.in"
-                className="flex flex-col items-center text-center p-4 rounded-2xl bg-secondary hover:bg-border transition-colors group"
-              >
-                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
-                  <Mail className="w-6 h-6 text-primary" />
-                </div>
-                <p className="font-semibold text-sm mb-1">Email Us</p>
-                <p className="text-primary font-bold text-xs break-all">gauravsaswade@gsgroupswebstore.in</p>
-              </a>
-              <div className="flex flex-col items-center text-center p-4 rounded-2xl bg-secondary">
-                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-3">
-                  <MapPin className="w-6 h-6 text-primary" />
-                </div>
-                <p className="font-semibold text-sm mb-1">Visit Us</p>
-                <p className="text-xs text-muted-foreground">Near Malavali Railway Station, Maharashtra-410405</p>
-              </div>
-            </div>
-            <div className="text-center">
-              <Button asChild className="rounded-xl" size="lg">
-                <Link to="/contact">Send Us a Message</Link>
-              </Button>
-            </div>
+          <div className="bg-card rounded-3xl border border-border p-8 md:p-12 text-center">
+            <h2 className="font-heading text-3xl font-bold mb-4">Get in Touch</h2>
+            <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
+              Have a question or need assistance? Visit our contact page to reach us by phone, email, or send us a message directly.
+            </p>
+            <Button asChild className="rounded-xl" size="lg">
+              <Link to="/contact">Contact Us</Link>
+            </Button>
           </div>
         </div>
       </section>

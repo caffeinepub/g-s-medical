@@ -1,34 +1,130 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-25T12:40:24.784Z",
+  "generatedAt": "2026-02-25T13:44:57.508Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 1,
-    "implemented": 1,
+    "total": 10,
+    "implemented": 0,
     "items": [
       {
-        "id": "REQ-54",
-        "summary": "In the About Us page (frontend/src/pages/AboutPage.tsx), display +91 9156896495 as Shushant Waghmare's (co-founder) personal contact number. This number should appear in his bio/profile card as a clickable tel: link, styled consistently with Gaurav Saswade's contact number display.",
-        "status": "implemented",
+        "id": "REQ-70",
+        "summary": "Apply a new layer of unique, non-repeating micro-interaction animations to all customer-facing product cards (ProductCard.tsx) and the cart badge: add a magnetic hover tilt effect on product cards (subtle 3D perspective rotation following cursor), a liquid fill progress animation on the 'Add to Cart' button that sweeps green from left to right on click, and a numerical increment burst on the cart badge each time a new item is added. None of these animations must duplicate any existing hover, scale, or slide-up patterns already applied.",
+        "status": "missing",
         "plannedFiles": [
-          "frontend/src/pages/AboutPage.tsx"
+          "frontend/src/components/ProductCard.tsx",
+          "frontend/src/components/Header.tsx",
+          "frontend/src/index.css"
         ],
-        "matchedFiles": [
-          "frontend/src/pages/AboutPage.tsx"
-        ]
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-71",
+        "summary": "Introduce a page-transition overlay system: when navigating between any two pages, display a brief (200–300 ms) branded curtain wipe animation (a vertical green panel that sweeps in from the left edge and immediately sweeps out to the right) before the new page renders. This must be applied globally via the Layout component and must not conflict with or duplicate existing fade-in/slide-up entrance animations already on individual pages.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/components/Layout.tsx",
+          "frontend/src/index.css"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-72",
+        "summary": "Add a dynamic scrolling progress indicator: a thin (3–4 px) emerald-to-teal gradient line at the very top of the viewport (above the Header accent bar) that fills from 0% to 100% width as the user scrolls down any page and resets on navigation. This is distinct from any existing top-border, accent bar, or underline animation already on the Header.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/components/Layout.tsx",
+          "frontend/src/index.css"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-73",
+        "summary": "Enhance the AnnouncementTicker (AnnouncementTicker.tsx) with a visually richer design: replace the plain scrolling strip with a frosted-glass pill-shaped ticker that has a soft inner glow, individual announcement items separated by animated dot-pulse dividers, and a subtle shimmer sweep across the background every 4 seconds. This must not reuse any animation from the existing marquee scroll or any page-body entrance animation.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/components/AnnouncementTicker.tsx",
+          "frontend/src/index.css"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-74",
+        "summary": "Add a floating ambient background layer to the HomePage hero section: render 6–8 large, very low-opacity (3–6%) morphing blob shapes in deep green and teal that slowly deform and drift using an SVG feTurbulence or CSS border-radius keyframe morph. These blobs must be layered behind all hero content and must be visually distinct from the existing floating pill/capsule SVG shapes already in the hero.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/pages/HomePage.tsx",
+          "frontend/src/index.css"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-75",
+        "summary": "Implement an interactive cursor spotlight effect on the Admin Dashboard pages (AdminDashboardPage, AdminProductsPage, AdminOrdersPage, AdminRefundsPage, AdminSellersPage): a radial gradient glow that follows the mouse cursor across the page background, with a soft 200 px radius emerald glow. This must only activate on desktop (pointer: fine) and must be a new visual layer not shared with any existing glassmorphism, shimmer, or gradient animation already applied to admin pages.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/pages/AdminDashboardPage.tsx",
+          "frontend/src/pages/AdminProductsPage.tsx",
+          "frontend/src/pages/AdminOrdersPage.tsx",
+          "frontend/src/pages/AdminRefundsPage.tsx",
+          "frontend/src/pages/AdminSellersPage.tsx",
+          "frontend/src/index.css"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-76",
+        "summary": "Add a staggered text word-reveal animation to all major page headings (h1 and prominent section titles) across the Seller Dashboard pages (SellerDashboardPage, SellerProductsPage, SellerOrdersPage, SellerProfilePage): each word in the heading splits and reveals upward from a clip-path mask with a 60 ms stagger per word. This must use a clip-path reveal technique that is distinct from the existing typewriter character-by-character animation already used in the welcome banner.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/hooks/useWordReveal.ts",
+          "frontend/src/pages/SellerDashboardPage.tsx",
+          "frontend/src/pages/SellerProductsPage.tsx",
+          "frontend/src/pages/SellerOrdersPage.tsx",
+          "frontend/src/pages/SellerProfilePage.tsx",
+          "frontend/src/index.css"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-77",
+        "summary": "Add a unique 'ink-drop' ripple animation to the StatusBadge component (StatusBadge.tsx): whenever a badge's status value changes (e.g., order status updated from pending to confirmed), the badge plays a concentric-ring ink-drop ripple expanding outward from its center before settling on the new color. This is distinct from the existing green-tint table row sweep and pulsing ring badge animations already applied.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/components/StatusBadge.tsx",
+          "frontend/src/index.css"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-78",
+        "summary": "Apply a unique visual treatment to the SkeletonProductCard component (SkeletonProductCard.tsx): replace the current shimmer with a scan-line animation — a single bright horizontal line that sweeps top-to-bottom repeatedly over a dark-tinted skeleton, giving a medical-scanner aesthetic. This scan-line must use a different keyframe from the existing shimmer/gradient sweep used on admin glassmorphism cards.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/components/SkeletonProductCard.tsx",
+          "frontend/src/index.css"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-79",
+        "summary": "Add a floating action button (FAB) to the CartPage with a unique spring-bounce entrance animation: the FAB appears in the bottom-right corner only when the cart has items, reveals with a spring overshoot bounce (scale 0 → 1.2 → 1.0), and shows a quick-checkout icon. On click it scrolls to the checkout summary section. This FAB must be visually and animatively distinct from the existing ScrollToTopButton component.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/pages/CartPage.tsx",
+          "frontend/src/index.css"
+        ],
+        "matchedFiles": []
       }
     ]
   },
   "changedFiles": [
     "build-request.json",
     "feature_evidence.json",
-    "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/pages/AboutPage.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

@@ -1,37 +1,222 @@
 {
   "kind": "build_request",
-  "title": "Add co-founder contact number to About Us page",
+  "title": "Next-level animations and unique design enrichment — no repeat patterns",
   "projectName": "G&S Medical",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-54",
-      "text": "In the About Us page (frontend/src/pages/AboutPage.tsx), display +91 9156896495 as Shushant Waghmare's (co-founder) personal contact number. This number should appear in his bio/profile card as a clickable tel: link, styled consistently with Gaurav Saswade's contact number display.",
+      "id": "REQ-70",
+      "text": "Apply a new layer of unique, non-repeating micro-interaction animations to all customer-facing product cards (ProductCard.tsx) and the cart badge: add a magnetic hover tilt effect on product cards (subtle 3D perspective rotation following cursor), a liquid fill progress animation on the 'Add to Cart' button that sweeps green from left to right on click, and a numerical increment burst on the cart badge each time a new item is added. None of these animations must duplicate any existing hover, scale, or slide-up patterns already applied.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-3"
         ],
         "quotes": [
-          "Add this phone number for co-founder: (+91 9156896495)"
+          "Make it more animative and designfull and don't repeat:design again"
         ]
       },
       "acceptanceCriteria": [
-        "The number +91 9156896495 is visible in Shushant Waghmare's bio/profile card on the About Us page.",
-        "The number is rendered as a clickable <a href=\"tel:+919156896495\"> link.",
-        "The styling matches the existing contact number display used for Gaurav Saswade's number on the same page.",
-        "No other pages or components are modified."
+        "Product cards exhibit a subtle 3D tilt/perspective on mouse hover that is visually distinct from any existing scale or shadow transition",
+        "The 'Add to Cart' button shows a left-to-right liquid fill sweep animation on click, not a ripple or pulse",
+        "The cart badge shows a number-increment burst animation (e.g., +1 float-up) unique from the existing bounce/pulse",
+        "No animation CSS class or keyframe is shared with previously implemented animations",
+        "All new animations respect prefers-reduced-motion"
+      ]
+    },
+    {
+      "id": "REQ-71",
+      "text": "Introduce a page-transition overlay system: when navigating between any two pages, display a brief (200–300 ms) branded curtain wipe animation (a vertical green panel that sweeps in from the left edge and immediately sweeps out to the right) before the new page renders. This must be applied globally via the Layout component and must not conflict with or duplicate existing fade-in/slide-up entrance animations already on individual pages.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Make it more animative and designfull and don't repeat:design again"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A branded green curtain wipe plays on every route change",
+        "The wipe completes within 300 ms so it does not feel sluggish",
+        "Existing per-page entrance animations are unaffected and still play after the curtain exits",
+        "The overlay is implemented in Layout.tsx or a dedicated PageTransition component, not inside individual pages",
+        "Animation is skipped when prefers-reduced-motion is set"
+      ]
+    },
+    {
+      "id": "REQ-72",
+      "text": "Add a dynamic scrolling progress indicator: a thin (3–4 px) emerald-to-teal gradient line at the very top of the viewport (above the Header accent bar) that fills from 0% to 100% width as the user scrolls down any page and resets on navigation. This is distinct from any existing top-border, accent bar, or underline animation already on the Header.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Make it more animative and designfull and don't repeat:design again"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A thin gradient progress bar is visible at the absolute top of the screen on all pages",
+        "Its width accurately reflects scroll percentage (0% at top, 100% at bottom of page)",
+        "The gradient uses emerald-to-teal colors distinct from the existing Header accent bar gradient",
+        "It resets to 0% on every route change",
+        "Reduced-motion users see a static full-width bar instead of animation"
+      ]
+    },
+    {
+      "id": "REQ-73",
+      "text": "Enhance the AnnouncementTicker (AnnouncementTicker.tsx) with a visually richer design: replace the plain scrolling strip with a frosted-glass pill-shaped ticker that has a soft inner glow, individual announcement items separated by animated dot-pulse dividers, and a subtle shimmer sweep across the background every 4 seconds. This must not reuse any animation from the existing marquee scroll or any page-body entrance animation.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Make it more animative and designfull and don't repeat:design again"
+        ]
+      },
+      "acceptanceCriteria": [
+        "AnnouncementTicker has a frosted-glass/pill visual style distinct from its current plain strip",
+        "Announcement items are separated by animated dot-pulse icons",
+        "A shimmer sweep plays across the ticker background on a 4-second interval",
+        "The shimmer keyframe is unique and not shared with any skeleton loader or card shimmer",
+        "prefers-reduced-motion disables the shimmer and dot-pulse while keeping the scroll"
+      ]
+    },
+    {
+      "id": "REQ-74",
+      "text": "Add a floating ambient background layer to the HomePage hero section: render 6–8 large, very low-opacity (3–6%) morphing blob shapes in deep green and teal that slowly deform and drift using an SVG feTurbulence or CSS border-radius keyframe morph. These blobs must be layered behind all hero content and must be visually distinct from the existing floating pill/capsule SVG shapes already in the hero.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Make it more animative and designfull and don't repeat:design again"
+        ]
+      },
+      "acceptanceCriteria": [
+        "6–8 morphing blob shapes are visible at very low opacity behind the hero content on HomePage",
+        "Blobs use border-radius keyframe morphing or SVG filter distortion — not the same pill/capsule float used elsewhere",
+        "Blobs do not overlap or obscure any text or CTA buttons",
+        "Animation cycles are staggered so no two blobs morph in sync",
+        "Reduced-motion: blobs render as static shapes without animation"
+      ]
+    },
+    {
+      "id": "REQ-75",
+      "text": "Implement an interactive cursor spotlight effect on the Admin Dashboard pages (AdminDashboardPage, AdminProductsPage, AdminOrdersPage, AdminRefundsPage, AdminSellersPage): a radial gradient glow that follows the mouse cursor across the page background, with a soft 200 px radius emerald glow. This must only activate on desktop (pointer: fine) and must be a new visual layer not shared with any existing glassmorphism, shimmer, or gradient animation already applied to admin pages.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Make it more animative and designfull and don't repeat:design again"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A radial emerald glow follows the mouse on all five Admin Dashboard pages on desktop",
+        "The glow is applied to the page background layer, not on top of content",
+        "Effect is disabled on touch/mobile devices (pointer: coarse)",
+        "The CSS/JS used is unique and not reused from any other animation in the codebase",
+        "prefers-reduced-motion disables the cursor tracking"
+      ]
+    },
+    {
+      "id": "REQ-76",
+      "text": "Add a staggered text word-reveal animation to all major page headings (h1 and prominent section titles) across the Seller Dashboard pages (SellerDashboardPage, SellerProductsPage, SellerOrdersPage, SellerProfilePage): each word in the heading splits and reveals upward from a clip-path mask with a 60 ms stagger per word. This must use a clip-path reveal technique that is distinct from the existing typewriter character-by-character animation already used in the welcome banner.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Make it more animative and designfull and don't repeat:design again"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All h1 and major section titles on the four Seller Dashboard pages use a word-split clip-path reveal on mount",
+        "Each word reveals with a 60 ms delay after the previous word",
+        "The animation uses CSS clip-path or overflow-hidden mask — NOT the TypewriterText component",
+        "The animation triggers once on page load via IntersectionObserver",
+        "Reduced-motion: words appear instantly without reveal animation"
+      ]
+    },
+    {
+      "id": "REQ-77",
+      "text": "Add a unique 'ink-drop' ripple animation to the StatusBadge component (StatusBadge.tsx): whenever a badge's status value changes (e.g., order status updated from pending to confirmed), the badge plays a concentric-ring ink-drop ripple expanding outward from its center before settling on the new color. This is distinct from the existing green-tint table row sweep and pulsing ring badge animations already applied.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Make it more animative and designfull and don't repeat:design again"
+        ]
+      },
+      "acceptanceCriteria": [
+        "StatusBadge plays a concentric ring ripple animation when its status prop changes",
+        "The ripple uses a unique keyframe (outward expanding rings fading to transparent)",
+        "Animation duration is 400–600 ms and does not shift layout",
+        "The ripple color matches the new status color",
+        "prefers-reduced-motion: badge changes color instantly without ripple"
+      ]
+    },
+    {
+      "id": "REQ-78",
+      "text": "Apply a unique visual treatment to the SkeletonProductCard component (SkeletonProductCard.tsx): replace the current shimmer with a scan-line animation — a single bright horizontal line that sweeps top-to-bottom repeatedly over a dark-tinted skeleton, giving a medical-scanner aesthetic. This scan-line must use a different keyframe from the existing shimmer/gradient sweep used on admin glassmorphism cards.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Make it more animative and designfull and don't repeat:design again"
+        ]
+      },
+      "acceptanceCriteria": [
+        "SkeletonProductCard shows a single bright scan-line sweeping top-to-bottom instead of a shimmer",
+        "The scan-line keyframe is unique (translateY-based single line, not a gradient shift)",
+        "The skeleton background uses a subtle dark-tinted green tone for the medical-scanner feel",
+        "Animation loops continuously while loading",
+        "prefers-reduced-motion: static skeleton without scan-line"
+      ]
+    },
+    {
+      "id": "REQ-79",
+      "text": "Add a floating action button (FAB) to the CartPage with a unique spring-bounce entrance animation: the FAB appears in the bottom-right corner only when the cart has items, reveals with a spring overshoot bounce (scale 0 → 1.2 → 1.0), and shows a quick-checkout icon. On click it scrolls to the checkout summary section. This FAB must be visually and animatively distinct from the existing ScrollToTopButton component.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Make it more animative and designfull and don't repeat:design again"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A FAB appears in the bottom-right of CartPage when cartItems.length > 0",
+        "FAB entrance uses a spring overshoot scale animation (0 → 1.2 → 1.0) distinct from the ScrollToTopButton fade-in",
+        "FAB displays a checkout/arrow-down icon clearly different from the ScrollToTopButton's up-arrow",
+        "Clicking FAB smoothly scrolls to the order summary/checkout section",
+        "FAB disappears with a scale-out when cart is empty",
+        "prefers-reduced-motion: FAB appears/disappears instantly without spring"
       ]
     }
   ],
   "constraints": [
-    "Only modify frontend/src/pages/AboutPage.tsx.",
-    "Do not alter any other contact number already present on the page."
+    "No new animation keyframe or CSS class may duplicate or alias an animation already defined in frontend/src/index.css or frontend/tailwind.config.js",
+    "All new animations must include a prefers-reduced-motion media query override",
+    "Do not modify any files listed in frontend.immutablePaths",
+    "Do not introduce new backend changes — all requirements are frontend-only"
   ],
   "nonGoals": [
-    "Adding the co-founder number to the Footer, Contact Us page, or any other page.",
-    "Backend changes of any kind.",
-    "Changing any other owner/co-founder details."
+    "Re-implementing or replacing any animation that was already delivered in previous features",
+    "Adding new pages, routes, or backend functions",
+    "Changing any contact information, product data, or business logic",
+    "Adding third-party animation libraries not already in the stack"
   ],
   "imageRequirements": {
     "required": [],

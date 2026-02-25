@@ -38,16 +38,9 @@ export default function Footer() {
                 />
                 <span className="font-display font-bold text-xl text-white">G&S Medical</span>
               </div>
-              <p className="text-white/60 text-sm leading-relaxed mb-4">
+              <p className="text-white/60 text-sm leading-relaxed">
                 Your trusted partner for genuine medicines and healthcare products. Licensed and verified.
               </p>
-              <div className="flex items-center gap-2 bg-white/10 rounded-xl p-3 border border-white/15">
-                <Phone className="w-4 h-4 text-green-400 flex-shrink-0" />
-                <div className="text-xs text-white/80">
-                  <a href="tel:+919270556455" className="block hover:text-white transition-colors">+91 9270556455</a>
-                  <a href="tel:+919766343454" className="block hover:text-white transition-colors">+91 9766343454</a>
-                </div>
-              </div>
             </div>
 
             {/* Quick Links */}
