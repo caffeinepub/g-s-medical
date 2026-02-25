@@ -1,0 +1,40 @@
+{
+  "kind": "build_request",
+  "title": "Add co-founder contact number to About Us page",
+  "projectName": "G&S Medical",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-54",
+      "text": "In the About Us page (frontend/src/pages/AboutPage.tsx), display +91 9156896495 as Shushant Waghmare's (co-founder) personal contact number. This number should appear in his bio/profile card as a clickable tel: link, styled consistently with Gaurav Saswade's contact number display.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Add this phone number for co-founder: (+91 9156896495)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The number +91 9156896495 is visible in Shushant Waghmare's bio/profile card on the About Us page.",
+        "The number is rendered as a clickable <a href=\"tel:+919156896495\"> link.",
+        "The styling matches the existing contact number display used for Gaurav Saswade's number on the same page.",
+        "No other pages or components are modified."
+      ]
+    }
+  ],
+  "constraints": [
+    "Only modify frontend/src/pages/AboutPage.tsx.",
+    "Do not alter any other contact number already present on the page."
+  ],
+  "nonGoals": [
+    "Adding the co-founder number to the Footer, Contact Us page, or any other page.",
+    "Backend changes of any kind.",
+    "Changing any other owner/co-founder details."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

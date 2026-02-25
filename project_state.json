@@ -1,0 +1,563 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 25,
+  "summary": "Online medical store project for G&S Medical. Includes a customer-facing website and mobile app, plus an admin dashboard. Admin can add/customize products visible on both website and app. Payment page integrated with UPI ID gauravsaswade03@pingpay. Store details: customer care +91 9270556455 and +91 9766343454, email gauravsaswade@gsgroupswebstore.in, address At-Bhaje, Post-Malavali, Tal-Maval, Dist-Pune, Near Malavali Railway Station, Maharashtra-410405. Owners: Gaurav Saswade (CEO & Director, contact: +91 9270556455) & Shushant Waghmare. Multi-vendor marketplace feature planned: third-party sellers can register, get DigiLocker document verification (Aadhaar, PAN, medical shop license), and sell medicines on the platform with their own seller dashboard.",
+  "architectural_notes": [
+    "Project has two separate codebases: website and mobile app — to be delivered as separate 7-zip archives",
+    "Admin dashboard manages product catalog shared across website and app",
+    "UPI payment integration using ID: gauravsaswade03@pingpay",
+    "Multi-vendor marketplace: third-party sellers register with DigiLocker verification (Aadhaar, PAN, medical shop license) before being allowed to sell",
+    "Admin dashboard login password changed to: p1love2g (no leading dot)",
+    "Email notifications for seller approval are unavailable on the current plan; in-dashboard notification system is used instead"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-create-a-visually-rich-mobile-responsive-customer-facing-homepage-for-g-s-medical-that-includes-store-logo-name-g-s-medical-hero-banner-with-a-pharmacy-health-theme-featured-product-grid-navigation-links-home-products-about-us-contact-cart-and-a-footer-with-all-store-details-customer-care-91-9270556455-email-gauravsaswade-gsgroupswebstore-in-address-at-bhaje-post-malavali-tal-maval-dist-pune-near-malavali-railway-station-malavali-maharashtra-410405",
+      "title": "Create a visually rich, mobile-responsive customer-facing homepage for G&S Medical that includes: store logo/name 'G&S MEDICAL', hero banner with a pharmacy/health theme, featured product grid, navigation links (Home, Products, About Us, Contact, Cart), and a footer with all store details (customer care: +91 9270556455, email: gauravsaswade@gsgroupswebstore.in, address: At-Bhaje, Post-Malavali, Tal-Maval, Dist-Pune, Near Malavali Railway Station, Malavali, Maharashtra-410405).",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-product-catalog-page-that-fetches-and-displays-all-products-stored-in-the-backend-each-product-card-should-show-product-name-image-price-category-and-an-add-to-cart-button-include-category-filter-and-search-functionality",
+      "title": "Create a Product Catalog page that fetches and displays all products stored in the backend. Each product card should show product name, image, price, category, and an 'Add to Cart' button. Include category filter and search functionality.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-shopping-cart-page-where-customers-can-view-selected-products-adjust-quantities-remove-items-and-see-a-running-total-include-a-proceed-to-payment-button-that-navigates-to-the-payment-page",
+      "title": "Implement a shopping cart page where customers can view selected products, adjust quantities, remove items, and see a running total. Include a 'Proceed to Payment' button that navigates to the payment page.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-payment-page-that-displays-the-order-summary-and-a-upi-payment-option-show-the-upi-id-gauravsaswade03-pingpay-prominently-with-a-qr-code-placeholder-or-a-copyable-upi-string-include-a-form-for-the-customer-to-enter-their-upi-transaction-reference-number-to-confirm-payment-and-a-place-order-button-that-submits-the-order-to-the-backend",
+      "title": "Create a Payment page that displays the order summary and a UPI payment option. Show the UPI ID 'gauravsaswade03@pingpay' prominently with a QR code placeholder or a copyable UPI string. Include a form for the customer to enter their UPI transaction reference number to confirm payment, and a 'Place Order' button that submits the order to the backend.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-protected-admin-dashboard-accessible-via-a-dedicated-admin-route-the-dashboard-must-include-a-sidebar-with-navigation-dashboard-overview-manage-products-view-orders-and-a-summary-panel-showing-total-products-total-orders-and-pending-orders-count",
+      "title": "Create a protected Admin Dashboard accessible via a dedicated '/admin' route. The dashboard must include: a sidebar with navigation (Dashboard Overview, Manage Products, View Orders), and a summary panel showing total products, total orders, and pending orders count.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-product-management-section-within-the-admin-dashboard-that-allows-admin-to-add-new-products-name-description-price-category-image-url-stock-availability-edit-existing-products-delete-products-and-see-the-full-product-list-in-a-data-table-changes-must-reflect-immediately-on-the-customer-facing-product-catalog",
+      "title": "Build a Product Management section within the Admin Dashboard that allows admin to: add new products (name, description, price, category, image URL, stock, availability), edit existing products, delete products, and see the full product list in a data table. Changes must reflect immediately on the customer-facing product catalog.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-an-orders-management-section-within-the-admin-dashboard-that-lists-all-customer-orders-with-details-order-id-customer-name-items-total-upi-ref-status-allow-admin-to-update-order-status-pending-confirmed-shipped-delivered",
+      "title": "Build an Orders Management section within the Admin Dashboard that lists all customer orders with details (order ID, customer name, items, total, UPI ref, status). Allow admin to update order status (pending → confirmed → shipped → delivered).",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-about-us-page-that-includes-a-section-introducing-the-store-g-s-medical-professional-bios-for-owners-gaurav-saswade-and-shushant-waghmare-highlight-their-dedication-to-healthcare-community-service-and-commitment-to-providing-quality-medicines-at-affordable-prices-store-mission-statement-and-contact-details",
+      "title": "Create an About Us page that includes: a section introducing the store G&S Medical, professional bios for owners Gaurav Saswade and Shushant Waghmare (highlight their dedication to healthcare, community service, and commitment to providing quality medicines at affordable prices), store mission statement, and contact details.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-contact-us-page-displaying-customer-care-number-91-9270556455-clickable-tel-link-email-gauravsaswade-gsgroupswebstore-in-clickable-mailto-link-and-full-address-at-bhaje-post-malavali-tal-maval-dist-pune-near-malavali-railway-station-malavali-maharashtra-410405-include-a-simple-customer-inquiry-form-name-phone-message-that-saves-to-backend",
+      "title": "Create a Contact Us page displaying: customer care number +91 9270556455 (clickable tel link), email gauravsaswade@gsgroupswebstore.in (clickable mailto link), and full address: At-Bhaje, Post-Malavali, Tal-Maval, Dist-Pune, Near Malavali Railway Station, Malavali, Maharashtra-410405. Include a simple customer inquiry form (name, phone, message) that saves to backend.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-design-and-apply-a-consistent-visual-theme-across-the-entire-application-use-a-clean-medical-health-inspired-color-palette-white-green-tones-and-a-warm-accent-color-not-blue-or-purple-modern-sans-serif-typography-card-based-product-layouts-smooth-hover-animations-and-a-professional-pharmacy-brand-feel-the-theme-must-be-applied-uniformly-to-all-pages-including-admin-dashboard",
+      "title": "Design and apply a consistent visual theme across the entire application: use a clean medical/health-inspired color palette (white, green tones, and a warm accent color — not blue or purple), modern sans-serif typography, card-based product layouts, smooth hover animations, and a professional pharmacy brand feel. The theme must be applied uniformly to all pages including admin dashboard.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-mobile-app-like-responsive-layout-optimized-for-small-screens-use-a-bottom-navigation-bar-on-mobile-home-products-cart-account-ensure-all-touch-targets-are-appropriately-sized-and-ensure-the-entire-ui-works-seamlessly-on-viewport-widths-from-320px-to-1920px",
+      "title": "Implement a mobile-app-like responsive layout optimized for small screens. Use a bottom navigation bar on mobile (Home, Products, Cart, Account), ensure all touch targets are appropriately sized, and ensure the entire UI works seamlessly on viewport widths from 320px to 1920px.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-save-the-uploaded-photo-of-gaurav-saswade-img-20250724-183425-656-webp-as-a-static-asset-at-frontend-public-assets-generated-gaurav-saswade-photo-dim-400x400-jpg-and-use-it-as-the-profile-photo-for-gaurav-saswade-in-the-about-us-page-frontend-src-pages-aboutpage-tsx-replacing-any-existing-placeholder-or-previous-image",
+      "title": "Save the uploaded photo of Gaurav Saswade (IMG_20250724_183425_656.webp) as a static asset at frontend/public/assets/generated/gaurav-saswade-photo.dim_400x400.jpg and use it as the profile photo for Gaurav Saswade in the About Us page (frontend/src/pages/AboutPage.tsx), replacing any existing placeholder or previous image.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-about-us-page-frontend-src-pages-aboutpage-tsx-update-gaurav-saswade-s-displayed-title-role-to-ceo-director",
+      "title": "In the About Us page (frontend/src/pages/AboutPage.tsx), update Gaurav Saswade's displayed title/role to 'CEO & Director'.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-dedicated-admin-login-page-at-route-admin-login-the-page-must-display-a-professional-branded-login-form-with-fields-for-email-and-password-a-login-button-and-validation-feedback-on-successful-credential-verification-via-the-backend-adminlogin-function-store-the-admin-session-in-localstorage-sessionstorage-and-redirect-to-admin-on-failure-show-a-clear-error-message-if-an-unauthenticated-user-tries-to-access-any-admin-route-redirect-them-to-admin-login-instead-of-showing-the-accessdeniedscreen-remove-any-previous-internet-identity-based-admin-guard-and-replace-it-with-this-credential-based-guard",
+      "title": "Create a dedicated Admin Login page at route '/admin/login'. The page must display a professional, branded login form with fields for email and password, a 'Login' button, and validation feedback. On successful credential verification via the backend adminLogin function, store the admin session in localStorage/sessionStorage and redirect to '/admin'. On failure, show a clear error message. If an unauthenticated user tries to access any '/admin/*' route, redirect them to '/admin/login' instead of showing the AccessDeniedScreen. Remove any previous Internet Identity-based admin guard and replace it with this credential-based guard.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-professional-customer-login-registration-page-at-route-login-the-page-must-allow-customers-to-register-with-name-phone-email-and-password-and-log-in-with-email-and-password-add-backend-functions-customerregister-and-customerlogin-to-store-and-verify-customer-credentials-on-successful-login-save-the-customer-session-and-redirect-to-the-previous-page-or-homepage-show-the-login-register-page-link-in-the-header-and-mobilebottomnav-account-tab-replacing-or-supplementing-the-internet-identity-button-the-design-must-match-the-site-s-green-medical-theme-and-be-fully-mobile-responsive",
+      "title": "Create a professional Customer Login / Registration page at route '/login'. The page must allow customers to register with name, phone, email, and password, and log in with email and password. Add backend functions `customerRegister` and `customerLogin` to store and verify customer credentials. On successful login, save the customer session and redirect to the previous page or homepage. Show the login/register page link in the Header and MobileBottomNav 'Account' tab, replacing or supplementing the Internet Identity button. The design must match the site's green medical theme and be fully mobile-responsive.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-admin-dashboard-overview-page-admindashboardpage-tsx-with-a-visually-improved-layout-display-summary-cards-for-total-products-total-orders-pending-orders-confirmed-orders-shipped-orders-delivered-orders-and-total-revenue-sum-of-all-order-totals-add-a-recent-orders-table-showing-the-last-10-orders-with-order-id-customer-name-total-status-badge-and-a-quick-view-button-use-color-coded-status-badges-pending-amber-confirmed-blue-shipped-purple-delivered-green-apply-the-medical-green-theme-consistently-with-card-shadows-and-smooth-hover-effects",
+      "title": "Enhance the Admin Dashboard overview page (AdminDashboardPage.tsx) with a visually improved layout. Display summary cards for: Total Products, Total Orders, Pending Orders, Confirmed Orders, Shipped Orders, Delivered Orders, and Total Revenue (sum of all order totals). Add a recent orders table showing the last 10 orders with order ID, customer name, total, status badge, and a quick-view button. Use color-coded status badges (pending=amber, confirmed=blue, shipped=purple, delivered=green). Apply the medical green theme consistently with card shadows and smooth hover effects.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-admin-orders-page-adminorderspage-tsx-to-clearly-display-payment-status-alongside-order-status-each-order-row-must-show-order-id-customer-name-phone-items-summary-total-amount-upi-transaction-reference-payment-status-paid-unpaid-derived-from-whether-a-upi-ref-was-provided-and-order-status-with-a-colored-badge-add-a-payment-status-filter-all-paid-unpaid-in-addition-to-the-existing-status-filter-make-the-orders-table-sortable-by-date-and-amount-ensure-the-orderdetailsmodal-also-prominently-shows-the-upi-reference-and-payment-status",
+      "title": "Enhance the Admin Orders page (AdminOrdersPage.tsx) to clearly display payment status alongside order status. Each order row must show: Order ID, Customer Name, Phone, Items summary, Total Amount, UPI Transaction Reference, Payment Status (paid/unpaid derived from whether a UPI ref was provided), and Order Status with a colored badge. Add a 'Payment Status' filter (All / Paid / Unpaid) in addition to the existing status filter. Make the orders table sortable by date and amount. Ensure the OrderDetailsModal also prominently shows the UPI reference and payment status.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-refund-management-page-at-route-admin-refunds-accessible-from-the-admin-sidebar-on-the-backend-add-a-refunds-data-store-and-expose-functions-requestrefund-orderid-reason-amount-getrefunds-updaterefundstatus-refundid-status-where-status-can-be-pending-approved-rejected-processed-on-the-frontend-display-all-refund-requests-in-a-table-with-columns-refund-id-order-id-customer-name-amount-reason-status-and-date-allow-the-admin-to-approve-reject-or-mark-a-refund-as-processed-via-a-status-dropdown-or-action-buttons-add-a-refunds-navigation-item-to-the-adminlayout-sidebar",
+      "title": "Add a Refund Management page at route '/admin/refunds' accessible from the admin sidebar. On the backend, add a `refunds` data store and expose functions: `requestRefund(orderId, reason, amount)`, `getRefunds()`, `updateRefundStatus(refundId, status)` where status can be: pending / approved / rejected / processed. On the frontend, display all refund requests in a table with columns: Refund ID, Order ID, Customer Name, Amount, Reason, Status, and Date. Allow the admin to approve, reject, or mark a refund as processed via a status dropdown or action buttons. Add a 'Refunds' navigation item to the AdminLayout sidebar.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-admin-products-page-adminproductspage-tsx-with-an-improved-ui-for-adding-and-managing-medicines-the-product-form-productform-tsx-must-include-all-existing-fields-name-description-price-category-imageurl-stock-isavailable-plus-a-new-medicine-type-field-tablet-capsule-syrup-injection-cream-other-and-a-requires-prescription-toggle-the-data-table-must-show-a-medicine-type-column-and-a-prescription-required-badge-update-the-backend-product-type-to-include-medicinetype-text-and-requiresprescription-bool-fields-with-migration-handling-the-add-edit-form-must-be-presented-as-a-clean-full-screen-modal-on-mobile",
+      "title": "Enhance the Admin Products page (AdminProductsPage.tsx) with an improved UI for adding and managing medicines. The product form (ProductForm.tsx) must include all existing fields (name, description, price, category, imageUrl, stock, isAvailable) plus a new 'Medicine Type' field (Tablet / Capsule / Syrup / Injection / Cream / Other) and a 'Requires Prescription' toggle. The data table must show a 'Medicine Type' column and a 'Prescription Required' badge. Update the backend Product type to include `medicineType: Text` and `requiresPrescription: Bool` fields with migration handling. The add/edit form must be presented as a clean full-screen modal on mobile.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-91-9766343454-as-an-additional-customer-care-number-in-the-footer-frontend-src-components-footer-tsx-alongside-the-existing-91-9270556455-both-numbers-must-be-displayed-as-clickable-tel-links-under-the-customer-care-contact-section",
+      "title": "Add +91 9766343454 as an additional customer care number in the Footer (frontend/src/components/Footer.tsx) alongside the existing +91 9270556455. Both numbers must be displayed as clickable tel: links under the customer care / contact section.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-91-9766343454-as-an-additional-customer-care-number-in-the-contact-us-page-frontend-src-pages-contactpage-tsx-alongside-the-existing-91-9270556455-both-numbers-must-appear-in-the-phone-customer-care-info-card-as-clickable-tel-links",
+      "title": "Add +91 9766343454 as an additional customer care number in the Contact Us page (frontend/src/pages/ContactPage.tsx) alongside the existing +91 9270556455. Both numbers must appear in the phone/customer care info card as clickable tel: links.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-about-us-page-frontend-src-pages-aboutpage-tsx-display-91-9270556455-as-gaurav-saswade-s-ceo-director-personal-contact-number-this-number-should-appear-in-his-bio-profile-card-as-a-clickable-tel-link",
+      "title": "In the About Us page (frontend/src/pages/AboutPage.tsx), display +91 9270556455 as Gaurav Saswade's (CEO & Director) personal contact number. This number should appear in his bio/profile card as a clickable tel: link.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-ordersuccesspage-frontend-src-pages-ordersuccesspage-tsx-to-display-both-customer-care-numbers-91-9270556455-and-91-9766343454-as-clickable-tel-links-wherever-contact-details-are-shown",
+      "title": "Update the OrderSuccessPage (frontend/src/pages/OrderSuccessPage.tsx) to display both customer care numbers: +91 9270556455 and +91 9766343454, as clickable tel: links wherever contact details are shown.",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-seller-registration-page-at-route-seller-register-the-page-must-include-a-multi-step-form-step-1-store-personal-info-store-name-owner-name-phone-email-password-confirm-password-step-2-document-verification-digilocker-style-document-upload-section-with-clearly-labeled-fields-for-aadhaar-card-number-pan-card-number-and-medical-shop-license-number-each-with-a-file-upload-input-for-the-document-image-pdf-and-a-note-that-documents-are-verified-via-digilocker-display-a-clear-notice-that-the-seller-account-will-be-reviewed-and-activated-only-after-document-verification-and-admin-approval-on-successful-submission-show-a-confirmation-screen-stating-your-application-is-under-review-the-design-must-match-the-site-s-green-medical-theme-and-be-fully-mobile-responsive",
+      "title": "Create a Seller Registration page at route '/seller/register'. The page must include a multi-step form: Step 1 — Store & Personal Info (store name, owner name, phone, email, password, confirm password); Step 2 — Document Verification (DigiLocker-style document upload section with clearly labeled fields for Aadhaar card number, PAN card number, and Medical Shop License number, each with a file upload input for the document image/PDF and a note that documents are verified via DigiLocker). Display a clear notice that the seller account will be reviewed and activated only after document verification and admin approval. On successful submission, show a confirmation screen stating 'Your application is under review.' The design must match the site's green medical theme and be fully mobile-responsive.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-seller-login-page-at-route-seller-login-display-a-branded-login-form-with-email-and-password-fields-and-a-login-button-on-successful-authentication-via-the-sellerlogin-backend-function-store-the-seller-session-in-localstorage-and-redirect-to-seller-dashboard-on-failure-show-a-clear-error-message-if-the-seller-s-verificationstatus-is-pending-or-rejected-show-an-appropriate-message-your-account-is-under-review-or-your-application-was-rejected-please-contact-support-include-a-link-to-seller-register-for-new-sellers-the-design-must-match-the-site-s-green-medical-theme",
+      "title": "Create a Seller Login page at route '/seller/login'. Display a branded login form with email and password fields and a 'Login' button. On successful authentication via the sellerLogin backend function, store the seller session in localStorage and redirect to '/seller/dashboard'. On failure, show a clear error message. If the seller's verificationStatus is 'pending' or 'rejected', show an appropriate message ('Your account is under review.' or 'Your application was rejected. Please contact support.'). Include a link to '/seller/register' for new sellers. The design must match the site's green medical theme.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-seller-dashboard-at-route-seller-dashboard-accessible-only-to-authenticated-and-verified-sellers-the-dashboard-must-include-a-sidebar-navigation-with-links-to-dashboard-overview-my-products-my-orders-and-my-profile-a-dashboard-overview-showing-total-products-listed-total-orders-received-and-pending-orders-count-a-my-products-section-where-the-seller-can-add-edit-and-delete-their-own-products-same-fields-as-admin-product-management-name-description-price-category-imageurl-stock-isavailable-medicinetype-requiresprescription-products-added-by-a-seller-must-be-stored-with-a-sellerid-reference-and-must-appear-on-the-customer-facing-product-catalog-a-my-orders-section-showing-orders-placed-for-the-seller-s-products-with-order-details-and-status-and-a-my-profile-section-showing-the-seller-s-store-info-and-document-verification-status-if-an-unauthenticated-or-unverified-user-accesses-any-seller-route-redirect-them-to-seller-login",
+      "title": "Create a Seller Dashboard at route '/seller/dashboard' accessible only to authenticated and verified sellers. The dashboard must include: a sidebar navigation with links to Dashboard Overview, My Products, My Orders, and My Profile; a dashboard overview showing total products listed, total orders received, and pending orders count; a 'My Products' section where the seller can add, edit, and delete their own products (same fields as admin product management: name, description, price, category, imageUrl, stock, isAvailable, medicineType, requiresPrescription) — products added by a seller must be stored with a sellerId reference and must appear on the customer-facing product catalog; a 'My Orders' section showing orders placed for the seller's products with order details and status; and a 'My Profile' section showing the seller's store info and document verification status. If an unauthenticated or unverified user accesses any '/seller/*' route, redirect them to '/seller/login'.",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-seller-login-register-entry-points-to-the-customer-facing-homepage-homepage-tsx-and-the-header-header-tsx-near-the-existing-customer-login-button-add-a-clearly-labeled-sell-on-g-s-medical-or-seller-portal-link-button-that-navigates-to-seller-login-also-add-the-seller-portal-link-to-the-mobilebottomnav-or-a-visible-location-on-mobile-the-visual-styling-must-match-the-site-s-green-medical-theme",
+      "title": "Add Seller login/register entry points to the customer-facing homepage (HomePage.tsx) and the Header (Header.tsx) near the existing customer login button. Add a clearly labeled 'Sell on G&S Medical' or 'Seller Portal' link/button that navigates to '/seller/login'. Also add the seller portal link to the MobileBottomNav or a visible location on mobile. The visual styling must match the site's green medical theme.",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-seller-management-section-to-the-admin-dashboard-accessible-from-the-adminlayout-sidebar-as-manage-sellers-at-route-admin-sellers-this-page-must-display-all-registered-sellers-in-a-data-table-with-columns-seller-id-store-name-owner-name-email-phone-aadhaar-number-pan-number-medical-license-number-verification-status-badge-pending-amber-verified-green-rejected-red-and-date-registered-admin-must-be-able-to-approve-set-to-verified-or-reject-a-seller-application-using-action-buttons-or-a-status-dropdown-directly-on-the-table-row-include-a-search-filter-by-verification-status",
+      "title": "Add a Seller Management section to the Admin Dashboard, accessible from the AdminLayout sidebar as 'Manage Sellers' at route '/admin/sellers'. This page must display all registered sellers in a data table with columns: Seller ID, Store Name, Owner Name, Email, Phone, Aadhaar Number, PAN Number, Medical License Number, Verification Status (badge: pending=amber, verified=green, rejected=red), and Date Registered. Admin must be able to approve (set to 'verified') or reject a seller application using action buttons or a status dropdown directly on the table row. Include a search/filter by verification status.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-customer-login-registration-page-frontend-src-pages-customerloginpage-tsx-to-add-otp-based-two-step-verification-for-both-login-and-registration-flows-after-the-user-submits-their-credentials-email-password-on-login-or-all-registration-fields-on-signup-show-an-otp-input-step-display-the-customer-s-registered-phone-number-partially-masked-call-generateotp-with-the-phone-number-show-the-6-digit-otp-on-screen-in-a-clearly-marked-your-otp-field-simulating-sms-delivery-since-external-sms-is-unavailable-present-an-otp-input-field-and-a-verify-otp-button-on-successful-verifyotp-call-complete-the-login-registration-if-otp-is-wrong-or-expired-display-a-clear-error-and-allow-retry-include-a-resend-otp-button-that-calls-generateotp-again-the-design-must-match-the-site-s-green-medical-theme-and-be-fully-mobile-responsive",
+      "title": "Enhance the Customer Login / Registration page (frontend/src/pages/CustomerLoginPage.tsx) to add OTP-based two-step verification for both login and registration flows. After the user submits their credentials (email + password on login, or all registration fields on signup), show an OTP input step: display the customer's registered phone number (partially masked), call generateOtp with the phone number, show the 6-digit OTP on-screen in a clearly marked 'Your OTP' field (simulating SMS delivery since external SMS is unavailable), present an OTP input field, and a 'Verify OTP' button. On successful verifyOtp call, complete the login/registration. If OTP is wrong or expired, display a clear error and allow retry. Include a 'Resend OTP' button that calls generateOtp again. The design must match the site's green medical theme and be fully mobile-responsive.",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-seller-login-page-frontend-src-pages-sellerloginpage-tsx-to-add-otp-based-two-step-verification-after-the-seller-submits-valid-email-and-password-credentials-show-an-otp-verification-step-call-generateotp-with-the-seller-s-registered-phone-number-display-the-otp-on-screen-in-a-your-otp-field-simulated-delivery-show-the-seller-s-phone-number-partially-masked-present-an-otp-input-field-and-a-verify-otp-button-on-successful-verifyotp-complete-the-login-and-redirect-to-seller-dashboard-if-otp-is-incorrect-or-expired-show-a-clear-error-include-a-resend-otp-button-the-design-must-match-the-site-s-green-medical-theme",
+      "title": "Enhance the Seller Login page (frontend/src/pages/SellerLoginPage.tsx) to add OTP-based two-step verification. After the seller submits valid email and password credentials, show an OTP verification step: call generateOtp with the seller's registered phone number, display the OTP on-screen in a 'Your OTP' field (simulated delivery), show the seller's phone number partially masked, present an OTP input field and a 'Verify OTP' button. On successful verifyOtp, complete the login and redirect to '/seller/dashboard'. If OTP is incorrect or expired, show a clear error. Include a 'Resend OTP' button. The design must match the site's green medical theme.",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-seller-registration-page-frontend-src-pages-sellerregisterpage-tsx-to-add-otp-verification-as-a-new-step-step-3-before-final-form-submission-after-step-2-document-details-call-generateotp-with-the-phone-number-entered-in-step-1-display-the-otp-on-screen-in-a-your-otp-field-show-the-phone-number-partially-masked-present-an-otp-input-field-and-verify-submit-button-only-after-successful-otp-verification-submit-the-registration-form-to-the-backend-include-a-resend-otp-button-and-show-appropriate-error-messages-for-wrong-or-expired-otps-the-design-must-match-the-site-s-green-medical-theme",
+      "title": "Enhance the Seller Registration page (frontend/src/pages/SellerRegisterPage.tsx) to add OTP verification as a new step (Step 3) before final form submission. After Step 2 (document details), call generateOtp with the phone number entered in Step 1, display the OTP on-screen in a 'Your OTP' field, show the phone number partially masked, present an OTP input field and 'Verify & Submit' button. Only after successful OTP verification, submit the registration form to the backend. Include a 'Resend OTP' button and show appropriate error messages for wrong or expired OTPs. The design must match the site's green medical theme.",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-adminlayout-sidebar-frontend-src-components-adminlayout-tsx-add-a-numeric-badge-next-to-the-manage-sellers-navigation-link-that-displays-the-count-of-sellers-with-verificationstatus-pending-the-badge-must-use-the-amber-color-to-match-the-pending-status-theme-and-update-reactively-whenever-the-sellers-list-changes",
+      "title": "In the AdminLayout sidebar (frontend/src/components/AdminLayout.tsx), add a numeric badge next to the 'Manage Sellers' navigation link that displays the count of sellers with verificationStatus === 'pending'. The badge must use the amber color to match the pending status theme and update reactively whenever the sellers list changes.",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-the-admin-sellers-page-frontend-src-pages-adminsellerspage-tsx-add-a-prominent-alert-banner-panel-at-the-top-of-the-page-that-highlights-unreviewed-pending-seller-registrations-the-panel-must-show-the-number-of-pending-applications-a-brief-message-such-as-x-new-seller-applications-are-awaiting-your-review-and-visually-stand-out-using-an-amber-warning-color-scheme-consistent-with-the-medical-green-theme",
+      "title": "On the Admin Sellers page (frontend/src/pages/AdminSellersPage.tsx), add a prominent alert/banner panel at the top of the page that highlights unreviewed (pending) seller registrations. The panel must show the number of pending applications, a brief message such as 'X new seller applications are awaiting your review', and visually stand out using an amber/warning color scheme consistent with the medical green theme.",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-strengthen-the-approve-reject-workflow-on-adminsellerspage-so-that-a-approving-a-seller-sets-their-verificationstatus-to-verified-and-their-isactive-flag-to-true-granting-them-permission-to-list-products-on-the-platform-b-rejecting-a-seller-sets-verificationstatus-to-rejected-and-isactive-to-false-blocking-them-from-listing-products-ensure-the-backend-functions-updatesellerverificationstatus-and-any-isactive-update-are-called-correctly-and-the-ui-reflects-the-new-status-immediately-after-the-action",
+      "title": "Strengthen the approve/reject workflow on AdminSellersPage so that: (a) approving a seller sets their verificationStatus to 'verified' and their isActive flag to true, granting them permission to list products on the platform; (b) rejecting a seller sets verificationStatus to 'rejected' and isActive to false, blocking them from listing products. Ensure the backend functions updateSellerVerificationStatus and any isActive update are called correctly and the UI reflects the new status immediately after the action.",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-the-seller-login-page-frontend-src-pages-sellerloginpage-tsx-after-a-seller-successfully-authenticates-with-valid-credentials-and-otp-check-the-seller-s-verificationstatus-and-isactive-flag-and-display-the-appropriate-feedback-message-before-completing-login-if-verificationstatus-is-verified-and-isactive-is-true-proceed-to-redirect-to-seller-dashboard-if-verificationstatus-is-pending-show-the-message-your-account-is-under-review-please-wait-for-admin-approval-if-verificationstatus-is-rejected-show-the-message-your-application-was-rejected-please-contact-support-at-91-9270556455-or-gauravsaswade-gsgroupswebstore-in-do-not-redirect-to-the-dashboard-in-either-blocked-case",
+      "title": "On the Seller Login page (frontend/src/pages/SellerLoginPage.tsx), after a seller successfully authenticates with valid credentials and OTP, check the seller's verificationStatus and isActive flag and display the appropriate feedback message before completing login: if verificationStatus is 'verified' and isActive is true, proceed to redirect to '/seller/dashboard'; if verificationStatus is 'pending', show the message 'Your account is under review. Please wait for admin approval.'; if verificationStatus is 'rejected', show the message 'Your application was rejected. Please contact support at +91 9270556455 or gauravsaswade@gsgroupswebstore.in.' Do not redirect to the dashboard in either blocked case.",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-rich-entrance-animations-and-micro-interactions-across-all-customer-facing-pages-homepage-productspage-cartpage-paymentpage-ordersuccesspage-aboutpage-contactpage-use-staggered-fade-in-slide-up-for-page-sections-and-cards-on-mount-smooth-scale-shadow-transitions-on-card-hover-animated-counters-for-stats-numbers-and-a-subtle-parallax-or-gradient-shift-effect-on-hero-banners-ensure-all-animations-respect-reduced-motion-preferences",
+      "title": "Add rich entrance animations and micro-interactions across all customer-facing pages (HomePage, ProductsPage, CartPage, PaymentPage, OrderSuccessPage, AboutPage, ContactPage). Use staggered fade-in + slide-up for page sections and cards on mount, smooth scale/shadow transitions on card hover, animated counters for stats/numbers, and a subtle parallax or gradient-shift effect on hero banners. Ensure all animations respect reduced-motion preferences.",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-polished-design-complete-visual-overhaul-to-the-homepage-add-a-full-screen-animated-hero-section-with-a-layered-gradient-background-deep-green-to-teal-tones-floating-decorative-pill-capsule-svg-shapes-that-drift-slowly-a-bold-headline-with-a-typewriter-or-word-reveal-animation-and-a-prominent-cta-button-with-a-ripple-pulse-effect-add-a-smooth-scrolling-marquee-or-ticker-strip-for-announcements-e-g-free-delivery-on-orders-above-500-genuine-medicines-guaranteed-24-7-customer-support-upgrade-the-featured-products-section-with-a-horizontal-scroll-carousel-on-mobile",
+      "title": "Apply a polished, design-complete visual overhaul to the HomePage: add a full-screen animated hero section with a layered gradient background (deep green to teal tones), floating decorative pill/capsule SVG shapes that drift slowly, a bold headline with a typewriter or word-reveal animation, and a prominent CTA button with a ripple/pulse effect. Add a smooth-scrolling marquee or ticker strip for announcements (e.g., 'Free delivery on orders above ₹500 · Genuine medicines guaranteed · 24/7 customer support'). Upgrade the featured products section with a horizontal scroll carousel on mobile.",
+      "reqIds": [
+        "REQ-45"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-polished-design-complete-visual-overhaul-to-the-productspage-add-animated-skeleton-loaders-while-products-fetch-add-a-sticky-filter-search-bar-with-a-smooth-slide-down-appearance-on-scroll-animate-product-cards-into-a-grid-with-staggered-delays-and-add-a-floating-scroll-to-top-button-that-fades-in-after-scrolling-down",
+      "title": "Apply a polished, design-complete visual overhaul to the ProductsPage: add animated skeleton loaders while products fetch, add a sticky filter/search bar with a smooth slide-down appearance on scroll, animate product cards into a grid with staggered delays, and add a floating 'scroll to top' button that fades in after scrolling down.",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-polished-design-complete-visual-overhaul-to-the-cartpage-and-paymentpage-animate-cart-item-rows-on-add-remove-slide-in-from-right-slide-out-to-left-add-a-smooth-animated-order-total-that-updates-with-a-number-flip-or-counter-transition-when-quantities-change-and-give-the-upi-payment-section-a-highlighted-card-with-a-pulsing-green-border-glow-and-a-copy-to-clipboard-animation-on-the-upi-id",
+      "title": "Apply a polished, design-complete visual overhaul to the CartPage and PaymentPage: animate cart item rows on add/remove (slide-in from right, slide-out to left), add a smooth animated order total that updates with a number-flip or counter transition when quantities change, and give the UPI payment section a highlighted card with a pulsing green border/glow and a copy-to-clipboard animation on the UPI ID.",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-polished-design-complete-visual-overhaul-to-the-ordersuccesspage-replace-the-static-layout-with-a-celebratory-full-screen-success-animation-a-large-animated-checkmark-svg-drawn-on-screen-confetti-or-particle-burst-and-a-fade-in-order-summary-card-add-smooth-transitions-when-navigating-away",
+      "title": "Apply a polished, design-complete visual overhaul to the OrderSuccessPage: replace the static layout with a celebratory full-screen success animation (a large animated checkmark SVG drawn on screen, confetti or particle burst, and a fade-in order summary card). Add smooth transitions when navigating away.",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-rich-animations-and-a-polished-layout-to-all-authentication-pages-customerloginpage-adminloginpage-sellerloginpage-sellerregisterpage-add-an-animated-split-screen-or-full-bleed-background-with-a-soft-animated-gradient-on-the-left-top-panel-featuring-the-g-s-medical-brand-smooth-slide-transitions-between-form-steps-login-register-step-1-step-2-otp-step-animated-input-focus-states-with-a-green-underline-sweep-and-a-shake-animation-on-form-validation-errors",
+      "title": "Apply rich animations and a polished layout to all authentication pages (CustomerLoginPage, AdminLoginPage, SellerLoginPage, SellerRegisterPage): add an animated split-screen or full-bleed background with a soft animated gradient on the left/top panel featuring the G&S Medical brand, smooth slide transitions between form steps (login ↔ register, step 1 → step 2 → OTP step), animated input focus states with a green underline sweep, and a shake animation on form validation errors.",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-rich-animations-and-a-polished-layout-to-the-admin-dashboard-admindashboardpage-adminproductspage-adminorderspage-adminrefundspage-adminsellerspage-animate-stat-cards-entering-with-a-bounce-or-pop-effect-on-load-add-animated-number-counters-for-all-numeric-stats-add-row-highlight-animations-when-order-seller-status-is-updated-and-add-a-smooth-slide-in-animation-for-the-adminlayout-sidebar-on-mobile-upgrade-the-adminlayout-sidebar-with-gradient-background-dark-green-tones-icon-badges-with-pulse-animations-for-pending-items-and-active-link-indicator-with-a-sliding-underline-or-left-border-sweep",
+      "title": "Apply rich animations and a polished layout to the Admin Dashboard (AdminDashboardPage, AdminProductsPage, AdminOrdersPage, AdminRefundsPage, AdminSellersPage): animate stat cards entering with a bounce or pop effect on load, add animated number counters for all numeric stats, add row highlight animations when order/seller status is updated, and add a smooth slide-in animation for the AdminLayout sidebar on mobile. Upgrade the AdminLayout sidebar with gradient background (dark green tones), icon badges with pulse animations for pending items, and active link indicator with a sliding underline or left-border sweep.",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-rich-animations-and-a-polished-layout-to-the-seller-dashboard-and-all-seller-pages-sellerdashboardpage-sellerproductspage-sellerorderspage-sellerprofilepage-replicate-the-same-staggered-card-entrance-animations-animated-counters-and-polished-sidebar-styling-gradient-green-animated-active-link-indicator-as-the-admin-dashboard-add-a-welcome-banner-at-the-top-of-the-seller-dashboard-with-the-seller-s-store-name-and-a-subtle-animated-greeting-illustration-e-g-a-small-pharmacy-store-icon",
+      "title": "Apply rich animations and a polished layout to the Seller Dashboard and all Seller pages (SellerDashboardPage, SellerProductsPage, SellerOrdersPage, SellerProfilePage): replicate the same staggered card entrance animations, animated counters, and polished sidebar styling (gradient green, animated active link indicator) as the Admin Dashboard. Add a welcome banner at the top of the Seller Dashboard with the seller's store name and a subtle animated greeting illustration (e.g., a small pharmacy/store icon).",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-header-and-footer-with-animation-and-design-polish-add-a-smooth-slide-down-entrance-for-the-header-on-page-load-add-an-animated-cart-badge-that-bounces-pulses-when-items-are-added-add-a-gradient-green-top-border-or-bottom-shadow-to-the-header-and-add-a-subtle-wave-or-diagonal-cut-top-edge-to-the-footer-with-a-richer-background-dark-green-gradient-add-hover-underline-sweep-animations-on-all-navigation-links",
+      "title": "Enhance the Header and Footer with animation and design polish: add a smooth slide-down entrance for the Header on page load, add an animated cart badge that bounces/pulses when items are added, add a gradient green top border or bottom shadow to the Header, and add a subtle wave or diagonal-cut top edge to the Footer with a richer background (dark green gradient). Add hover underline-sweep animations on all navigation links.",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-rich-animations-and-a-polished-layout-to-the-aboutpage-and-contactpage-add-animated-timeline-or-card-reveal-effects-for-owner-bios-slide-in-from-alternating-sides-add-a-parallax-background-layer-in-the-hero-header-sections-animate-the-contactpage-info-cards-with-staggered-entrance-and-add-a-smooth-success-animation-checkmark-fade-when-the-contact-inquiry-form-is-submitted-successfully",
+      "title": "Apply rich animations and a polished layout to the AboutPage and ContactPage: add animated timeline or card reveal effects for owner bios (slide in from alternating sides), add a parallax background layer in the hero/header sections, animate the ContactPage info cards with staggered entrance, and add a smooth success animation (checkmark + fade) when the contact inquiry form is submitted successfully.",
+      "reqIds": [
+        "REQ-53"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-about-us-page-frontend-src-pages-aboutpage-tsx-display-91-9156896495-as-shushant-waghmare-s-co-founder-personal-contact-number-this-number-should-appear-in-his-bio-profile-card-as-a-clickable-tel-link-styled-consistently-with-gaurav-saswade-s-contact-number-display",
+      "title": "In the About Us page (frontend/src/pages/AboutPage.tsx), display +91 9156896495 as Shushant Waghmare's (co-founder) personal contact number. This number should appear in his bio/profile card as a clickable tel: link, styled consistently with Gaurav Saswade's contact number display.",
+      "reqIds": [
+        "REQ-54"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Customer-facing website for G&S Medical online store with attractive design",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Mobile app for G&S Medical online store with attractive design",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Admin dashboard with ability to add and customize products (reflected on both website and app)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Payment page integrated with UPI ID gauravsaswade03@pingpay",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Store info page: customer care +91 9270556455, email, address, and owner profiles for Gaurav Saswade & Shushant Waghmare",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Build a backend data model and API for Products. Each product must store: id, name, description, price, category, imageUrl, stock quantity, and isAvailable flag. Expose functions: addProduct, updateProduct, deleteProduct, getProducts, getProductById.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Build a backend data model and API for Orders. Each order must store: id, customerName, customerPhone, customerAddress, items (list of productId + quantity + price), totalAmount, upiTransactionRef, status (pending/confirmed/shipped/delivered), and createdAt timestamp. Expose functions: placeOrder, getOrders, getOrderById, updateOrderStatus.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Update Gaurav Saswade's profile photo on the About Us page with a user-provided photo",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Update Gaurav Saswade's title/role on the About Us page to 'CEO & Director'",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Add protected admin login page with credentials (email: gauravsaswade2009@gmail.com, password: :p1love2g). No one can access admin dashboard without logging in.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Enhance admin dashboard: improved orders view, add medicines/products management, payment status visibility, and a refund management page.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Add a professional customer login/registration page on the customer-facing website.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Add a backend authentication system for admin login. Store a single hardcoded admin credential (email: gauravsaswade2009@gmail.com, password: :p1love2g). Expose a backend function `adminLogin(email: Text, password: Text) : async Bool` that returns true only when both match. Also store and manage admin session state so the frontend can verify admin status.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Add +91 9766343454 as an additional customer care number across all relevant pages (Contact Us, Footer, etc.) and set +91 9270556455 as the CEO Gaurav Saswade's personal contact number on the About Us page.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Add multi-vendor seller feature: seller signup/login page (linked from homepage near customer login), seller profile creation, and a seller dashboard for managing their products and orders.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Seller registration must require DigiLocker-based document verification: Aadhaar card, PAN card, and medical shop license. Only verified sellers are granted permission to list and sell medicines on the platform.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Add seller management section in the admin dashboard to view registered sellers, their verification status, and approve/reject seller accounts.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Add a backend data model and API for Sellers. Each seller record must store: id, storeName, ownerName, email, phone, passwordHash, aadhaarNumber, panNumber, medicalLicenseNumber, verificationStatus (pending / verified / rejected), isActive flag, and createdAt timestamp. Expose backend functions: sellerRegister(storeName, ownerName, email, phone, password, aadhaarNumber, panNumber, medicalLicenseNumber) returning a Result with seller id or error; sellerLogin(email, password) returning Bool; getSellerById(id); getSellers() for admin use; updateSellerVerificationStatus(sellerId, status) for admin use; getSellerProducts(sellerId); and getSellerOrders(sellerId).",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Update the backend Product type to include a sellerId field (type: ?Text, optional) to associate products with a specific seller. Products without a sellerId belong to the main G&S Medical store. Existing products must retain their data without modification (migration safe). The getProducts function must return all products regardless of sellerId so they all appear on the customer-facing catalog. Add a getSellerProducts(sellerId: Text) function to return only products belonging to a specific seller.",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-29",
+      "summary": "Add OTP verification (two-step authentication) to the seller and customer login/signup pages",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-30",
+      "summary": "Add a backend OTP store and expose the following functions: `generateOtp(phone: Text) : async Text` — generates a 6-digit numeric OTP, stores it with a 5-minute expiry keyed by phone number, and returns it (to be sent via UI simulation since SMS is not available); `verifyOtp(phone: Text, otp: Text) : async Bool` — checks the stored OTP against the provided value and expiry, invalidates it after a successful match, and returns true/false. OTPs must expire after 5 minutes and be single-use.",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-31",
+      "summary": "Update the hardcoded admin password in the backend from ':p1love2g' to 'p1love2g' (remove the leading colon). The adminLogin function must accept email 'gauravsaswade2009@gmail.com' and password 'p1love2g' and return true only when both match exactly.",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-32",
+      "summary": "Update the hardcoded admin password in the backend (backend/main.mo and backend/migration.mo) from ':p1love2g' to 'p1love2g' (removing the leading colon). The adminLogin function must accept email 'gauravsaswade2009@gmail.com' and password 'p1love2g' and return true only when both match exactly.",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-33",
+      "summary": "Add pending seller badge in admin sidebar showing count of new applications, new applications alert panel on Manage Sellers page, approve/reject workflow granting/blocking product listing permission, and seller status feedback messages on login (approved/rejected). No email notifications (unavailable on current plan).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-34",
+      "summary": "Enhance the overall UI/UX with more animations, richer visual design, and polished full-page layouts across the entire application (customer site, seller pages, admin dashboard).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Add +91 9156896495 as the co-founder (Shushant Waghmare) personal contact number on the About Us page",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "G&S Medical",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

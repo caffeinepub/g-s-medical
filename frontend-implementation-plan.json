@@ -1,0 +1,24 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Add co-founder contact number to About Us page",
+  "requirements": [
+    {
+      "id": "REQ-54",
+      "summary": "Display Shushant Waghmare's contact number (+91 9156896495) as a clickable tel: link in his bio/profile card on the About Us page, styled consistently with Gaurav Saswade's contact number display",
+      "acceptanceCriteria": [
+        "The number +91 9156896495 is visible in Shushant Waghmare's bio/profile card on the About Us page.",
+        "The number is rendered as a clickable <a href=\"tel:+919156896495\"> link.",
+        "The styling matches the existing contact number display used for Gaurav Saswade's number on the same page.",
+        "No other pages or components are modified."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/AboutPage.tsx",
+          "operation": "modify",
+          "description": "Add the contact number +91 9156896495 as a clickable tel: link in Shushant Waghmare's profile card. Locate the existing contact number display for Gaurav Saswade in the owners/team section, then replicate the same HTML structure and styling for Shushant Waghmare's card. Ensure the tel: link uses the format href=\"tel:+919156896495\" and the visual presentation matches Gaurav's contact number exactly (same icon, text size, color, and spacing)."
+        }
+      ]
+    }
+  ]
+}
