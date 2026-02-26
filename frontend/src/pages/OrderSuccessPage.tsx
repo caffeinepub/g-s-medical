@@ -1,81 +1,75 @@
-import React from 'react';
-import { Link } from '@tanstack/react-router';
-import { CheckCircle2, Home, ShoppingBag, Phone } from 'lucide-react';
+import { useNavigate, useSearch } from '@tanstack/react-router';
+import { CheckCircle, Phone, Home, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function OrderSuccessPage() {
-  // Read orderId directly from URL search params to avoid route ID type constraints
-  const params = new URLSearchParams(window.location.search);
-  const orderId = params.get('orderId') || 'N/A';
+  const navigate = useNavigate();
+  const search = useSearch({ strict: false }) as { orderId?: string };
+  const orderId = search?.orderId;
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-16 text-center animate-fade-in">
-      {/* Success Icon */}
-      <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
-        <CheckCircle2 className="w-14 h-14 text-primary" />
+    <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+      <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-6">
+        <CheckCircle className="h-10 w-10 text-green-600" />
       </div>
 
-      <h1 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-3">
-        Order Placed Successfully!
-      </h1>
-      <p className="text-muted-foreground text-lg mb-2">
-        Thank you for shopping with G&S Medical!
+      <h1 className="text-3xl font-bold text-foreground mb-3">Order Placed Successfully!</h1>
+      {orderId && (
+        <p className="text-muted-foreground mb-2">
+          Order ID: <span className="font-mono font-semibold text-foreground">#{orderId}</span>
+        </p>
+      )}
+      <p className="text-muted-foreground mb-8">
+        Thank you for your order. We'll verify your payment and process your order shortly.
       </p>
 
-      {/* Order ID */}
-      <div className="bg-card border border-border rounded-2xl p-6 my-8 text-left">
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-muted-foreground text-sm">Order ID</span>
-          <span className="font-mono font-bold text-primary text-lg">#{orderId}</span>
-        </div>
-        <div className="bg-secondary rounded-xl p-4 text-sm text-muted-foreground">
-          <p className="font-medium text-foreground mb-1">What happens next?</p>
-          <ul className="space-y-1 list-disc list-inside">
-            <li>Our team will verify your UPI payment</li>
-            <li>You'll receive a confirmation call from us</li>
-            <li>Your order will be prepared and dispatched</li>
-            <li>Delivery within 1-3 business days</li>
-          </ul>
-        </div>
+      <div className="bg-card border border-border rounded-xl p-6 mb-8 text-left">
+        <h2 className="font-semibold text-foreground mb-4">What happens next?</h2>
+        <ol className="space-y-3">
+          {[
+            'We verify your UPI payment transaction',
+            'Your order is confirmed and prepared',
+            'Order is dispatched for delivery',
+            'You receive your medicines at your doorstep',
+          ].map((step, i) => (
+            <li key={i} className="flex items-start gap-3">
+              <span className="flex-shrink-0 w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                {i + 1}
+              </span>
+              <span className="text-sm text-muted-foreground">{step}</span>
+            </li>
+          ))}
+        </ol>
       </div>
 
-      {/* Contact */}
-      <div className="bg-primary/5 border border-primary/20 rounded-2xl p-4 mb-8">
-        <p className="text-sm text-muted-foreground mb-3">
-          For order updates, contact our customer care:
-        </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+      <div className="bg-muted/50 rounded-xl p-4 mb-8">
+        <p className="text-sm text-muted-foreground mb-3">Need help? Contact our customer care:</p>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <a
             href="tel:+919270556455"
-            className="flex items-center gap-2 font-bold text-primary text-lg hover:underline"
+            className="flex items-center gap-2 justify-center text-sm font-medium text-primary hover:underline"
           >
-            <Phone className="w-5 h-5" />
-            +91 9270556455
+            <Phone className="h-4 w-4" />
+            +91 92705 56455
           </a>
-          <span className="hidden sm:block text-muted-foreground">|</span>
           <a
             href="tel:+919766343454"
-            className="flex items-center gap-2 font-bold text-primary text-lg hover:underline"
+            className="flex items-center gap-2 justify-center text-sm font-medium text-primary hover:underline"
           >
-            <Phone className="w-5 h-5" />
-            +91 9766343454
+            <Phone className="h-4 w-4" />
+            +91 97663 43454
           </a>
         </div>
       </div>
 
-      {/* Actions */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button asChild className="rounded-xl" size="lg">
-          <Link to="/">
-            <Home className="w-4 h-4 mr-2" />
-            Back to Home
-          </Link>
+      <div className="flex flex-col sm:flex-row gap-3 justify-center">
+        <Button variant="outline" onClick={() => navigate({ to: '/' })}>
+          <Home className="h-4 w-4 mr-2" />
+          Back to Home
         </Button>
-        <Button asChild variant="outline" className="rounded-xl" size="lg">
-          <Link to="/products">
-            <ShoppingBag className="w-4 h-4 mr-2" />
-            Continue Shopping
-          </Link>
+        <Button onClick={() => navigate({ to: '/products' })}>
+          <ShoppingBag className="h-4 w-4 mr-2" />
+          Continue Shopping
         </Button>
       </div>
     </div>

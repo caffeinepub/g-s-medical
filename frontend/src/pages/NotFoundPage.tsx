@@ -1,29 +1,23 @@
-import React from 'react';
-import { Link } from '@tanstack/react-router';
-import { Home, Search } from 'lucide-react';
+import { useNavigate } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
+import { Home } from 'lucide-react';
 
 export default function NotFoundPage() {
+  const navigate = useNavigate();
+
   return (
-    <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 animate-fade-in">
-      <div className="relative mb-8">
-        <div className="font-heading text-8xl md:text-9xl font-bold text-primary/10 select-none">404</div>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center">
-            <Search className="w-10 h-10 text-primary" />
-          </div>
-        </div>
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="text-center">
+        <h1 className="text-8xl font-bold text-primary/20 mb-4">404</h1>
+        <h2 className="text-2xl font-bold text-foreground mb-2">Page Not Found</h2>
+        <p className="text-muted-foreground mb-8">
+          The page you're looking for doesn't exist or has been moved.
+        </p>
+        <Button onClick={() => navigate({ to: '/' })}>
+          <Home className="h-4 w-4 mr-2" />
+          Back to Home
+        </Button>
       </div>
-      <h1 className="font-heading text-3xl font-bold text-foreground mb-3">Page Not Found</h1>
-      <p className="text-muted-foreground max-w-md mb-8">
-        Oops! The page you're looking for doesn't exist. It may have been moved or deleted.
-      </p>
-      <Button asChild className="rounded-xl" size="lg">
-        <Link to="/">
-          <Home className="w-4 h-4 mr-2" />
-          Back to Homepage
-        </Link>
-      </Button>
     </div>
   );
 }

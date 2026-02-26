@@ -1,70 +1,43 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { Copy, Check, CreditCard, User, Phone, MapPin, Loader2 } from 'lucide-react';
-import { toast } from 'sonner';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import { useCustomerAuth } from '../hooks/useCustomerAuth';
+import { Copy, CheckCircle, Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { usePlaceOrder } from '../hooks/useQueries';
-import { useAnimatedCounter } from '../hooks/useAnimatedCounter';
-import { useReducedMotion } from '../hooks/useReducedMotion';
-import { Product } from '../backend';
+import { useCart } from '../context/CartContext';
+import { toast } from 'sonner';
 
-const UPI_ID = 'gauravsaswade2009@oksbi';
-
-interface CartItem {
-  product: Product;
-  quantity: number;
-}
+const UPI_ID = 'gsmedical@upi';
 
 export default function PaymentPage() {
+  const { cartItems, clearCart } = useCart();
   const navigate = useNavigate();
-  const { isCustomerAuthenticated, customer, logout } = useCustomerAuth();
-  const prefersReducedMotion = useReducedMotion();
-  const placeOrderMutation = usePlaceOrder();
-
-  const [cart] = useState<CartItem[]>(() => {
-    try {
-      return JSON.parse(localStorage.getItem('cart') || '[]');
-    } catch {
-      return [];
-    }
-  });
+  const placeOrder = usePlaceOrder();
 
   const [copied, setCopied] = useState(false);
-  const [form, setForm] = useState({
-    name: customer?.name || '',
-    phone: customer?.phone || '',
-    address: '',
-    upiRef: '',
-  });
+  const [upiRef, setUpiRef] = useState('');
+  const [customerName, setCustomerName] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [customerAddress, setCustomerAddress] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const total = cart.reduce((sum, item) => sum + Number(item.product.price) * item.quantity, 0);
-  const animatedTotal = useAnimatedCounter(total, { duration: 800 });
-
-  const cartItems = cart.map((item) => ({
-    id: Number(item.product.id),
-    quantity: item.quantity,
-  }));
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const deliveryFee = subtotal > 500 ? 0 : 50;
+  const total = subtotal + deliveryFee;
 
   const handleCopyUPI = () => {
-    navigator.clipboard.writeText(UPI_ID).then(() => {
-      setCopied(true);
-      toast.success('UPI ID copied!', {
-        description: 'Paste it in your payment app',
-        icon: '✅',
-      });
-      setTimeout(() => setCopied(false), 3000);
-    });
+    navigator.clipboard.writeText(UPI_ID);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const validate = () => {
     const errs: Record<string, string> = {};
-    if (!form.name.trim()) errs.name = 'Name is required';
-    if (!form.phone.trim() || !/^\d{10}$/.test(form.phone)) errs.phone = 'Valid 10-digit phone required';
-    if (!form.address.trim()) errs.address = 'Address is required';
-    if (!form.upiRef.trim()) errs.upiRef = 'UPI transaction reference is required';
+    if (!customerName.trim()) errs.name = 'Name is required';
+    if (!customerPhone.trim() || !/^\d{10}$/.test(customerPhone)) errs.phone = 'Valid 10-digit phone required';
+    if (!customerAddress.trim()) errs.address = 'Address is required';
+    if (!upiRef.trim()) errs.upiRef = 'UPI transaction reference is required';
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -72,181 +45,153 @@ export default function PaymentPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    if (cart.length === 0) {
+    if (cartItems.length === 0) {
       toast.error('Your cart is empty');
       return;
     }
 
     try {
-      const items = cart.map((item) => ({
-        productId: item.product.id,
-        quantity: BigInt(item.quantity),
-        price: item.product.price,
-      }));
-
-      const orderId = await placeOrderMutation.mutateAsync({
-        customerName: form.name,
-        customerPhone: form.phone,
-        customerAddress: form.address,
-        items,
+      const orderId = await placeOrder.mutateAsync({
+        customerName,
+        customerPhone,
+        customerAddress,
+        items: cartItems.map(item => ({
+          productId: BigInt(item.id),
+          quantity: BigInt(item.quantity),
+          price: BigInt(item.price),
+        })),
         totalAmount: BigInt(total),
-        upiTransactionRef: form.upiRef,
+        upiTransactionRef: upiRef,
       });
 
-      localStorage.removeItem('cart');
+      clearCart();
       navigate({ to: '/order-success', search: { orderId: orderId.toString() } });
     } catch (err: any) {
-      toast.error('Failed to place order', { description: err.message });
+      toast.error(err.message || 'Failed to place order');
     }
   };
 
-  if (cart.length === 0) {
-    navigate({ to: '/cart' });
-    return null;
+  if (cartItems.length === 0) {
+    return (
+      <div className="max-w-2xl mx-auto px-4 py-16 text-center">
+        <h2 className="text-2xl font-bold mb-4">No items in cart</h2>
+        <Button onClick={() => navigate({ to: '/products' })}>Browse Products</Button>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <Header
-        cartItems={cartItems}
-        isCustomerAuthenticated={isCustomerAuthenticated}
-        customerName={customer?.name}
-        onLogout={logout}
-      />
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h1 className="text-3xl font-bold text-foreground mb-8">Payment</h1>
 
-      <main className="flex-1 py-8">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className={`text-3xl font-display font-bold text-foreground mb-8 ${!prefersReducedMotion ? 'animate-fade-in-up' : ''}`}>
-            Complete Payment
-          </h1>
-
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* UPI Payment Section */}
-            <div className={`space-y-6 ${!prefersReducedMotion ? 'animate-fade-in-up' : ''}`}>
-              {/* UPI Card with pulse glow */}
-              <div
-                className="bg-card rounded-2xl border-2 border-primary/40 p-6 relative overflow-hidden"
-                style={!prefersReducedMotion ? { animation: 'pulse-glow 2s ease-in-out infinite' } : {}}
-              >
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-green-400 to-primary" />
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
-                    <CreditCard className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <h2 className="font-display font-bold text-foreground">Pay via UPI</h2>
-                    <p className="text-xs text-muted-foreground">Use any UPI app to pay</p>
-                  </div>
-                </div>
-
-                <div className="bg-muted rounded-xl p-4 flex items-center justify-between mb-4">
-                  <div>
-                    <p className="text-xs text-muted-foreground mb-1">UPI ID</p>
-                    <p className="font-mono font-semibold text-foreground">{UPI_ID}</p>
-                  </div>
-                  <button
-                    onClick={handleCopyUPI}
-                    className={`flex items-center gap-1.5 text-sm font-medium px-3 py-2 rounded-lg transition-all duration-200 ${
-                      copied
-                        ? 'bg-success/20 text-success'
-                        : 'bg-primary/10 text-primary hover:bg-primary/20'
-                    }`}
-                  >
-                    {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                    {copied ? 'Copied!' : 'Copy'}
-                  </button>
-                </div>
-
-                {/* QR Code */}
-                <div className="flex justify-center">
-                  <img
-                    src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=${UPI_ID}&pn=G%26S%20Medical&am=${total}&cu=INR`}
-                    alt="UPI QR Code"
-                    className="w-40 h-40 rounded-xl border border-border"
-                  />
-                </div>
-
-                <p className="text-center text-xs text-muted-foreground mt-3">
-                  Scan with any UPI app to pay ₹{prefersReducedMotion ? total : animatedTotal}
-                </p>
-              </div>
-
-              {/* Order Summary */}
-              <div className="bg-card rounded-2xl border border-border p-6">
-                <h3 className="font-display font-semibold text-foreground mb-4">Order Summary</h3>
-                <div className="space-y-2 mb-4">
-                  {cart.map((item) => (
-                    <div key={Number(item.product.id)} className="flex justify-between text-sm">
-                      <span className="text-muted-foreground line-clamp-1 flex-1 mr-2">
-                        {item.product.name} × {item.quantity}
-                      </span>
-                      <span className="font-medium">₹{Number(item.product.price) * item.quantity}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="border-t border-border pt-3 flex justify-between items-center">
-                  <span className="font-bold text-foreground">Total</span>
-                  <span className="text-xl font-bold text-primary">
-                    ₹{prefersReducedMotion ? total : animatedTotal}
-                  </span>
-                </div>
-              </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* UPI Payment */}
+        <div className="space-y-6">
+          <div className="bg-card border border-border rounded-xl p-6">
+            <h2 className="text-lg font-bold text-foreground mb-4">Pay via UPI</h2>
+            <div className="flex items-center gap-3 bg-muted rounded-lg p-3 mb-4">
+              <span className="font-mono text-sm flex-1">{UPI_ID}</span>
+              <Button size="sm" variant="outline" onClick={handleCopyUPI}>
+                {copied ? <CheckCircle className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
+              </Button>
             </div>
-
-            {/* Delivery Details Form */}
-            <div className={`${!prefersReducedMotion ? 'animate-slide-in-right' : ''}`}>
-              <form onSubmit={handleSubmit} className="bg-card rounded-2xl border border-border p-6 space-y-5">
-                <h2 className="font-display font-bold text-foreground text-lg">Delivery Details</h2>
-
-                {[
-                  { key: 'name', label: 'Full Name', icon: User, placeholder: 'Your full name', type: 'text' },
-                  { key: 'phone', label: 'Phone Number', icon: Phone, placeholder: '10-digit mobile number', type: 'tel' },
-                  { key: 'address', label: 'Delivery Address', icon: MapPin, placeholder: 'Full delivery address', type: 'text' },
-                  { key: 'upiRef', label: 'UPI Transaction Reference', icon: CreditCard, placeholder: 'Transaction ID from your UPI app', type: 'text' },
-                ].map(({ key, label, icon: Icon, placeholder, type }) => (
-                  <div key={key} className="input-animated">
-                    <label className="block text-sm font-medium text-foreground mb-1.5">
-                      {label}
-                    </label>
-                    <div className="relative">
-                      <Icon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                      <input
-                        type={type}
-                        value={form[key as keyof typeof form]}
-                        onChange={(e) => setForm((prev) => ({ ...prev, [key]: e.target.value }))}
-                        placeholder={placeholder}
-                        className={`w-full pl-10 pr-4 py-2.5 text-sm bg-background border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all ${
-                          errors[key] ? 'border-destructive' : 'border-border'
-                        }`}
-                      />
-                    </div>
-                    {errors[key] && (
-                      <p className="text-xs text-destructive mt-1">{errors[key]}</p>
-                    )}
-                  </div>
-                ))}
-
-                <button
-                  type="submit"
-                  disabled={placeOrderMutation.isPending}
-                  className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground font-semibold py-3 rounded-full hover:opacity-90 transition-all hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-                >
-                  {placeOrderMutation.isPending ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      Placing Order...
-                    </>
-                  ) : (
-                    'Confirm Order'
-                  )}
-                </button>
-              </form>
+            <div className="flex justify-center mb-4">
+              <img
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${UPI_ID}&am=${total}`}
+                alt="UPI QR Code"
+                className="rounded-lg border border-border"
+                width={200}
+                height={200}
+              />
             </div>
+            <p className="text-sm text-muted-foreground text-center">
+              Scan QR code or use UPI ID to pay <strong>₹{total}</strong>
+            </p>
           </div>
         </div>
-      </main>
 
-      <Footer />
+        {/* Delivery Details */}
+        <div>
+          <form onSubmit={handleSubmit} className="bg-card border border-border rounded-xl p-6 space-y-4">
+            <h2 className="text-lg font-bold text-foreground mb-2">Delivery Details</h2>
+
+            <div>
+              <Label htmlFor="name">Full Name *</Label>
+              <Input
+                id="name"
+                value={customerName}
+                onChange={e => setCustomerName(e.target.value)}
+                placeholder="Your full name"
+                className="mt-1"
+              />
+              {errors.name && <p className="text-destructive text-xs mt-1">{errors.name}</p>}
+            </div>
+
+            <div>
+              <Label htmlFor="phone">Phone Number *</Label>
+              <Input
+                id="phone"
+                value={customerPhone}
+                onChange={e => setCustomerPhone(e.target.value)}
+                placeholder="10-digit mobile number"
+                className="mt-1"
+              />
+              {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
+            </div>
+
+            <div>
+              <Label htmlFor="address">Delivery Address *</Label>
+              <Input
+                id="address"
+                value={customerAddress}
+                onChange={e => setCustomerAddress(e.target.value)}
+                placeholder="Full delivery address"
+                className="mt-1"
+              />
+              {errors.address && <p className="text-destructive text-xs mt-1">{errors.address}</p>}
+            </div>
+
+            <div>
+              <Label htmlFor="upiRef">UPI Transaction Reference *</Label>
+              <Input
+                id="upiRef"
+                value={upiRef}
+                onChange={e => setUpiRef(e.target.value)}
+                placeholder="Enter UPI transaction ID"
+                className="mt-1"
+              />
+              {errors.upiRef && <p className="text-destructive text-xs mt-1">{errors.upiRef}</p>}
+            </div>
+
+            {/* Order Summary */}
+            <div className="border-t border-border pt-4 space-y-2">
+              <div className="flex justify-between text-sm">
+                <span className="text-muted-foreground">Subtotal</span>
+                <span>₹{subtotal}</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-muted-foreground">Delivery</span>
+                <span>{deliveryFee === 0 ? 'Free' : `₹${deliveryFee}`}</span>
+              </div>
+              <div className="flex justify-between font-bold">
+                <span>Total</span>
+                <span className="text-primary">₹{total}</span>
+              </div>
+            </div>
+
+            <Button type="submit" className="w-full" size="lg" disabled={placeOrder.isPending}>
+              {placeOrder.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Placing Order...
+                </>
+              ) : (
+                'Confirm Order'
+              )}
+            </Button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

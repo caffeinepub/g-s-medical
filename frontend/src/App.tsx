@@ -1,143 +1,138 @@
-import React from 'react';
-import { createRouter, createRoute, createRootRoute, RouterProvider, Outlet } from '@tanstack/react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RouterProvider, createRouter, createRoute, createRootRoute, Outlet } from '@tanstack/react-router';
 import { Toaster } from '@/components/ui/sonner';
-import { ThemeProvider } from 'next-themes';
-
-// Layouts
-import Layout from './components/Layout';
-import AdminLayout from './components/AdminLayout';
-import SellerLayout from './components/SellerLayout';
-
-// Customer Pages
+import Header from './components/Header';
+import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
 import CartPage from './pages/CartPage';
 import PaymentPage from './pages/PaymentPage';
 import OrderSuccessPage from './pages/OrderSuccessPage';
-import AboutPage from './pages/AboutPage';
-import ContactPage from './pages/ContactPage';
-import NotFoundPage from './pages/NotFoundPage';
-import CustomerLoginPage from './pages/CustomerLoginPage';
-
-// Admin Pages
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import AdminProductsPage from './pages/AdminProductsPage';
 import AdminOrdersPage from './pages/AdminOrdersPage';
 import AdminRefundsPage from './pages/AdminRefundsPage';
-import AdminSellersPage from './pages/AdminSellersPage';
-
-// Seller Pages
-import SellerRegisterPage from './pages/SellerRegisterPage';
-import SellerLoginPage from './pages/SellerLoginPage';
-import SellerDashboardPage from './pages/SellerDashboardPage';
-import SellerProductsPage from './pages/SellerProductsPage';
-import SellerOrdersPage from './pages/SellerOrdersPage';
-import SellerProfilePage from './pages/SellerProfilePage';
-
-// Cart Context
+import AdminLayout from './components/AdminLayout';
+import NotFoundPage from './pages/NotFoundPage';
 import { CartProvider } from './context/CartContext';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: { retry: 1, staleTime: 30_000 },
-  },
-});
+const queryClient = new QueryClient();
 
-// Root route
-const rootRoute = createRootRoute({
-  component: () => <Outlet />,
-});
+function Layout() {
+  return (
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
+      <Header />
+      <main className="flex-1">
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
+  );
+}
 
-// Customer layout route
-const layoutRoute = createRoute({
+const rootRoute = createRootRoute({ component: Layout });
+
+const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
-  id: 'layout',
-  component: Layout,
+  path: '/',
+  component: HomePage,
 });
 
-// Customer routes
-const homeRoute = createRoute({ getParentRoute: () => layoutRoute, path: '/', component: HomePage });
-const productsRoute = createRoute({ getParentRoute: () => layoutRoute, path: '/products', component: ProductsPage });
-const cartRoute = createRoute({ getParentRoute: () => layoutRoute, path: '/cart', component: CartPage });
-const paymentRoute = createRoute({ getParentRoute: () => layoutRoute, path: '/payment', component: PaymentPage });
-const orderSuccessRoute = createRoute({ getParentRoute: () => layoutRoute, path: '/order-success', component: OrderSuccessPage });
-const aboutRoute = createRoute({ getParentRoute: () => layoutRoute, path: '/about', component: AboutPage });
-const contactRoute = createRoute({ getParentRoute: () => layoutRoute, path: '/contact', component: ContactPage });
-const loginRoute = createRoute({ getParentRoute: () => rootRoute, path: '/login', component: CustomerLoginPage });
+const productsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/products',
+  component: ProductsPage,
+});
 
-// Admin login (standalone, no AdminLayout guard)
-const adminLoginRoute = createRoute({ getParentRoute: () => rootRoute, path: '/admin/login', component: AdminLoginPage });
+const aboutRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/about',
+  component: AboutPage,
+});
 
-// Admin layout route — wraps children with AdminLayout which enforces auth
+const contactRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/contact',
+  component: ContactPage,
+});
+
+const cartRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/cart',
+  component: CartPage,
+});
+
+const paymentRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/payment',
+  component: PaymentPage,
+});
+
+const orderSuccessRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/order-success',
+  component: OrderSuccessPage,
+});
+
+const adminLoginRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin/login',
+  component: AdminLoginPage,
+});
+
 const adminLayoutRoute = createRoute({
   getParentRoute: () => rootRoute,
-  id: 'admin-layout',
-  component: () => (
-    <AdminLayout>
-      <Outlet />
-    </AdminLayout>
-  ),
+  path: '/admin',
+  component: AdminLayout,
 });
 
-// Admin routes
-const adminDashboardRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin', component: AdminDashboardPage });
-const adminProductsRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/products', component: AdminProductsPage });
-const adminOrdersRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/orders', component: AdminOrdersPage });
-const adminRefundsRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/refunds', component: AdminRefundsPage });
-const adminSellersRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/sellers', component: AdminSellersPage });
+const adminDashboardRoute = createRoute({
+  getParentRoute: () => adminLayoutRoute,
+  path: '/',
+  component: AdminDashboardPage,
+});
 
-// Seller standalone routes (no SellerLayout)
-const sellerRegisterRoute = createRoute({ getParentRoute: () => rootRoute, path: '/seller/register', component: SellerRegisterPage });
-const sellerLoginRoute = createRoute({ getParentRoute: () => rootRoute, path: '/seller/login', component: SellerLoginPage });
+const adminProductsRoute = createRoute({
+  getParentRoute: () => adminLayoutRoute,
+  path: '/products',
+  component: AdminProductsPage,
+});
 
-// Seller layout route — wraps children with SellerLayout which enforces auth
-const sellerLayoutRoute = createRoute({
+const adminOrdersRoute = createRoute({
+  getParentRoute: () => adminLayoutRoute,
+  path: '/orders',
+  component: AdminOrdersPage,
+});
+
+const adminRefundsRoute = createRoute({
+  getParentRoute: () => adminLayoutRoute,
+  path: '/refunds',
+  component: AdminRefundsPage,
+});
+
+const notFoundRoute = createRoute({
   getParentRoute: () => rootRoute,
-  id: 'seller-layout',
-  component: () => (
-    <SellerLayout>
-      <Outlet />
-    </SellerLayout>
-  ),
+  path: '*',
+  component: NotFoundPage,
 });
-
-// Seller dashboard routes
-const sellerDashboardRoute = createRoute({ getParentRoute: () => sellerLayoutRoute, path: '/seller/dashboard', component: SellerDashboardPage });
-const sellerProductsRoute = createRoute({ getParentRoute: () => sellerLayoutRoute, path: '/seller/products', component: SellerProductsPage });
-const sellerOrdersRoute = createRoute({ getParentRoute: () => sellerLayoutRoute, path: '/seller/orders', component: SellerOrdersPage });
-const sellerProfileRoute = createRoute({ getParentRoute: () => sellerLayoutRoute, path: '/seller/profile', component: SellerProfilePage });
-
-// Not found
-const notFoundRoute = createRoute({ getParentRoute: () => rootRoute, path: '*', component: NotFoundPage });
 
 const routeTree = rootRoute.addChildren([
-  layoutRoute.addChildren([
-    homeRoute,
-    productsRoute,
-    cartRoute,
-    paymentRoute,
-    orderSuccessRoute,
-    aboutRoute,
-    contactRoute,
-  ]),
-  loginRoute,
+  indexRoute,
+  productsRoute,
+  aboutRoute,
+  contactRoute,
+  cartRoute,
+  paymentRoute,
+  orderSuccessRoute,
   adminLoginRoute,
   adminLayoutRoute.addChildren([
     adminDashboardRoute,
     adminProductsRoute,
     adminOrdersRoute,
     adminRefundsRoute,
-    adminSellersRoute,
-  ]),
-  sellerRegisterRoute,
-  sellerLoginRoute,
-  sellerLayoutRoute.addChildren([
-    sellerDashboardRoute,
-    sellerProductsRoute,
-    sellerOrdersRoute,
-    sellerProfileRoute,
   ]),
   notFoundRoute,
 ]);
@@ -152,13 +147,11 @@ declare module '@tanstack/react-router' {
 
 export default function App() {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-      <QueryClientProvider client={queryClient}>
-        <CartProvider>
-          <RouterProvider router={router} />
-          <Toaster richColors position="top-right" />
-        </CartProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <CartProvider>
+        <RouterProvider router={router} />
+        <Toaster />
+      </CartProvider>
+    </QueryClientProvider>
   );
 }

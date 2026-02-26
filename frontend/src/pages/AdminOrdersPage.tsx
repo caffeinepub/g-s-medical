@@ -1,296 +1,217 @@
-import React, { useState, useMemo } from 'react';
-import { useGetOrders, useUpdateOrderStatus } from '../hooks/useQueries';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useState } from 'react';
+import { Search, ChevronDown, ChevronUp, Eye, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { useGetOrders, useUpdateOrderStatus } from '../hooks/useQueries';
 import StatusBadge from '../components/StatusBadge';
-import { Search, ArrowUpDown, ArrowUp, ArrowDown, Eye } from 'lucide-react';
 import type { Order } from '../backend';
-import { sortByDate, sortByAmount, type SortDirection } from '../utils/sortHelpers';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { toast } from 'sonner';
 
-type SortField = 'date' | 'amount' | null;
-
-function OrderDetailsModal({
-  order,
-  open,
-  onClose,
-}: {
-  order: Order | null;
-  open: boolean;
-  onClose: () => void;
-}) {
+export default function AdminOrdersPage() {
+  const { data: orders = [], isLoading } = useGetOrders();
   const updateStatus = useUpdateOrderStatus();
 
-  if (!order) return null;
-
-  const isPaid = order.upiTransactionRef && order.upiTransactionRef.trim() !== '';
-
-  const handleStatusChange = async (status: string) => {
-    try {
-      await updateStatus.mutateAsync({ id: order.id, status });
-      toast.success('Order status updated');
-    } catch {
-      toast.error('Failed to update status');
-    }
-  };
-
-  return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>Order #{order.id.toString()}</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-4 text-sm">
-          {/* Payment Info */}
-          <div className="bg-muted/40 rounded-lg p-4 space-y-2">
-            <h3 className="font-semibold text-foreground mb-2">Payment Information</h3>
-            <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">Payment Status</span>
-              <StatusBadge status={isPaid ? 'paid' : 'unpaid'} type="payment" />
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">UPI Reference</span>
-              <span className="font-mono text-xs font-medium">{order.upiTransactionRef || 'N/A'}</span>
-            </div>
-          </div>
-
-          {/* Customer Info */}
-          <div className="space-y-2">
-            <h3 className="font-semibold text-foreground">Customer Details</h3>
-            <div className="grid grid-cols-2 gap-2 text-sm">
-              <span className="text-muted-foreground">Name</span>
-              <span className="font-medium">{order.customerName}</span>
-              <span className="text-muted-foreground">Phone</span>
-              <span className="font-medium">{order.customerPhone}</span>
-              <span className="text-muted-foreground">Address</span>
-              <span className="font-medium">{order.customerAddress}</span>
-            </div>
-          </div>
-
-          {/* Order Items */}
-          <div className="space-y-2">
-            <h3 className="font-semibold text-foreground">Items</h3>
-            <div className="space-y-1">
-              {order.items.map((item, i) => (
-                <div key={i} className="flex justify-between text-sm bg-muted/30 rounded px-3 py-2">
-                  <span>Product #{item.productId.toString()} × {item.quantity.toString()}</span>
-                  <span className="font-medium">₹{Number(item.price).toLocaleString('en-IN')}</span>
-                </div>
-              ))}
-            </div>
-            <div className="flex justify-between font-semibold pt-2 border-t border-border/50">
-              <span>Total</span>
-              <span className="text-primary">₹{Number(order.totalAmount).toLocaleString('en-IN')}</span>
-            </div>
-          </div>
-
-          {/* Status Update */}
-          <div className="space-y-2">
-            <h3 className="font-semibold text-foreground">Update Status</h3>
-            <Select defaultValue={order.status} onValueChange={handleStatusChange} disabled={updateStatus.isPending}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="confirmed">Confirmed</SelectItem>
-                <SelectItem value="shipped">Shipped</SelectItem>
-                <SelectItem value="delivered">Delivered</SelectItem>
-                <SelectItem value="cancelled">Cancelled</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-export default function AdminOrdersPage() {
-  const { data: orders, isLoading } = useGetOrders();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
-  const [paymentFilter, setPaymentFilter] = useState('all');
-  const [sortField, setSortField] = useState<SortField>(null);
-  const [sortDir, setSortDir] = useState<SortDirection>('desc');
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
 
-  const handleSort = (field: SortField) => {
-    if (sortField === field) {
-      setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
-    } else {
-      setSortField(field);
-      setSortDir('desc');
+  const filtered = orders
+    .filter(o => {
+      if (statusFilter !== 'all' && o.status !== statusFilter) return false;
+      if (search) {
+        const s = search.toLowerCase();
+        return (
+          o.customerName.toLowerCase().includes(s) ||
+          o.customerPhone.includes(s) ||
+          o.id.toString().includes(s)
+        );
+      }
+      return true;
+    })
+    .sort((a, b) => {
+      const diff = Number(b.createdAt) - Number(a.createdAt);
+      return sortDir === 'desc' ? diff : -diff;
+    });
+
+  const handleStatusUpdate = async (orderId: number, status: string) => {
+    try {
+      await updateStatus.mutateAsync({ id: orderId, status });
+      toast.success('Order status updated');
+      if (selectedOrder && Number(selectedOrder.id) === orderId) {
+        setSelectedOrder({ ...selectedOrder, status });
+      }
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to update status');
     }
   };
-
-  const SortIcon = ({ field }: { field: SortField }) => {
-    if (sortField !== field) return <ArrowUpDown className="h-3 w-3 ml-1 opacity-40" />;
-    return sortDir === 'asc' ? <ArrowUp className="h-3 w-3 ml-1" /> : <ArrowDown className="h-3 w-3 ml-1" />;
-  };
-
-  const filtered = useMemo(() => {
-    let list = orders ?? [];
-
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      list = list.filter(
-        (o) =>
-          o.customerName.toLowerCase().includes(q) ||
-          o.id.toString().includes(q) ||
-          o.upiTransactionRef.toLowerCase().includes(q),
-      );
-    }
-
-    if (statusFilter !== 'all') {
-      list = list.filter((o) => o.status === statusFilter);
-    }
-
-    if (paymentFilter === 'paid') {
-      list = list.filter((o) => o.upiTransactionRef && o.upiTransactionRef.trim() !== '');
-    } else if (paymentFilter === 'unpaid') {
-      list = list.filter((o) => !o.upiTransactionRef || o.upiTransactionRef.trim() === '');
-    }
-
-    if (sortField === 'date') list = sortByDate(list, sortDir);
-    else if (sortField === 'amount') list = sortByAmount(list, sortDir);
-    else list = [...list].sort((a, b) => Number(b.createdAt) - Number(a.createdAt));
-
-    return list;
-  }, [orders, search, statusFilter, paymentFilter, sortField, sortDir]);
 
   return (
-    <div className="space-y-4">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Orders</h1>
-        <p className="text-muted-foreground text-sm mt-1">Manage and track all customer orders</p>
+    <div className="p-6">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-900">Orders</h1>
+        <p className="text-gray-500 text-sm">{orders.length} total orders</p>
       </div>
 
-      <Card>
-        <CardHeader className="pb-3">
-          <div className="flex flex-col sm:flex-row gap-3">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search by name, order ID, or UPI ref..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-9"
-              />
-            </div>
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-full sm:w-40">
-                <SelectValue placeholder="Order Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Statuses</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="confirmed">Confirmed</SelectItem>
-                <SelectItem value="shipped">Shipped</SelectItem>
-                <SelectItem value="delivered">Delivered</SelectItem>
-                <SelectItem value="cancelled">Cancelled</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={paymentFilter} onValueChange={setPaymentFilter}>
-              <SelectTrigger className="w-full sm:w-40">
-                <SelectValue placeholder="Payment" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Payments</SelectItem>
-                <SelectItem value="paid">Paid</SelectItem>
-                <SelectItem value="unpaid">Unpaid</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </CardHeader>
-        <CardContent className="p-0">
-          {isLoading ? (
-            <div className="p-4 space-y-3">
-              {[...Array(6)].map((_, i) => <Skeleton key={i} className="h-12 w-full" />)}
-            </div>
-          ) : filtered.length === 0 ? (
-            <div className="p-10 text-center text-muted-foreground">No orders found.</div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border/50 bg-muted/30">
-                    <th className="text-left px-4 py-3 font-medium text-muted-foreground">Order ID</th>
-                    <th className="text-left px-4 py-3 font-medium text-muted-foreground">Customer</th>
-                    <th className="text-left px-4 py-3 font-medium text-muted-foreground">
-                      <button className="flex items-center hover:text-foreground" onClick={() => handleSort('amount')}>
-                        Amount <SortIcon field="amount" />
-                      </button>
-                    </th>
-                    <th className="text-left px-4 py-3 font-medium text-muted-foreground">UPI Ref</th>
-                    <th className="text-left px-4 py-3 font-medium text-muted-foreground">Payment</th>
-                    <th className="text-left px-4 py-3 font-medium text-muted-foreground">Status</th>
-                    <th className="text-left px-4 py-3 font-medium text-muted-foreground">
-                      <button className="flex items-center hover:text-foreground" onClick={() => handleSort('date')}>
-                        Date <SortIcon field="date" />
-                      </button>
-                    </th>
-                    <th className="text-left px-4 py-3 font-medium text-muted-foreground">Action</th>
+      {/* Filters */}
+      <div className="flex flex-wrap gap-3 mb-6">
+        <div className="relative flex-1 min-w-48">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <Input
+            placeholder="Search orders..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="pl-9"
+          />
+        </div>
+        <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <SelectTrigger className="w-40">
+            <SelectValue placeholder="All Status" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Status</SelectItem>
+            <SelectItem value="pending">Pending</SelectItem>
+            <SelectItem value="confirmed">Confirmed</SelectItem>
+            <SelectItem value="shipped">Shipped</SelectItem>
+            <SelectItem value="delivered">Delivered</SelectItem>
+            <SelectItem value="cancelled">Cancelled</SelectItem>
+          </SelectContent>
+        </Select>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setSortDir(d => d === 'desc' ? 'asc' : 'desc')}
+          className="flex items-center gap-1"
+        >
+          Date {sortDir === 'desc' ? <ChevronDown className="h-3 w-3" /> : <ChevronUp className="h-3 w-3" />}
+        </Button>
+      </div>
+
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      ) : (
+        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="text-left text-xs text-gray-500 border-b border-gray-100 bg-gray-50">
+                  <th className="px-4 py-3 font-medium">Order ID</th>
+                  <th className="px-4 py-3 font-medium">Customer</th>
+                  <th className="px-4 py-3 font-medium">Amount</th>
+                  <th className="px-4 py-3 font-medium">Status</th>
+                  <th className="px-4 py-3 font-medium">Date</th>
+                  <th className="px-4 py-3 font-medium">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="px-4 py-12 text-center text-gray-400">
+                      No orders found
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {filtered.map((order) => {
-                    const isPaid = order.upiTransactionRef && order.upiTransactionRef.trim() !== '';
-                    return (
-                      <tr key={order.id.toString()} className="border-b border-border/30 hover:bg-muted/20 transition-colors">
-                        <td className="px-4 py-3 font-mono text-xs text-muted-foreground">#{order.id.toString()}</td>
-                        <td className="px-4 py-3 font-medium">{order.customerName}</td>
-                        <td className="px-4 py-3 font-semibold text-primary">₹{Number(order.totalAmount).toLocaleString('en-IN')}</td>
-                        <td className="px-4 py-3 font-mono text-xs max-w-[120px] truncate">{order.upiTransactionRef || '—'}</td>
-                        <td className="px-4 py-3">
-                          <StatusBadge status={isPaid ? 'paid' : 'unpaid'} type="payment" />
-                        </td>
-                        <td className="px-4 py-3">
-                          <StatusBadge status={order.status} type="order" />
-                        </td>
-                        <td className="px-4 py-3 text-muted-foreground text-xs">
-                          {new Date(Number(order.createdAt) / 1_000_000).toLocaleDateString('en-IN')}
-                        </td>
-                        <td className="px-4 py-3">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => setSelectedOrder(order)}
-                            className="h-7 px-2"
-                          >
-                            <Eye className="h-3.5 w-3.5" />
-                          </Button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                ) : (
+                  filtered.map(order => (
+                    <tr key={Number(order.id)} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                      <td className="px-4 py-3 text-sm font-mono text-gray-600">#{Number(order.id)}</td>
+                      <td className="px-4 py-3">
+                        <div className="text-sm font-medium text-gray-900">{order.customerName}</div>
+                        <div className="text-xs text-gray-400">{order.customerPhone}</div>
+                      </td>
+                      <td className="px-4 py-3 text-sm font-semibold text-gray-900">₹{Number(order.totalAmount)}</td>
+                      <td className="px-4 py-3">
+                        <StatusBadge status={order.status} type="order" />
+                      </td>
+                      <td className="px-4 py-3 text-sm text-gray-500">
+                        {new Date(Number(order.createdAt) / 1_000_000).toLocaleDateString()}
+                      </td>
+                      <td className="px-4 py-3">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => setSelectedOrder(order)}
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Order Details Modal */}
+      <Dialog open={!!selectedOrder} onOpenChange={() => setSelectedOrder(null)}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Order #{selectedOrder && Number(selectedOrder.id)}</DialogTitle>
+          </DialogHeader>
+          {selectedOrder && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div>
+                  <p className="text-gray-500">Customer</p>
+                  <p className="font-medium">{selectedOrder.customerName}</p>
+                </div>
+                <div>
+                  <p className="text-gray-500">Phone</p>
+                  <p className="font-medium">{selectedOrder.customerPhone}</p>
+                </div>
+                <div className="col-span-2">
+                  <p className="text-gray-500">Address</p>
+                  <p className="font-medium">{selectedOrder.customerAddress}</p>
+                </div>
+                <div>
+                  <p className="text-gray-500">UPI Reference</p>
+                  <p className="font-mono text-xs">{selectedOrder.upiTransactionRef}</p>
+                </div>
+                <div>
+                  <p className="text-gray-500">Total Amount</p>
+                  <p className="font-bold text-primary">₹{Number(selectedOrder.totalAmount)}</p>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-gray-500 text-sm mb-2">Items ({selectedOrder.items.length})</p>
+                <div className="space-y-1">
+                  {selectedOrder.items.map((item, i) => (
+                    <div key={i} className="flex justify-between text-sm bg-gray-50 rounded px-3 py-2">
+                      <span>Product #{Number(item.productId)} × {Number(item.quantity)}</span>
+                      <span className="font-medium">₹{Number(item.price) * Number(item.quantity)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className="text-gray-500 text-sm mb-2">Update Status</p>
+                <Select
+                  value={selectedOrder.status}
+                  onValueChange={val => handleStatusUpdate(Number(selectedOrder.id), val)}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="confirmed">Confirmed</SelectItem>
+                    <SelectItem value="shipped">Shipped</SelectItem>
+                    <SelectItem value="delivered">Delivered</SelectItem>
+                    <SelectItem value="cancelled">Cancelled</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           )}
-        </CardContent>
-      </Card>
-
-      <OrderDetailsModal
-        order={selectedOrder}
-        open={!!selectedOrder}
-        onClose={() => setSelectedOrder(null)}
-      />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

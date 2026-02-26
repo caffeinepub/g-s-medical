@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 37,
+  "projectStateVersion": 45,
   "summary": "Online medical store project for G&S Medical. Includes a customer-facing website and mobile app, plus an admin dashboard. Admin can add/customize products visible on both website and app. Payment page integrated with UPI ID gauravsaswade03@pingpay. Store details: customer care +91 9270556455 and +91 9766343454, email gauravsaswade@gsgroupswebstore.in, address At-Bhaje, Post-Malavali, Tal-Maval, Dist-Pune, Near Malavali Railway Station, Maharashtra-410405. Owners: Gaurav Saswade (CEO & Director, contact: +91 9270556455) & Shushant Waghmare. Multi-vendor marketplace feature planned: third-party sellers can register, get DigiLocker document verification (Aadhaar, PAN, medical shop license), and sell medicines on the platform with their own seller dashboard.",
   "architectural_notes": [
     "Project has two separate codebases: website and mobile app — to be delivered as separate 7-zip archives",
@@ -487,6 +487,262 @@
         "REQ-69"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-add-a-3d-card-flip-reveal-animation-to-the-productcard-component-frontend-src-components-productcard-tsx-when-a-product-card-enters-the-viewport-for-the-first-time-it-performs-a-single-y-axis-flip-0deg-360deg-over-600-ms-using-css-perspective-transform-before-settling-into-its-normal-face-up-state-this-flip-must-be-triggered-by-intersectionobserver-and-must-be-distinct-from-all-existing-fade-in-slide-up-scale-tilt-and-liquid-fill-animations-already-on-product-cards",
+      "title": "Add a 3D card-flip reveal animation to the ProductCard component (frontend/src/components/ProductCard.tsx): when a product card enters the viewport for the first time, it performs a single Y-axis flip (0deg → 360deg) over 600 ms using CSS perspective transform before settling into its normal face-up state. This flip must be triggered by IntersectionObserver and must be distinct from all existing fade-in, slide-up, scale, tilt, and liquid-fill animations already on product cards.",
+      "reqIds": [
+        "REQ-80"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-neon-pulse-glow-ring-around-the-hero-cta-button-on-the-homepage-frontend-src-pages-homepage-tsx-a-continuously-animated-double-ring-halo-in-emerald-and-teal-alternates-opacity-0-3-0-8-0-3-on-a-2-second-loop-giving-the-button-a-living-breathing-glow-this-must-be-implemented-with-css-keyframes-distinct-from-the-existing-ripple-pulse-effect-already-on-the-cta",
+      "title": "Add a neon-pulse glow ring around the hero CTA button on the HomePage (frontend/src/pages/HomePage.tsx): a continuously animated double-ring halo in emerald and teal alternates opacity (0.3 → 0.8 → 0.3) on a 2-second loop, giving the button a living, breathing glow. This must be implemented with CSS keyframes distinct from the existing ripple/pulse effect already on the CTA.",
+      "reqIds": [
+        "REQ-81"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-animated-svg-drawing-effect-to-the-g-s-medical-logo-text-in-the-header-frontend-src-components-header-tsx-on-first-page-load-the-logo-letters-are-rendered-as-svg-stroke-paths-that-draw-themselves-stroke-dashoffset-animation-from-left-to-right-over-1-second-before-filling-with-the-final-brand-color-on-subsequent-navigations-the-logo-is-shown-instantly-without-re-animating-this-must-be-distinct-from-the-existing-morphing-logo-text-hover-effect",
+      "title": "Add an animated SVG drawing effect to the G&S MEDICAL logo text in the Header (frontend/src/components/Header.tsx): on first page load, the logo letters are rendered as SVG stroke paths that draw themselves (stroke-dashoffset animation) from left to right over 1 second before filling with the final brand color. On subsequent navigations, the logo is shown instantly without re-animating. This must be distinct from the existing morphing logo text hover effect.",
+      "reqIds": [
+        "REQ-82"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-animated-gradient-mesh-background-to-the-paymentpage-frontend-src-pages-paymentpage-tsx-render-a-full-page-background-layer-of-4-5-softly-animated-radial-gradient-nodes-in-deep-green-and-warm-amber-tones-that-drift-slowly-and-smoothly-creating-a-living-mesh-effect-behind-all-page-content-this-background-must-be-unique-to-the-paymentpage-and-must-not-reuse-the-morphing-blob-or-floating-pill-shapes-used-on-the-homepage",
+      "title": "Add an animated gradient mesh background to the PaymentPage (frontend/src/pages/PaymentPage.tsx): render a full-page background layer of 4–5 softly animated radial gradient nodes in deep green and warm amber tones that drift slowly and smoothly, creating a living mesh effect behind all page content. This background must be unique to the PaymentPage and must not reuse the morphing blob or floating pill shapes used on the HomePage.",
+      "reqIds": [
+        "REQ-83"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-staggered-letter-drop-entrance-animation-to-all-prominent-section-headings-on-the-aboutpage-frontend-src-pages-aboutpage-tsx-each-letter-in-the-heading-falls-from-30px-above-its-final-position-with-a-slight-spring-overshoot-staggered-30-ms-per-letter-this-technique-must-be-visually-and-technically-distinct-from-the-word-reveal-clip-path-technique-used-on-seller-dashboard-pages-and-the-typewriter-character-animation-used-in-the-welcome-banner",
+      "title": "Add a 'staggered letter-drop' entrance animation to all prominent section headings on the AboutPage (frontend/src/pages/AboutPage.tsx): each letter in the heading falls from 30px above its final position with a slight spring overshoot, staggered 30 ms per letter. This technique must be visually and technically distinct from the word-reveal clip-path technique used on Seller Dashboard pages and the typewriter character animation used in the welcome banner.",
+      "reqIds": [
+        "REQ-84"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-dynamic-particle-trail-to-the-cursor-on-all-seller-dashboard-pages-sellerdashboardpage-sellerproductspage-sellerorderspage-sellerprofilepage-small-teal-dot-particles-4-6-px-spawn-at-the-cursor-position-float-upward-and-fade-out-over-600-ms-as-the-cursor-moves-limit-to-desktop-pointer-fine-only-this-effect-must-be-distinct-from-the-admin-cursor-spotlight-radial-glow-already-implemented-on-admin-pages",
+      "title": "Add a dynamic particle trail to the cursor on all Seller Dashboard pages (SellerDashboardPage, SellerProductsPage, SellerOrdersPage, SellerProfilePage): small teal dot particles (4–6 px) spawn at the cursor position, float upward, and fade out over 600 ms as the cursor moves. Limit to desktop (pointer: fine) only. This effect must be distinct from the admin cursor spotlight radial glow already implemented on admin pages.",
+      "reqIds": [
+        "REQ-85"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-animated-heartbeat-pulse-to-the-pharmacy-cross-logo-icon-in-the-sellerdashboardpage-welcome-banner-the-pharmacy-store-svg-icon-pulses-with-a-heartbeat-style-double-beat-scale-animation-1-0-1-15-1-0-1-15-1-0-on-a-2-second-loop-this-must-be-a-new-keyframe-distinct-from-the-existing-spin-pop-in-checkmark-and-bounce-pop-entrance-animations-already-used-in-seller-pages",
+      "title": "Add an animated 'heartbeat' pulse to the pharmacy cross / logo icon in the SellerDashboardPage welcome banner: the pharmacy-store SVG icon pulses with a heartbeat-style double-beat scale animation (1.0 → 1.15 → 1.0 → 1.15 → 1.0) on a 2-second loop. This must be a new keyframe distinct from the existing spin, pop-in checkmark, and bounce-pop entrance animations already used in seller pages.",
+      "reqIds": [
+        "REQ-86"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-animated-stats-counter-with-an-odometer-rolling-digit-effect-to-all-numeric-stat-displays-on-the-admindashboardpage-frontend-src-pages-admindashboardpage-tsx-when-stat-cards-enter-the-viewport-each-digit-rolls-upward-through-0-9-before-landing-on-the-final-value-like-a-mechanical-odometer-this-must-be-a-new-implementation-distinct-from-the-existing-simple-linear-animated-counter-hook-useanimatedcounter-ts-already-used-on-admin-pages",
+      "title": "Add an animated stats counter with an odometer/rolling-digit effect to all numeric stat displays on the AdminDashboardPage (frontend/src/pages/AdminDashboardPage.tsx): when stat cards enter the viewport, each digit rolls upward through 0–9 before landing on the final value, like a mechanical odometer. This must be a new implementation distinct from the existing simple linear animated counter hook (useAnimatedCounter.ts) already used on admin pages.",
+      "reqIds": [
+        "REQ-87"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-unique-typewriter-with-highlight-animation-to-the-contactpage-frontend-src-pages-contactpage-tsx-hero-header-section-title-the-heading-types-out-character-by-character-reusing-typewritertext-component-behavior-is-allowed-for-the-character-reveal-but-each-completed-word-briefly-flashes-a-green-highlight-background-that-fades-out-over-300-ms-before-the-next-word-starts-typing-this-highlight-flash-is-the-unique-additive-layer-that-distinguishes-it-from-the-plain-typewriter-already-used-elsewhere",
+      "title": "Add a unique 'typewriter with highlight' animation to the ContactPage (frontend/src/pages/ContactPage.tsx) hero/header section title: the heading types out character by character (reusing TypewriterText component behavior is allowed for the character reveal), but each completed word briefly flashes a green highlight background that fades out over 300 ms before the next word starts typing. This highlight-flash is the unique additive layer that distinguishes it from the plain typewriter already used elsewhere.",
+      "reqIds": [
+        "REQ-88"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-shimmer-reveal-entrance-to-all-data-table-rows-on-adminorderspage-adminrefundspage-and-adminsellerspage-when-the-table-first-loads-or-when-new-data-arrives-each-row-shimmers-in-from-left-to-right-with-a-traveling-light-sweep-not-a-fade-or-slide-staggered-40-ms-per-row-this-shimmer-row-reveal-must-be-distinct-from-the-existing-green-tint-status-change-sweep-and-the-glassmorphism-card-shimmer-already-applied-to-admin-pages",
+      "title": "Add a 'shimmer reveal' entrance to all data table rows on AdminOrdersPage, AdminRefundsPage, and AdminSellersPage: when the table first loads or when new data arrives, each row shimmers in from left-to-right with a traveling light sweep (not a fade or slide), staggered 40 ms per row. This shimmer row-reveal must be distinct from the existing green-tint status-change sweep and the glassmorphism card shimmer already applied to admin pages.",
+      "reqIds": [
+        "REQ-89"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-floating-quick-add-micro-animation-to-the-productspage-frontend-src-pages-productspage-tsx-when-a-user-clicks-add-to-cart-on-any-product-card-a-small-ghost-copy-of-the-product-image-detaches-from-the-card-and-flies-in-an-arc-toward-the-cart-icon-in-the-header-scaling-down-and-fading-out-as-it-reaches-the-target-this-fly-to-cart-animation-must-be-unique-and-distinct-from-all-existing-button-badge-or-entrance-animations",
+      "title": "Add a floating 'quick-add' micro-animation to the ProductsPage (frontend/src/pages/ProductsPage.tsx): when a user clicks 'Add to Cart' on any product card, a small ghost copy of the product image detaches from the card and flies in an arc toward the cart icon in the Header, scaling down and fading out as it reaches the target. This 'fly-to-cart' animation must be unique and distinct from all existing button, badge, or entrance animations.",
+      "reqIds": [
+        "REQ-90"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-magnetic-ripple-hover-effect-to-all-primary-action-buttons-add-to-cart-place-order-login-register-verify-otp-approve-reject-across-the-entire-application-on-hover-a-soft-radial-ripple-ring-expands-outward-from-the-cursor-contact-point-within-the-button-boundary-using-a-css-clip-path-and-pseudo-element-technique-this-must-be-visually-distinct-from-the-existing-liquid-fill-sweep-ripple-pulse-cta-effect-and-ink-drop-ripple-already-applied-to-badges-and-cart",
+      "title": "Add a 'magnetic ripple' hover effect to all primary action buttons (Add to Cart, Place Order, Login, Register, Verify OTP, Approve, Reject) across the entire application: on hover, a soft radial ripple ring expands outward from the cursor contact point within the button boundary using a CSS clip-path and pseudo-element technique. This must be visually distinct from the existing liquid-fill sweep, ripple/pulse CTA effect, and ink-drop ripple already applied to badges and cart.",
+      "reqIds": [
+        "REQ-91"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-animated-breathing-background-to-the-adminloginpage-the-deep-green-geometric-grid-pattern-already-on-the-page-gains-a-slow-pulsing-brightness-modulation-opacity-oscillates-between-0-4-and-0-7-on-an-8-second-loop-so-the-grid-appears-to-breathe-overlay-3-4-very-faint-5-8-opacity-slowly-rotating-conic-gradient-rings-centered-in-the-panel-these-rings-must-be-distinct-from-the-morphing-blobs-on-homepage-the-mesh-nodes-on-paymentpage-and-all-existing-auth-page-decorative-panels",
+      "title": "Add an animated 'breathing' background to the AdminLoginPage: the deep-green geometric grid pattern already on the page gains a slow pulsing brightness modulation (opacity oscillates between 0.4 and 0.7 on an 8-second loop) so the grid appears to breathe. Overlay 3–4 very faint (5–8% opacity) slowly rotating conic-gradient rings centered in the panel. These rings must be distinct from the morphing blobs on HomePage, the mesh nodes on PaymentPage, and all existing auth page decorative panels.",
+      "reqIds": [
+        "REQ-92"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-card-tilt-depth-shadow-effect-to-all-stat-summary-cards-on-the-admindashboardpage-sellerdashboardpage-and-all-their-sub-pages-as-the-user-moves-their-cursor-over-a-stat-card-the-card-casts-a-directional-drop-shadow-that-shifts-position-relative-to-cursor-angle-shadow-moves-opposite-to-cursor-direction-creating-a-3d-light-source-illusion-this-must-be-implemented-with-javascript-mouse-enter-move-leave-listeners-updating-css-custom-properties-and-must-not-duplicate-the-existing-bounce-pop-entrance-glassmorphism-shimmer-or-magnetic-tilt-on-product-cards",
+      "title": "Add a 'card tilt depth shadow' effect to all stat/summary cards on the AdminDashboardPage, SellerDashboardPage, and all their sub-pages: as the user moves their cursor over a stat card, the card casts a directional drop-shadow that shifts position relative to cursor angle (shadow moves opposite to cursor direction), creating a 3D light-source illusion. This must be implemented with JavaScript mouse-enter/move/leave listeners updating CSS custom properties and must not duplicate the existing bounce-pop entrance, glassmorphism shimmer, or magnetic tilt on product cards.",
+      "reqIds": [
+        "REQ-93"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-introduce-a-text-scramble-reveal-animation-for-all-numeric-order-ids-product-ids-and-refund-ids-shown-in-admin-and-seller-data-tables-when-a-row-first-renders-the-id-text-rapidly-cycles-through-random-alphanumeric-characters-for-400-ms-before-resolving-to-the-real-value-like-a-decryption-effect-use-a-javascript-character-scramble-loop-on-mount-this-must-be-distinct-from-the-odometer-digit-roll-typewriter-character-reveal-and-shimmer-row-reveal-effects-already-applied",
+      "title": "Introduce a 'text scramble' reveal animation for all numeric order IDs, product IDs, and refund IDs shown in admin and seller data tables: when a row first renders, the ID text rapidly cycles through random alphanumeric characters for 400 ms before resolving to the real value, like a decryption effect. Use a JavaScript character-scramble loop on mount. This must be distinct from the odometer digit-roll, typewriter character-reveal, and shimmer-row-reveal effects already applied.",
+      "reqIds": [
+        "REQ-94"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-spotlight-follow-hover-effect-to-the-sellerregisterpage-step-progress-timeline-indicators-as-the-user-hovers-over-or-focuses-each-step-node-a-soft-amber-spotlight-radial-gradient-80-px-radius-15-opacity-follows-the-cursor-within-the-timeline-area-and-snaps-to-the-hovered-step-with-a-smooth-200-ms-transition-this-must-be-distinct-from-the-admin-cursor-spotlight-emerald-and-the-seller-cursor-particle-trail-teal-dots-using-amber-to-match-the-document-verification-theme-of-the-page",
+      "title": "Add a 'spotlight follow' hover effect to the SellerRegisterPage step-progress timeline indicators: as the user hovers over or focuses each step node, a soft amber spotlight radial gradient (80 px radius, 15% opacity) follows the cursor within the timeline area and snaps to the hovered step with a smooth 200 ms transition. This must be distinct from the admin cursor spotlight (emerald) and the seller cursor particle trail (teal dots), using amber to match the document/verification theme of the page.",
+      "reqIds": [
+        "REQ-95"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-animated-wave-underline-to-all-section-sub-headings-h2-h3-on-the-customer-facing-aboutpage-and-contactpage-a-wavy-svg-underline-path-draws-itself-beneath-each-heading-when-it-enters-the-viewport-using-stroke-dashoffset-animation-over-600-ms-the-wave-underline-must-be-emerald-colored-and-use-a-sinusoidal-svg-path-this-must-be-distinct-from-the-staggered-letter-drop-on-aboutpage-headings-which-targets-h1-and-prominent-titles-and-the-hover-underline-sweep-on-nav-links",
+      "title": "Add an animated 'wave underline' to all section sub-headings (h2, h3) on the customer-facing AboutPage and ContactPage: a wavy SVG underline path draws itself beneath each heading when it enters the viewport using stroke-dashoffset animation over 600 ms. The wave underline must be emerald-colored and use a sinusoidal SVG path. This must be distinct from the staggered letter-drop on AboutPage headings (which targets h1 and prominent titles) and the hover underline-sweep on nav links.",
+      "reqIds": [
+        "REQ-96"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-price-tag-flip-micro-animation-to-product-prices-on-the-productspage-and-in-the-cartpage-when-the-page-first-loads-or-when-a-price-enters-the-viewport-the-price-number-flips-in-with-a-y-axis-rotatey-90deg-0deg-over-350-ms-per-item-using-css-3d-transform-in-the-cartpage-when-a-quantity-is-changed-the-recalculated-line-item-price-also-plays-this-flip-in-to-signal-the-update-this-must-be-distinct-from-the-existing-spring-physics-row-animations-in-cartpage-the-number-flip-counter-transition-on-order-totals-and-the-odometer-digit-roll-on-admin-stats",
+      "title": "Add a 'price tag flip' micro-animation to product prices on the ProductsPage and in the CartPage: when the page first loads or when a price enters the viewport, the price number flips in with a Y-axis rotateY(90deg → 0deg) over 350 ms per item using CSS 3D transform. In the CartPage, when a quantity is changed, the recalculated line-item price also plays this flip-in to signal the update. This must be distinct from the existing spring-physics row animations in CartPage, the number-flip counter transition on order totals, and the odometer digit-roll on admin stats.",
+      "reqIds": [
+        "REQ-97"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-glowing-category-pill-effect-to-the-category-filter-buttons-on-the-productspage-when-a-category-filter-is-active-selected-the-pill-button-emits-a-soft-pulsing-outer-glow-box-shadow-expands-and-contracts-on-a-1-5-second-loop-in-the-category-s-accent-color-green-for-medicines-amber-for-generics-teal-for-others-when-switching-categories-the-active-pill-transitions-with-a-cross-fade-glow-transfer-to-the-newly-selected-pill-this-must-be-distinct-from-the-existing-sticky-filter-bar-slide-down-and-the-neon-pulse-glow-ring-on-the-homepage-cta",
+      "title": "Add a 'glowing category pill' effect to the category filter buttons on the ProductsPage: when a category filter is active/selected, the pill button emits a soft pulsing outer glow (box-shadow expands and contracts on a 1.5-second loop) in the category's accent color (green for medicines, amber for generics, teal for others). When switching categories, the active pill transitions with a cross-fade glow transfer to the newly selected pill. This must be distinct from the existing sticky filter bar slide-down and the neon-pulse glow ring on the homepage CTA.",
+      "reqIds": [
+        "REQ-98"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-animated-order-timeline-stepper-to-the-ordersuccesspage-below-the-order-summary-card-a-horizontal-desktop-or-vertical-mobile-stepper-showing-the-4-order-stages-order-placed-confirmed-shipped-delivered-where-order-placed-is-pre-filled-and-highlighted-and-the-remaining-steps-are-shown-as-upcoming-each-step-node-animates-in-sequentially-with-a-200-ms-stagger-after-the-confetti-burst-completes-this-is-additive-to-the-existing-confetti-checkmark-celebration-and-must-not-replace-or-duplicate-it",
+      "title": "Add an animated 'order timeline stepper' to the OrderSuccessPage below the order summary card: a horizontal (desktop) or vertical (mobile) stepper showing the 4 order stages — Order Placed → Confirmed → Shipped → Delivered — where 'Order Placed' is pre-filled and highlighted, and the remaining steps are shown as upcoming. Each step node animates in sequentially with a 200 ms stagger after the confetti burst completes. This is additive to the existing confetti/checkmark celebration and must not replace or duplicate it.",
+      "reqIds": [
+        "REQ-99"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-frosted-glass-notification-toast-system-upgrade-replace-or-enhance-the-existing-toast-notifications-used-throughout-admin-and-seller-dashboards-with-a-custom-frosted-glass-styled-toast-that-slides-in-from-the-top-right-with-a-spring-bounce-entrance-translatey-20px-translatey-4px-translatey-0-has-a-thin-animated-green-progress-bar-at-the-bottom-indicating-auto-dismiss-countdown-and-fades-out-with-a-blur-to-transparent-exit-the-toast-background-must-use-backdrop-filter-blur-with-a-semi-transparent-green-tinted-surface-this-is-distinct-from-all-existing-page-entrance-and-overlay-animations",
+      "title": "Add a 'frosted glass notification toast' system upgrade: replace or enhance the existing toast notifications (used throughout admin and seller dashboards) with a custom frosted-glass styled toast that slides in from the top-right with a spring-bounce entrance (translateY(-20px) → translateY(4px) → translateY(0)), has a thin animated green progress bar at the bottom indicating auto-dismiss countdown, and fades out with a blur-to-transparent exit. The toast background must use backdrop-filter blur with a semi-transparent green-tinted surface. This is distinct from all existing page-entrance and overlay animations.",
+      "reqIds": [
+        "REQ-100"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-introduce-a-vibrant-multi-color-accent-system-across-all-customer-facing-pages-homepage-productspage-cartpage-paymentpage-ordersuccesspage-aboutpage-contactpage-replace-any-remaining-monochromatic-green-surfaces-with-rich-gradient-fills-that-blend-emerald-teal-amber-and-coral-rose-accent-tones-section-dividers-card-borders-and-icon-backgrounds-must-each-carry-a-distinct-hue-from-this-palette-no-two-adjacent-sections-should-share-the-same-dominant-color",
+      "title": "Introduce a vibrant multi-color accent system across all customer-facing pages (HomePage, ProductsPage, CartPage, PaymentPage, OrderSuccessPage, AboutPage, ContactPage): replace any remaining monochromatic green surfaces with rich gradient fills that blend emerald, teal, amber, and coral/rose accent tones. Section dividers, card borders, and icon backgrounds must each carry a distinct hue from this palette. No two adjacent sections should share the same dominant color.",
+      "reqIds": [
+        "REQ-101"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-animated-gradient-border-rings-to-all-product-cards-on-productspage-and-the-featured-product-grid-on-homepage-each-card-has-a-slowly-rotating-conic-gradient-border-360-rotation-over-4-seconds-visible-on-hover-cycling-through-emerald-teal-amber-hues-this-must-be-a-css-only-keyframes-technique-using-a-pseudo-element-border-overlay-and-must-not-conflict-with-the-existing-3d-card-flip-magnetic-tilt-or-liquid-fill-animations",
+      "title": "Add animated gradient border rings to all product cards on ProductsPage and the featured product grid on HomePage: each card has a slowly rotating conic-gradient border (360° rotation over 4 seconds) visible on hover, cycling through emerald → teal → amber hues. This must be a CSS-only @keyframes technique using a pseudo-element border overlay and must not conflict with the existing 3D card-flip, magnetic tilt, or liquid-fill animations.",
+      "reqIds": [
+        "REQ-102"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-color-burst-splash-animation-to-the-add-to-cart-button-on-productcard-on-click-a-spray-of-8-10-tiny-colored-dots-mixed-emerald-teal-and-amber-burst-radially-outward-from-the-button-center-travel-30-50-px-and-fade-out-over-500-ms-implement-using-dom-appended-elements-with-css-animation-this-must-be-distinct-from-the-existing-liquid-fill-sweep-magnetic-ripple-and-fly-to-cart-image-animations",
+      "title": "Add a color-burst splash animation to the Add to Cart button on ProductCard: on click, a spray of 8–10 tiny colored dots (mixed emerald, teal, and amber) burst radially outward from the button center, travel 30–50 px, and fade out over 500 ms. Implement using DOM-appended elements with CSS animation. This must be distinct from the existing liquid-fill sweep, magnetic ripple, and fly-to-cart image animations.",
+      "reqIds": [
+        "REQ-103"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-introduce-a-dynamic-hero-gradient-shift-on-the-homepage-hero-section-the-layered-gradient-background-smoothly-transitions-through-a-looping-color-sequence-deep-green-teal-emerald-forest-green-over-a-12-second-css-animation-cycle-creating-a-living-color-shift-effect-the-hue-shift-must-be-implemented-via-css-keyframes-on-background-position-or-hue-rotate-and-must-be-visually-distinct-from-the-existing-floating-blob-morph-and-floating-pill-shapes",
+      "title": "Introduce a dynamic hero gradient shift on the HomePage hero section: the layered gradient background smoothly transitions through a looping color sequence (deep green → teal → emerald → forest green) over a 12-second CSS animation cycle, creating a living color-shift effect. The hue shift must be implemented via CSS @keyframes on background-position or hue-rotate and must be visually distinct from the existing floating blob morph and floating pill shapes.",
+      "reqIds": [
+        "REQ-104"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-colorful-animated-step-progress-bar-to-the-multi-step-forms-sellerregisterpage-step-indicator-and-customerloginpage-login-register-otp-tabs-the-progress-bar-fills-from-left-to-right-as-the-user-advances-steps-using-a-gradient-that-shifts-from-amber-step-1-to-emerald-step-2-to-teal-step-3-the-fill-transition-between-steps-uses-a-smooth-400-ms-ease-animation-this-is-distinct-from-the-existing-spotlight-follow-hover-on-step-nodes-and-the-slide-in-form-transitions",
+      "title": "Add a colorful animated step-progress bar to the multi-step forms (SellerRegisterPage step indicator and CustomerLoginPage login/register/OTP tabs): the progress bar fills from left to right as the user advances steps, using a gradient that shifts from amber (step 1) to emerald (step 2) to teal (step 3). The fill transition between steps uses a smooth 400 ms ease animation. This is distinct from the existing spotlight-follow hover on step nodes and the slide-in form transitions.",
+      "reqIds": [
+        "REQ-105"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-vibrant-animated-status-color-aura-to-each-order-status-badge-in-the-ordersuccesspage-timeline-stepper-and-in-the-cartpage-paymentpage-order-summary-the-active-completed-step-node-pulses-with-a-colored-aura-matching-its-status-color-emerald-for-delivered-teal-for-shipped-amber-for-confirmed-rose-for-pending-the-aura-expands-and-fades-on-a-1-8-second-loop-using-css-box-shadow-keyframes-this-must-be-distinct-from-the-existing-ink-drop-ripple-on-statusbadge-and-the-pulsing-ring-badge-animation-on-admin-sidebar-items",
+      "title": "Add a vibrant animated status-color aura to each order status badge in the OrderSuccessPage timeline stepper and in the CartPage/PaymentPage order summary: the active/completed step node pulses with a colored aura matching its status color (emerald for delivered, teal for shipped, amber for confirmed, rose for pending). The aura expands and fades on a 1.8-second loop using CSS box-shadow keyframes. This must be distinct from the existing ink-drop ripple on StatusBadge and the pulsing ring badge animation on admin sidebar items.",
+      "reqIds": [
+        "REQ-106"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-colorful-icon-tinting-system-to-the-admindashboardpage-and-sellerdashboardpage-stat-cards-each-stat-card-s-icon-is-rendered-with-a-unique-vivid-background-pill-total-products-uses-an-amber-pill-total-orders-uses-a-teal-pill-pending-orders-uses-a-rose-coral-pill-revenue-uses-an-emerald-pill-delivered-orders-uses-a-cyan-pill-the-pill-background-uses-a-soft-radial-gradient-and-has-a-subtle-color-shift-hover-animation-brightness-10-this-must-complement-the-existing-glassmorphism-frosted-green-card-style-without-replacing-it",
+      "title": "Apply a colorful icon tinting system to the AdminDashboardPage and SellerDashboardPage stat cards: each stat card's icon is rendered with a unique vivid background pill — Total Products uses an amber pill, Total Orders uses a teal pill, Pending Orders uses a rose/coral pill, Revenue uses an emerald pill, Delivered Orders uses a cyan pill. The pill background uses a soft radial gradient and has a subtle color-shift hover animation (brightness +10%). This must complement the existing glassmorphism frosted-green card style without replacing it.",
+      "reqIds": [
+        "REQ-107"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-rainbow-gradient-animated-highlight-to-the-announcementticker-text-items-each-announcement-phrase-is-wrapped-in-a-span-whose-text-color-cycles-through-a-green-teal-amber-green-gradient-using-a-css-background-clip-text-animation-over-a-6-second-loop-the-animation-phase-is-offset-by-2-seconds-per-item-so-adjacent-phrases-are-never-the-same-color-simultaneously-this-must-not-reuse-the-existing-shimmer-sweep-background-animation-already-applied-to-the-announcementticker-background",
+      "title": "Add a rainbow-gradient animated highlight to the AnnouncementTicker text items: each announcement phrase is wrapped in a span whose text color cycles through a green → teal → amber → green gradient using a CSS background-clip text animation over a 6-second loop. The animation phase is offset by 2 seconds per item so adjacent phrases are never the same color simultaneously. This must not reuse the existing shimmer sweep background animation already applied to the AnnouncementTicker background.",
+      "reqIds": [
+        "REQ-108"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-colorful-animated-category-icon-badge-to-each-medicine-category-displayed-across-productspage-filter-pills-and-product-cards-tablet-gets-a-violet-tinted-icon-pill-capsule-gets-a-rose-tinted-pill-syrup-gets-a-cyan-tinted-pill-injection-gets-an-amber-tinted-pill-cream-gets-a-lime-tinted-pill-other-gets-a-slate-pill-each-icon-badge-animates-into-view-with-a-scale-in-bounce-scale-0-1-1-1-0-300-ms-when-first-rendered-this-color-coding-must-be-applied-consistently-on-both-the-filter-pills-and-the-medicine-type-badge-inside-productcard",
+      "title": "Add a colorful animated category-icon badge to each medicine category displayed across ProductsPage filter pills and product cards: Tablet gets a violet-tinted icon pill, Capsule gets a rose-tinted pill, Syrup gets a cyan-tinted pill, Injection gets an amber-tinted pill, Cream gets a lime-tinted pill, Other gets a slate pill. Each icon badge animates into view with a scale-in bounce (scale 0 → 1.1 → 1.0, 300 ms) when first rendered. This color-coding must be applied consistently on both the filter pills and the medicine type badge inside ProductCard.",
+      "reqIds": [
+        "REQ-109"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-vivid-animated-gradient-shimmer-to-the-footer-s-brand-name-g-s-medical-text-the-text-uses-a-background-clip-gradient-that-sweeps-a-bright-teal-to-amber-highlight-across-the-letters-on-a-3-second-loop-giving-the-brand-name-a-metallic-sheen-appearance-also-apply-a-matching-but-shorter-1-5-second-gradient-sweep-to-the-footer-section-headings-quick-links-contact-us-etc-these-must-use-the-css-background-clip-text-technique-with-keyframes-background-position-animation-and-must-not-reuse-the-svg-stroke-draw-animation-on-the-header-logo",
+      "title": "Add a vivid animated gradient shimmer to the Footer's brand name 'G&S MEDICAL' text: the text uses a background-clip gradient that sweeps a bright teal-to-amber highlight across the letters on a 3-second loop, giving the brand name a metallic sheen appearance. Also apply a matching but shorter (1.5-second) gradient sweep to the footer section headings (Quick Links, Contact Us, etc.). These must use the CSS background-clip: text technique with @keyframes background-position animation and must not reuse the SVG stroke draw animation on the Header logo.",
+      "reqIds": [
+        "REQ-110"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-revert-the-entire-application-both-frontend-and-backend-to-the-state-it-was-in-at-version-9-discarding-all-changes-made-in-versions-10-through-the-current-latest-version-the-codebase-must-exactly-reflect-version-9-s-functionality-design-and-data-models-with-no-residual-code-styles-or-logic-from-any-later-version",
+      "title": "Revert the entire application (both frontend and backend) to the state it was in at Version 9, discarding all changes made in Versions 10 through the current latest version. The codebase must exactly reflect Version 9's functionality, design, and data models with no residual code, styles, or logic from any later version.",
+      "reqIds": [
+        "REQ-111"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -786,6 +1042,24 @@
       "reqIds": [
         "REQ-79"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-54",
+      "summary": "Make the entire application even more animative and design-rich (another layer on top of existing animations) — add new unique animations and visual enhancements across all pages without repeating existing patterns",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-55",
+      "summary": "Make the entire application even more animative and design-rich (another layer on top of existing animations) — add new unique animations and visual enhancements across all pages without repeating existing patterns",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-56",
+      "summary": "Make the entire application more colorful and animative — add new vibrant color accents, richer gradients, and more dynamic animations across all pages without repeating existing patterns",
+      "reqIds": [],
       "status": "pending"
     }
   ],

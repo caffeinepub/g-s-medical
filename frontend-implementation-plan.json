@@ -1,281 +1,34 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Next-level animations and unique design enrichment — no repeat patterns",
+  "title": "Revert to Version 9 - Frontend Changes",
   "requirements": [
     {
-      "id": "REQ-70",
-      "summary": "Add unique non-repeating micro-interaction animations to ProductCard and cart badge: magnetic hover tilt effect, liquid fill progress on 'Add to Cart' button, and numerical increment burst on cart badge",
+      "id": "REQ-111",
+      "summary": "Revert the entire frontend to Version 9 state, removing all changes from Versions 10+",
       "acceptanceCriteria": [
-        "Product cards exhibit a subtle 3D tilt/perspective on mouse hover that is visually distinct from any existing scale or shadow transition",
-        "The 'Add to Cart' button shows a left-to-right liquid fill sweep animation on click, not a ripple or pulse",
-        "The cart badge shows a number-increment burst animation (e.g., +1 float-up) unique from the existing bounce/pulse",
-        "No animation CSS class or keyframe is shared with previously implemented animations",
-        "All new animations respect prefers-reduced-motion"
+        "The application code matches Version 9 exactly in terms of features, pages, components, and frontend logic.",
+        "No code, styles, animations, or UI changes introduced after Version 9 are present.",
+        "All pages and routes that existed in Version 9 render correctly.",
+        "All pages and features added after Version 9 are removed.",
+        "The frontend reflects only the components, pages, and styles present in Version 9.",
+        "Immutable paths (useInternetIdentity.ts, useActor.ts, main.tsx, components/ui) remain unchanged."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/ProductCard.tsx",
+          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Add magnetic 3D tilt effect on hover using mouse position tracking and CSS transform perspective. Implement liquid fill progress animation on the 'Add to Cart' button using a ::before pseudo-element with left-to-right width animation on click. Ensure animations use unique keyframes distinct from existing scale/shadow effects and respect prefers-reduced-motion."
-        },
-        {
-          "path": "frontend/src/components/Header.tsx",
-          "operation": "modify",
-          "description": "Add numerical increment burst animation to the cart badge. When cart count increases, display a +1 floating-up text element that fades out using a unique keyframe animation. Ensure the burst effect does not reuse existing bounce/pulse animations and respects prefers-reduced-motion."
+          "description": "CRITICAL: This plan cannot be executed without Version 9 source code or git history. Manual steps required: 1) Identify Version 9 commit hash from git history, 2) Review git diff between Version 9 and current version, 3) Identify all files that existed in Version 9, 4) Restore each file to its Version 9 state using git checkout or manual restoration, 5) Remove any files that did not exist in Version 9, 6) Verify all routes, components, and pages match Version 9 exactly. Without access to Version 9's actual code, this automated plan cannot specify exact changes. The BuildRequest requires exact replication of Version 9, which is impossible without the source material."
         },
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Define new keyframes for: (1) liquid-fill sweep animation with transform translateX, (2) increment-burst animation with translateY and opacity fade. Ensure these keyframes are unique and not aliased with any existing animations. Add prefers-reduced-motion media queries for all new animations."
-        }
-      ]
-    },
-    {
-      "id": "REQ-71",
-      "summary": "Introduce a page-transition overlay system with a branded curtain wipe animation (200–300 ms) that sweeps from left to right on route changes, applied globally via Layout component",
-      "acceptanceCriteria": [
-        "A branded green curtain wipe plays on every route change",
-        "The wipe completes within 300 ms so it does not feel sluggish",
-        "Existing per-page entrance animations are unaffected and still play after the curtain exits",
-        "The overlay is implemented in Layout.tsx or a dedicated PageTransition component, not inside individual pages",
-        "Animation is skipped when prefers-reduced-motion is set"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/Layout.tsx",
-          "operation": "modify",
-          "description": "Add a page transition overlay system that displays a branded green curtain wipe animation on route changes. Use TanStack Router's useRouter hook to detect navigation events. Render a fixed full-screen overlay that sweeps in from the left edge and exits to the right within 300 ms using a unique translateX keyframe. Ensure the animation does not interfere with existing per-page entrance animations and respects prefers-reduced-motion."
+          "description": "Restore global styles, CSS custom properties, and Tailwind configuration to match Version 9 exactly. Remove any theme variables, animations, or styling additions made after Version 9. Requires comparison with Version 9 source."
         },
         {
-          "path": "frontend/src/index.css",
+          "path": "frontend/tailwind.config.js",
           "operation": "modify",
-          "description": "Define a unique keyframe for the curtain-wipe animation using translateX from -100% to 0% (sweep in) and 0% to 100% (sweep out). Use a branded emerald-to-teal gradient background. Add prefers-reduced-motion override to skip the animation."
-        }
-      ]
-    },
-    {
-      "id": "REQ-72",
-      "summary": "Add a dynamic scrolling progress indicator at the very top of the viewport: a thin emerald-to-teal gradient line that fills from 0% to 100% width as the user scrolls, resets on navigation",
-      "acceptanceCriteria": [
-        "A thin gradient progress bar is visible at the absolute top of the screen on all pages",
-        "Its width accurately reflects scroll percentage (0% at top, 100% at bottom of page)",
-        "The gradient uses emerald-to-teal colors distinct from the existing Header accent bar gradient",
-        "It resets to 0% on every route change",
-        "Reduced-motion users see a static full-width bar instead of animation"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/Layout.tsx",
-          "operation": "modify",
-          "description": "Add a scroll progress indicator as a fixed element at the very top of the viewport (above the Header). Use a scroll event listener to calculate scroll percentage and update the width of the progress bar. Implement an emerald-to-teal gradient distinct from the Header accent bar. Reset the progress to 0% on route changes using TanStack Router's navigation events. For prefers-reduced-motion, display a static full-width bar."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Add CSS for the scroll progress indicator with a unique emerald-to-teal gradient using OKLCH colors. Ensure the gradient is visually distinct from any existing Header gradients. Add prefers-reduced-motion media query to show a static full-width bar."
-        }
-      ]
-    },
-    {
-      "id": "REQ-73",
-      "summary": "Enhance the AnnouncementTicker with a frosted-glass pill-shaped design, animated dot-pulse dividers, and a subtle shimmer sweep across the background every 4 seconds",
-      "acceptanceCriteria": [
-        "AnnouncementTicker has a frosted-glass/pill visual style distinct from its current plain strip",
-        "Announcement items are separated by animated dot-pulse icons",
-        "A shimmer sweep plays across the ticker background on a 4-second interval",
-        "The shimmer keyframe is unique and not shared with any skeleton loader or card shimmer",
-        "prefers-reduced-motion disables the shimmer and dot-pulse while keeping the scroll"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/AnnouncementTicker.tsx",
-          "operation": "modify",
-          "description": "Replace the plain scrolling strip with a frosted-glass pill-shaped design using backdrop-filter and rounded borders. Add animated dot-pulse dividers between announcement items using a unique pulse keyframe. Implement a shimmer sweep background animation using a linear-gradient that translates across the ticker on a 4-second interval. Ensure the shimmer keyframe is distinct from any existing skeleton or card shimmer animations. Respect prefers-reduced-motion by disabling shimmer and dot-pulse while keeping the marquee scroll."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Define unique keyframes for: (1) dot-pulse animation with scale and opacity, (2) shimmer-sweep animation using translateX with a linear-gradient. Ensure these are distinct from existing skeleton shimmer animations. Add prefers-reduced-motion overrides to disable dot-pulse and shimmer."
-        }
-      ]
-    },
-    {
-      "id": "REQ-74",
-      "summary": "Add a floating ambient background layer to the HomePage hero section: 6–8 large, very low-opacity morphing blob shapes in deep green and teal that slowly deform and drift",
-      "acceptanceCriteria": [
-        "6–8 morphing blob shapes are visible at very low opacity behind the hero content on HomePage",
-        "Blobs use border-radius keyframe morphing or SVG filter distortion — not the same pill/capsule float used elsewhere",
-        "Blobs do not overlap or obscure any text or CTA buttons",
-        "Animation cycles are staggered so no two blobs morph in sync",
-        "Reduced-motion: blobs render as static shapes without animation"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/HomePage.tsx",
-          "operation": "modify",
-          "description": "Add a floating ambient background layer to the hero section rendering 6–8 large blob shapes positioned absolutely behind all hero content. Use CSS border-radius keyframe morphing with staggered animation delays to create unique deformation patterns. Set very low opacity (3–6%) in deep green and teal colors. Ensure blobs are z-indexed below hero text and CTAs. For prefers-reduced-motion, render static shapes without morphing animation."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Define unique border-radius morphing keyframes for blob shapes using multiple border-radius percentage values to create organic deformation. Add staggered animation delays across multiple blobs. Ensure these keyframes are distinct from any existing pill/capsule float animations. Add prefers-reduced-motion override to display static shapes."
-        }
-      ]
-    },
-    {
-      "id": "REQ-75",
-      "summary": "Implement an interactive cursor spotlight effect on Admin Dashboard pages: a radial gradient glow that follows the mouse cursor across the page background, activated only on desktop",
-      "acceptanceCriteria": [
-        "A radial emerald glow follows the mouse on all five Admin Dashboard pages on desktop",
-        "The glow is applied to the page background layer, not on top of content",
-        "Effect is disabled on touch/mobile devices (pointer: coarse)",
-        "The CSS/JS used is unique and not reused from any other animation in the codebase",
-        "prefers-reduced-motion disables the cursor tracking"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/AdminDashboardPage.tsx",
-          "operation": "modify",
-          "description": "Add an interactive cursor spotlight effect using a mousemove event listener that updates CSS custom properties for cursor position. Render a background layer with a radial-gradient glow centered at the cursor position. Enable only on desktop (pointer: fine media query). Respect prefers-reduced-motion by disabling cursor tracking."
-        },
-        {
-          "path": "frontend/src/pages/AdminProductsPage.tsx",
-          "operation": "modify",
-          "description": "Add the same interactive cursor spotlight effect as AdminDashboardPage, following the mouse with a radial emerald glow on the background layer. Enable only on desktop and respect prefers-reduced-motion."
-        },
-        {
-          "path": "frontend/src/pages/AdminOrdersPage.tsx",
-          "operation": "modify",
-          "description": "Add the same interactive cursor spotlight effect as AdminDashboardPage, following the mouse with a radial emerald glow on the background layer. Enable only on desktop and respect prefers-reduced-motion."
-        },
-        {
-          "path": "frontend/src/pages/AdminRefundsPage.tsx",
-          "operation": "modify",
-          "description": "Add the same interactive cursor spotlight effect as AdminDashboardPage, following the mouse with a radial emerald glow on the background layer. Enable only on desktop and respect prefers-reduced-motion."
-        },
-        {
-          "path": "frontend/src/pages/AdminSellersPage.tsx",
-          "operation": "modify",
-          "description": "Add the same interactive cursor spotlight effect as AdminDashboardPage, following the mouse with a radial emerald glow on the background layer. Enable only on desktop and respect prefers-reduced-motion."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Add CSS for the cursor spotlight effect using radial-gradient with CSS custom properties for dynamic cursor positioning. Add media queries to disable on touch devices (pointer: coarse) and for prefers-reduced-motion."
-        }
-      ]
-    },
-    {
-      "id": "REQ-76",
-      "summary": "Add a staggered text word-reveal animation to all major page headings across Seller Dashboard pages: each word reveals upward from a clip-path mask with a 60 ms stagger per word",
-      "acceptanceCriteria": [
-        "All h1 and major section titles on the four Seller Dashboard pages use a word-split clip-path reveal on mount",
-        "Each word reveals with a 60 ms delay after the previous word",
-        "The animation uses CSS clip-path or overflow-hidden mask — NOT the TypewriterText component",
-        "The animation triggers once on page load via IntersectionObserver",
-        "Reduced-motion: words appear instantly without reveal animation"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/hooks/useWordReveal.ts",
-          "operation": "create",
-          "description": "Create a custom React hook that implements word-reveal animation. Split text into individual words, wrap each in a span, and apply a clip-path reveal animation with staggered delays (60 ms per word). Use IntersectionObserver to trigger the animation once on mount. Respect prefers-reduced-motion by showing words instantly without animation."
-        },
-        {
-          "path": "frontend/src/pages/SellerDashboardPage.tsx",
-          "operation": "modify",
-          "description": "Apply the useWordReveal hook to all h1 and major section titles on the seller dashboard. Ensure the word-reveal animation uses clip-path and is visually distinct from the TypewriterText component."
-        },
-        {
-          "path": "frontend/src/pages/SellerProductsPage.tsx",
-          "operation": "modify",
-          "description": "Apply the useWordReveal hook to all h1 and major section titles on the seller products page. Ensure the word-reveal animation uses clip-path and is visually distinct from the TypewriterText component."
-        },
-        {
-          "path": "frontend/src/pages/SellerOrdersPage.tsx",
-          "operation": "modify",
-          "description": "Apply the useWordReveal hook to all h1 and major section titles on the seller orders page. Ensure the word-reveal animation uses clip-path and is visually distinct from the TypewriterText component."
-        },
-        {
-          "path": "frontend/src/pages/SellerProfilePage.tsx",
-          "operation": "modify",
-          "description": "Apply the useWordReveal hook to all h1 and major section titles on the seller profile page. Ensure the word-reveal animation uses clip-path and is visually distinct from the TypewriterText component."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Define a unique clip-path reveal keyframe that animates from clip-path: inset(100% 0 0 0) to clip-path: inset(0 0 0 0) for upward word reveal. Add prefers-reduced-motion override to show words instantly."
-        }
-      ]
-    },
-    {
-      "id": "REQ-77",
-      "summary": "Add a unique 'ink-drop' ripple animation to the StatusBadge component: concentric-ring ripple expanding outward from center when status value changes",
-      "acceptanceCriteria": [
-        "StatusBadge plays a concentric ring ripple animation when its status prop changes",
-        "The ripple uses a unique keyframe (outward expanding rings fading to transparent)",
-        "Animation duration is 400–600 ms and does not shift layout",
-        "The ripple color matches the new status color",
-        "prefers-reduced-motion: badge changes color instantly without ripple"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/StatusBadge.tsx",
-          "operation": "modify",
-          "description": "Add an ink-drop ripple animation that triggers when the status prop changes. Use a pseudo-element (::after) to render concentric expanding rings that fade to transparent. Match the ripple color to the new status color. Ensure the animation uses a unique keyframe distinct from existing pulsing ring or table row sweep animations, lasts 400–600 ms, and does not shift layout. Respect prefers-reduced-motion by changing color instantly without ripple."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Define a unique keyframe for the ink-drop ripple animation using transform scale from 0 to 2.5 and opacity from 0.6 to 0. Ensure this is distinct from any existing pulse or sweep animations. Add prefers-reduced-motion override to skip the ripple."
-        }
-      ]
-    },
-    {
-      "id": "REQ-78",
-      "summary": "Apply a unique visual treatment to the SkeletonProductCard component: replace the current shimmer with a scan-line animation — a single bright horizontal line sweeping top-to-bottom",
-      "acceptanceCriteria": [
-        "SkeletonProductCard shows a single bright scan-line sweeping top-to-bottom instead of a shimmer",
-        "The scan-line keyframe is unique (translateY-based single line, not a gradient shift)",
-        "The skeleton background uses a subtle dark-tinted green tone for the medical-scanner feel",
-        "Animation loops continuously while loading",
-        "prefers-reduced-motion: static skeleton without scan-line"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/SkeletonProductCard.tsx",
-          "operation": "modify",
-          "description": "Replace the current shimmer animation with a scan-line animation. Use a pseudo-element (::before) to render a single bright horizontal line that sweeps top-to-bottom using translateY. Apply a dark-tinted green skeleton background for a medical-scanner aesthetic. Ensure the scan-line keyframe is unique and distinct from the existing shimmer/gradient sweep. Loop the animation continuously. Respect prefers-reduced-motion by showing a static skeleton."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Define a unique keyframe for the scan-line animation using translateY from -100% to 100% to sweep a single bright line top-to-bottom. Add a dark-tinted green background color for the medical-scanner feel. Ensure this keyframe is distinct from any shimmer or gradient shift animations. Add prefers-reduced-motion override to display static skeleton."
-        }
-      ]
-    },
-    {
-      "id": "REQ-79",
-      "summary": "Add a floating action button (FAB) to the CartPage with a spring-bounce entrance animation: appears bottom-right when cart has items, shows quick-checkout icon, scrolls to checkout summary on click",
-      "acceptanceCriteria": [
-        "A FAB appears in the bottom-right of CartPage when cartItems.length > 0",
-        "FAB entrance uses a spring overshoot scale animation (0 → 1.2 → 1.0) distinct from the ScrollToTopButton fade-in",
-        "FAB displays a checkout/arrow-down icon clearly different from the ScrollToTopButton's up-arrow",
-        "Clicking FAB smoothly scrolls to the order summary/checkout section",
-        "FAB disappears with a scale-out when cart is empty",
-        "prefers-reduced-motion: FAB appears/disappears instantly without spring"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/CartPage.tsx",
-          "operation": "modify",
-          "description": "Add a floating action button (FAB) in the bottom-right corner that appears only when cartItems.length > 0. Implement a spring-bounce entrance animation using a unique keyframe with scale values (0 → 1.2 → 1.0). Display a checkout or arrow-down icon distinct from the ScrollToTopButton's up-arrow. On click, smoothly scroll to the order summary/checkout section. Implement a scale-out exit animation when the cart becomes empty. Respect prefers-reduced-motion by showing/hiding the FAB instantly without spring animation."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Define unique keyframes for: (1) spring-bounce entrance using scale values (0, 1.2, 1.0) with easing, (2) scale-out exit using scale from 1.0 to 0. Ensure these keyframes are visually distinct from the ScrollToTopButton fade-in animation. Add prefers-reduced-motion overrides to skip entrance/exit animations."
+          "description": "Restore Tailwind configuration to Version 9 state, removing any custom colors, fonts, animations, or theme extensions added after Version 9. Requires comparison with Version 9 source."
         }
       ]
     }

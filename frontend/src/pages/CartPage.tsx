@@ -1,195 +1,111 @@
-import React, { useState, useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight } from 'lucide-react';
-import { useAnimatedCounter } from '../hooks/useAnimatedCounter';
-import { useReducedMotion } from '../hooks/useReducedMotion';
-import { Product } from '../backend';
-
-interface CartItem {
-  product: Product;
-  quantity: number;
-}
+import { Button } from '@/components/ui/button';
+import { useCart } from '../context/CartContext';
 
 export default function CartPage() {
+  const { cartItems, updateQuantity, removeFromCart } = useCart();
   const navigate = useNavigate();
-  const prefersReducedMotion = useReducedMotion();
 
-  const [cart, setCart] = useState<CartItem[]>(() => {
-    try {
-      return JSON.parse(localStorage.getItem('cart') || '[]');
-    } catch {
-      return [];
-    }
-  });
-  const [removingId, setRemovingId] = useState<number | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const deliveryFee = subtotal > 500 ? 0 : 50;
+  const total = subtotal + deliveryFee;
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const total = cart.reduce((sum, item) => sum + Number(item.product.price) * item.quantity, 0);
-  const animatedTotal = useAnimatedCounter(total, { duration: 600 });
-
-  const updateQuantity = (productId: bigint, delta: number) => {
-    setCart((prev) => {
-      const updated = prev
-        .map((item) =>
-          item.product.id === productId
-            ? { ...item, quantity: Math.max(0, item.quantity + delta) }
-            : item
-        )
-        .filter((item) => item.quantity > 0);
-      localStorage.setItem('cart', JSON.stringify(updated));
-      return updated;
-    });
-  };
-
-  const removeItem = (productId: bigint) => {
-    if (!prefersReducedMotion) {
-      setRemovingId(Number(productId));
-      setTimeout(() => {
-        setCart((prev) => {
-          const updated = prev.filter((item) => item.product.id !== productId);
-          localStorage.setItem('cart', JSON.stringify(updated));
-          return updated;
-        });
-        setRemovingId(null);
-      }, 300);
-    } else {
-      setCart((prev) => {
-        const updated = prev.filter((item) => item.product.id !== productId);
-        localStorage.setItem('cart', JSON.stringify(updated));
-        return updated;
-      });
-    }
-  };
+  if (cartItems.length === 0) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+        <ShoppingBag className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+        <h2 className="text-2xl font-bold text-foreground mb-2">Your cart is empty</h2>
+        <p className="text-muted-foreground mb-6">Add some products to get started</p>
+        <Button onClick={() => navigate({ to: '/products' })}>
+          Browse Products
+        </Button>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <main className="flex-1 py-8">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1
-            className={`text-3xl font-display font-bold text-foreground mb-8 ${!prefersReducedMotion && mounted ? 'animate-fade-in-up' : ''}`}
-          >
-            Shopping Cart
-          </h1>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h1 className="text-3xl font-bold text-foreground mb-8">Shopping Cart</h1>
 
-          {cart.length === 0 ? (
-            <div
-              className={`text-center py-20 ${!prefersReducedMotion && mounted ? 'animate-fade-in-up' : ''}`}
-            >
-              <ShoppingBag className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-              <h2 className="text-xl font-display font-semibold text-foreground mb-2">Your cart is empty</h2>
-              <p className="text-muted-foreground mb-6">Add some products to get started</p>
-              <button
-                onClick={() => navigate({ to: '/products' })}
-                className="bg-primary text-primary-foreground font-semibold px-6 py-3 rounded-full hover:opacity-90 transition-all hover:scale-105"
-              >
-                Browse Products
-              </button>
-            </div>
-          ) : (
-            <div className="grid lg:grid-cols-3 gap-8">
-              {/* Cart Items */}
-              <div className="lg:col-span-2 space-y-4">
-                {cart.map((item, i) => (
-                  <div
-                    key={Number(item.product.id)}
-                    className={`bg-card rounded-2xl border border-border p-4 flex gap-4 transition-all duration-300 ${
-                      removingId === Number(item.product.id)
-                        ? 'opacity-0 -translate-x-8'
-                        : !prefersReducedMotion && mounted
-                        ? 'animate-slide-in-right'
-                        : ''
-                    }`}
-                    style={!prefersReducedMotion ? { animationDelay: `${i * 80}ms` } : {}}
-                  >
-                    <img
-                      src={item.product.image.getDirectURL()}
-                      alt={item.product.name}
-                      className="w-20 h-20 rounded-xl object-cover flex-shrink-0"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = '/assets/generated/product-placeholder.dim_400x400.png';
-                      }}
-                    />
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-display font-semibold text-foreground text-sm line-clamp-2 mb-1">
-                        {item.product.name}
-                      </h3>
-                      <p className="text-xs text-muted-foreground mb-3">{item.product.category}</p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => updateQuantity(item.product.id, -1)}
-                            className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-accent transition-colors"
-                          >
-                            <Minus className="w-3 h-3" />
-                          </button>
-                          <span className="w-8 text-center font-semibold text-sm">{item.quantity}</span>
-                          <button
-                            onClick={() => updateQuantity(item.product.id, 1)}
-                            className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-accent transition-colors"
-                          >
-                            <Plus className="w-3 h-3" />
-                          </button>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <span className="font-bold text-primary">
-                            ₹{Number(item.product.price) * item.quantity}
-                          </span>
-                          <button
-                            onClick={() => removeItem(item.product.id)}
-                            className="p-1.5 rounded-lg text-destructive hover:bg-destructive/10 transition-colors"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Order Summary */}
-              <div
-                className={`${!prefersReducedMotion && mounted ? 'animate-slide-in-right animate-delay-300' : ''}`}
-              >
-                <div className="bg-card rounded-2xl border border-border p-6 sticky top-24">
-                  <h2 className="font-display font-bold text-foreground text-lg mb-6">Order Summary</h2>
-                  <div className="space-y-3 mb-6">
-                    {cart.map((item) => (
-                      <div key={Number(item.product.id)} className="flex justify-between text-sm">
-                        <span className="text-muted-foreground line-clamp-1 flex-1 mr-2">
-                          {item.product.name} × {item.quantity}
-                        </span>
-                        <span className="font-medium text-foreground flex-shrink-0">
-                          ₹{Number(item.product.price) * item.quantity}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="border-t border-border pt-4 mb-6">
-                    <div className="flex justify-between items-center">
-                      <span className="font-display font-bold text-foreground">Total</span>
-                      <span className="text-2xl font-bold text-primary">
-                        ₹{prefersReducedMotion ? total : animatedTotal}
-                      </span>
-                    </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Cart Items */}
+        <div className="lg:col-span-2 space-y-4">
+          {cartItems.map(item => (
+            <div key={item.id} className="bg-card border border-border rounded-xl p-4 flex gap-4">
+              <img
+                src={item.image}
+                alt={item.name}
+                className="h-20 w-20 object-cover rounded-lg flex-shrink-0"
+                onError={e => {
+                  (e.target as HTMLImageElement).src = '/assets/generated/product-placeholder.dim_400x400.png';
+                }}
+              />
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-foreground text-sm mb-1 truncate">{item.name}</h3>
+                <p className="text-primary font-bold">₹{item.price}</p>
+                <div className="flex items-center gap-3 mt-2">
+                  <div className="flex items-center gap-2 bg-muted rounded-lg p-1">
+                    <button
+                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      className="p-1 hover:bg-background rounded transition-colors"
+                    >
+                      <Minus className="h-3 w-3" />
+                    </button>
+                    <span className="text-sm font-medium w-6 text-center">{item.quantity}</span>
+                    <button
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      className="p-1 hover:bg-background rounded transition-colors"
+                    >
+                      <Plus className="h-3 w-3" />
+                    </button>
                   </div>
                   <button
-                    onClick={() => navigate({ to: '/payment' })}
-                    className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground font-semibold py-3 rounded-full hover:opacity-90 transition-all hover:scale-105 hover:shadow-lg"
+                    onClick={() => removeFromCart(item.id)}
+                    className="p-1.5 text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
                   >
-                    Proceed to Payment
-                    <ArrowRight className="w-4 h-4" />
+                    <Trash2 className="h-4 w-4" />
                   </button>
                 </div>
               </div>
+              <div className="text-right">
+                <p className="font-bold text-foreground">₹{item.price * item.quantity}</p>
+              </div>
             </div>
-          )}
+          ))}
         </div>
-      </main>
+
+        {/* Order Summary */}
+        <div className="lg:col-span-1">
+          <div className="bg-card border border-border rounded-xl p-6 sticky top-24">
+            <h2 className="text-lg font-bold text-foreground mb-4">Order Summary</h2>
+            <div className="space-y-3 mb-4">
+              <div className="flex justify-between text-sm">
+                <span className="text-muted-foreground">Subtotal ({cartItems.reduce((s, i) => s + i.quantity, 0)} items)</span>
+                <span className="font-medium">₹{subtotal}</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-muted-foreground">Delivery Fee</span>
+                <span className="font-medium">{deliveryFee === 0 ? 'Free' : `₹${deliveryFee}`}</span>
+              </div>
+              {deliveryFee === 0 && (
+                <p className="text-xs text-green-600">🎉 Free delivery on orders above ₹500!</p>
+              )}
+              <div className="border-t border-border pt-3 flex justify-between font-bold">
+                <span>Total</span>
+                <span className="text-primary">₹{total}</span>
+              </div>
+            </div>
+            <Button
+              className="w-full"
+              size="lg"
+              onClick={() => navigate({ to: '/payment' })}
+            >
+              Proceed to Payment <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

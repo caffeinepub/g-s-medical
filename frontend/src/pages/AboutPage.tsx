@@ -1,206 +1,131 @@
-import React from 'react';
-import { Link } from '@tanstack/react-router';
-import { Shield, Heart, Star, Award, Phone, Mail, MapPin, Users } from 'lucide-react';
+import { useNavigate } from '@tanstack/react-router';
+import { Heart, Award, Users, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-
-const values = [
-  { icon: Shield, title: 'Quality Assurance', desc: 'Every product we stock is sourced from licensed distributors and verified for authenticity.' },
-  { icon: Heart, title: 'Community Care', desc: 'We are deeply committed to the health and well-being of the Malavali community.' },
-  { icon: Star, title: 'Expert Guidance', desc: 'Our trained pharmacists provide professional advice on medicines and healthcare.' },
-  { icon: Award, title: 'Affordable Prices', desc: 'We believe quality healthcare should be accessible to everyone at fair prices.' },
-];
 
 export default function AboutPage() {
+  const navigate = useNavigate();
+
+  const values = [
+    { icon: Heart, title: 'Patient First', description: 'Every decision we make is centered around the health and wellbeing of our customers.' },
+    { icon: Award, title: 'Quality Assured', description: 'We stock only genuine, certified medicines from trusted manufacturers.' },
+    { icon: Users, title: 'Community Care', description: 'Serving our local community with dedication and personalized healthcare support.' },
+    { icon: Target, title: 'Accessibility', description: 'Making quality healthcare products accessible and affordable for everyone.' },
+  ];
+
+  const founders = [
+    {
+      name: 'Gaurav Saswade',
+      role: 'Co-Founder & Director',
+      image: '/assets/generated/owner-gaurav.dim_300x300.png',
+      bio: 'With years of experience in the pharmaceutical industry, Gaurav leads our operations with a commitment to quality and customer satisfaction.',
+      phone: '+91 92705 56455',
+    },
+    {
+      name: 'Shushant',
+      role: 'Co-Founder & Operations',
+      image: '/assets/generated/owner-shushant.dim_300x300.png',
+      bio: 'Shushant oversees day-to-day operations and ensures that every customer receives the best possible service and genuine products.',
+      phone: '+91 97663 43454',
+    },
+  ];
+
   return (
-    <div className="animate-fade-in">
+    <div>
       {/* Hero */}
-      <section className="hero-gradient text-white py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Badge className="bg-white/20 text-white border-white/30 mb-4 rounded-full px-4 py-1">
-            About G&S Medical
-          </Badge>
-          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
-            Serving the Community<br />with Dedication
-          </h1>
-          <p className="text-lg opacity-90 max-w-2xl mx-auto">
-            G&S Medical is a trusted pharmacy serving the Malavali community with quality medicines,
-            healthcare products, and expert guidance since our founding.
+      <section className="bg-gradient-to-br from-primary/10 to-background py-16 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl font-bold text-foreground mb-4">About G&S Medical</h1>
+          <p className="text-xl text-muted-foreground">
+            Your trusted healthcare partner, committed to providing quality medicines and exceptional service to our community.
           </p>
         </div>
       </section>
 
       {/* Mission */}
-      <section className="py-16 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <section className="py-16 px-4 bg-background">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="font-heading text-3xl font-bold mb-4">Our Mission</h2>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                At G&S Medical, our mission is simple: to make quality healthcare accessible to every family
-                in Malavali and the surrounding areas. We believe that good health is a fundamental right,
-                not a privilege.
+              <h2 className="text-3xl font-bold text-foreground mb-4">Our Mission</h2>
+              <p className="text-muted-foreground mb-4">
+                At G&S Medical, we believe that access to quality healthcare is a fundamental right. Our mission is to provide genuine, affordable medicines and healthcare products to every member of our community.
               </p>
-              <p className="text-muted-foreground leading-relaxed mb-6">
-                We stock a comprehensive range of medicines, vitamins, medical equipment, and personal care
-                products — all sourced from trusted manufacturers and licensed distributors. Our team of
-                experienced pharmacists is always ready to guide you with professional advice.
+              <p className="text-muted-foreground">
+                We are committed to maintaining the highest standards of quality, ensuring that every product we sell is authentic and safe for our customers.
               </p>
-              <div className="flex flex-wrap gap-3">
-                <Badge variant="secondary" className="rounded-xl px-4 py-2 text-sm">Licensed Pharmacy</Badge>
-                <Badge variant="secondary" className="rounded-xl px-4 py-2 text-sm">500+ Products</Badge>
-                <Badge variant="secondary" className="rounded-xl px-4 py-2 text-sm">Expert Pharmacists</Badge>
-              </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              {values.map(value => {
-                const Icon = value.icon;
-                return (
-                  <div key={value.title} className="bg-card rounded-2xl p-5 border border-border card-hover">
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-3">
-                      <Icon className="w-5 h-5 text-primary" />
-                    </div>
-                    <h3 className="font-heading font-semibold text-sm mb-1">{value.title}</h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{value.desc}</p>
-                  </div>
-                );
-              })}
+            <div>
+              <img
+                src="/assets/generated/gs-medical-logo.dim_400x400.png"
+                alt="G&S Medical"
+                className="rounded-2xl shadow-lg w-full max-w-sm mx-auto"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Owners */}
-      <section className="py-16 bg-secondary/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl font-bold mb-3">Meet Our Founders</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              G&S Medical was founded by two passionate individuals dedicated to improving healthcare
-              access in their community.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Gaurav Saswade */}
-            <div className="bg-card rounded-3xl border border-border overflow-hidden card-hover">
-              <div className="relative h-64 bg-gradient-to-br from-primary/20 to-primary/5 overflow-hidden">
-                <img
-                  src="/assets/generated/gaurav-saswade-photo.dim_400x400.jpg"
-                  alt="Gaurav Saswade"
-                  className="w-full h-full object-cover object-top"
-                  onError={e => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-card to-transparent h-16" />
-              </div>
-              <div className="p-6">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <h3 className="font-heading font-bold text-xl">Gaurav Saswade</h3>
-                    <p className="text-primary text-sm font-medium">CEO & Director</p>
+      {/* Values */}
+      <section className="py-16 px-4 bg-muted/30">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl font-bold text-center text-foreground mb-10">Our Values</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {values.map((value, i) => {
+              const Icon = value.icon;
+              return (
+                <div key={i} className="bg-card border border-border rounded-xl p-6 text-center">
+                  <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-full mb-4">
+                    <Icon className="h-6 w-6 text-primary" />
                   </div>
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <Users className="w-5 h-5 text-primary" />
-                  </div>
+                  <h3 className="font-semibold text-foreground mb-2">{value.title}</h3>
+                  <p className="text-sm text-muted-foreground">{value.description}</p>
                 </div>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                  Gaurav Saswade is a visionary entrepreneur with a deep passion for community healthcare.
-                  With years of experience in the pharmaceutical industry, he co-founded G&S Medical with
-                  the goal of bringing quality medicines and healthcare products to the doorstep of every
-                  family in Malavali. His dedication to customer service and commitment to affordable
-                  healthcare has made G&S Medical a trusted name in the region. Gaurav's leadership and
-                  forward-thinking approach continue to drive the store's growth and community impact.
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <Badge variant="secondary" className="text-xs rounded-lg">Healthcare Expert</Badge>
-                  <Badge variant="secondary" className="text-xs rounded-lg">Community Leader</Badge>
-                  <Badge variant="secondary" className="text-xs rounded-lg">Entrepreneur</Badge>
-                </div>
-                {/* CEO Contact */}
-                <div className="flex items-center gap-2 pt-3 border-t border-border">
-                  <Phone className="w-4 h-4 text-primary shrink-0" />
-                  <div>
-                    <p className="text-xs text-muted-foreground">CEO Contact</p>
-                    <a
-                      href="tel:+919270556455"
-                      className="text-sm font-bold text-primary hover:underline"
-                    >
-                      +91 9270556455
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Shushant Waghmare */}
-            <div className="bg-card rounded-3xl border border-border overflow-hidden card-hover">
-              <div className="relative h-64 bg-gradient-to-br from-accent/20 to-accent/5 overflow-hidden">
-                <img
-                  src="/assets/generated/owner-shushant.dim_300x300.png"
-                  alt="Shushant Waghmare"
-                  className="w-full h-full object-cover"
-                  onError={e => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-card to-transparent h-16" />
-              </div>
-              <div className="p-6">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <h3 className="font-heading font-bold text-xl">Shushant Waghmare</h3>
-                    <p className="text-primary text-sm font-medium">Co-Founder & Operations Head</p>
-                  </div>
-                  <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center">
-                    <Users className="w-5 h-5 text-accent-foreground" />
-                  </div>
-                </div>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                  Shushant Waghmare brings exceptional operational expertise and a heartfelt commitment
-                  to public health. As the Operations Head of G&S Medical, he ensures that every customer
-                  receives the right product with the right guidance. His meticulous attention to quality
-                  control and his warm approach to customer care have earned him the trust and respect of
-                  the entire Malavali community. Shushant believes that a healthy community is the
-                  foundation of a prosperous society, and he works tirelessly to uphold that vision.
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <Badge variant="secondary" className="text-xs rounded-lg">Operations Expert</Badge>
-                  <Badge variant="secondary" className="text-xs rounded-lg">Quality Advocate</Badge>
-                  <Badge variant="secondary" className="text-xs rounded-lg">Community Servant</Badge>
-                </div>
-                {/* Co-Founder Contact */}
-                <div className="flex items-center gap-2 pt-3 border-t border-border">
-                  <Phone className="w-4 h-4 text-primary shrink-0" />
-                  <div>
-                    <p className="text-xs text-muted-foreground">Co-Founder Contact</p>
-                    <a
-                      href="tel:+919156896495"
-                      className="text-sm font-bold text-primary hover:underline"
-                    >
-                      +91 9156896495
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Contact CTA */}
-      <section className="py-16 bg-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-card rounded-3xl border border-border p-8 md:p-12 text-center">
-            <h2 className="font-heading text-3xl font-bold mb-4">Get in Touch</h2>
-            <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
-              Have a question or need assistance? Visit our contact page to reach us by phone, email, or send us a message directly.
-            </p>
-            <Button asChild className="rounded-xl" size="lg">
-              <Link to="/contact">Contact Us</Link>
-            </Button>
+      {/* Founders */}
+      <section className="py-16 px-4 bg-background">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold text-center text-foreground mb-10">Meet Our Founders</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {founders.map((founder, i) => (
+              <div key={i} className="bg-card border border-border rounded-xl p-6 text-center">
+                <img
+                  src={founder.image}
+                  alt={founder.name}
+                  className="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-4 border-primary/20"
+                  onError={e => {
+                    (e.target as HTMLImageElement).src = '/assets/generated/product-placeholder.dim_400x400.png';
+                  }}
+                />
+                <h3 className="font-bold text-foreground text-lg mb-1">{founder.name}</h3>
+                <p className="text-primary text-sm mb-3">{founder.role}</p>
+                <p className="text-muted-foreground text-sm mb-4">{founder.bio}</p>
+                <a
+                  href={`tel:${founder.phone.replace(/\s/g, '')}`}
+                  className="text-sm font-medium text-primary hover:underline"
+                >
+                  {founder.phone}
+                </a>
+              </div>
+            ))}
           </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-16 px-4 bg-muted/30">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-3xl font-bold text-foreground mb-4">Get in Touch</h2>
+          <p className="text-muted-foreground mb-6">
+            Have questions or need assistance? We're here to help.
+          </p>
+          <Button size="lg" onClick={() => navigate({ to: '/contact' })}>
+            Contact Us
+          </Button>
         </div>
       </section>
     </div>
